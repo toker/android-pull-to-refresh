@@ -37,7 +37,9 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.handmark.pulltorefresh.experimental.Concept;
+import com.handmark.pulltorefresh.configuration.DefaultPullToRefreshConfiguration;
+import com.handmark.pulltorefresh.configuration.PullToRefreshConfigurationFactory;
+import com.handmark.pulltorefresh.configuration.PullToRefreshConfiguration;
 import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 import com.handmark.pulltorefresh.library.internal.RotateLoadingLayout;
@@ -235,32 +237,32 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		return mScrollingWhileRefreshingEnabled;
 	}
 
-	/**
-	 *  Must be deleted.
-	 */
-	@Concept
-	@Override
-	protected void onFinishInflate() {
-		int sizeOfChildViews = getChildCount();
-		for(int i = 0; i< sizeOfChildViews;++i) {
-			View view = getChildAt(i);
-			if ( view instanceof LoadingLayout) {
-				if (mMode.showHeaderLoadingLayout()) {
-					// ? Header? Footer?
-					mHeaderLayout = (LoadingLayout) view;
-					
-				}
-//			} else if ( view instanceof IndicatorLayout) {
-//				
-			} else {
-				addView(view, -1, view.getLayoutParams());
-			}
-
-			removeViewAt(i);
-		}
-		
-		updateUIForMode();
-	}
+//	/**
+//	 *  Must be deleted.
+//	 */
+//	@Concept
+//	@Override
+//	protected void onFinishInflate() {
+//		int sizeOfChildViews = getChildCount();
+//		for(int i = 0; i< sizeOfChildViews;++i) {
+//			View view = getChildAt(i);
+//			if ( view instanceof LoadingLayout) {
+//				if (mMode.showHeaderLoadingLayout()) {
+//					// ? Header? Footer?
+//					mHeaderLayout = (LoadingLayout) view;
+//					
+//				}
+////			} else if ( view instanceof IndicatorLayout) {
+////				
+//			} else {
+//				addView(view, -1, view.getLayoutParams());
+//			}
+//
+//			removeViewAt(i);
+//		}
+//		
+//		updateUIForMode();
+//	}
 	
 	@Override
 	public final boolean onInterceptTouchEvent(MotionEvent event) {
@@ -1140,14 +1142,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
-			// This sentence is incorrect now -_-;;
-			@Concept
-			String loadingLayoutClazzName = a.getString(R.styleable.PullToRefresh_ptrAnimationStyle);
-			mLoadingLayoutClazz = LoadingLayoutFactory.getInstance().createLoadingLayoutClazz(loadingLayoutClazzName);
+			int loadingLayoutCode = a.getInteger(R.styleable.PullToRefresh_ptrAnimationStyle, 0);
+			PullToRefreshConfiguration<Integer, Integer> configuration = PullToRefreshConfigurationFactory.createConfiguration(context);
+			mLoadingLayoutClazz = configuration.getLoadingLayout(loadingLayoutCode);
 			
-			// old logic 
-//			mLoadingAnimationStyle = AnimationStyle.mapIntToValue(a.getInteger(
-//					R.styleable.PullToRefresh_ptrAnimationStyle, 0));
 		}
 
 		// Refreshable View

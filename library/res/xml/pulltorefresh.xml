@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PullToRefresh>
+    <LoadingLayouts>
+        <layout name="rotate" value="0">com.handmark.pulltorefresh.library.internal.RotateLoadingLayout</layout>
+        <layout name="flip" value="1">com.handmark.pulltorefresh.library.internal.FlipLoadingLayout</layout>
+    </LoadingLayouts>
+    <IndicatorLayouts>
+        
+    </IndicatorLayouts>
+</PullToRefresh>
