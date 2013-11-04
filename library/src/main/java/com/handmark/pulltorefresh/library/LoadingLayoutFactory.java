@@ -12,7 +12,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
-
+@Deprecated
 class LoadingLayoutFactory implements ILoadingLayoutFactory {
 
 	private final static LoadingLayoutFactory instance = new LoadingLayoutFactory();

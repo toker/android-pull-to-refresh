@@ -9,6 +9,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.handmark.pulltorefresh.configuration.PullToRefreshConfigXmlParser.Result;
 import com.handmark.pulltorefresh.configuration.XmlPullParserUtilsWrapper.DocumentState;
 import com.handmark.pulltorefresh.library.R;
+import com.handmark.pulltorefresh.library.internal.DefaultIndicatorLayout;
 import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
@@ -19,7 +20,7 @@ import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
 import android.util.Log;
 
-public class DefaultPullToRefreshConfiguration extends PullToRefreshConfiguration<Integer, Integer> {
+public class DefaultPullToRefreshConfiguration extends PullToRefreshConfiguration { //<Integer, Integer>
 
 	private Map<Integer, Class<? extends IndicatorLayout>> indicatorLayoutsMap;
 	private Map<Integer, Class<? extends LoadingLayout>> loadingLayoutsMap;

@@ -5,6 +5,6 @@
         <layout name="flip" value="1">com.handmark.pulltorefresh.library.internal.FlipLoadingLayout</layout>
     </LoadingLayouts>
     <IndicatorLayouts>
-        
+        <layout name="default" value="0">com.handmark.pulltorefresh.library.internal.DefaultIndicatorLayout</layout>
     </IndicatorLayouts>
 </PullToRefresh>

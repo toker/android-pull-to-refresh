@@ -32,8 +32,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 
-import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
+import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
+import com.handmark.pulltorefresh.library.internal.DefaultIndicatorLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
 public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends PullToRefreshBase<T> implements
@@ -338,11 +339,12 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showHeaderLoadingLayout() && null == mIndicatorIvTop) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvTop = new IndicatorLayout(getContext(), Mode.PULL_FROM_START);
-			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT);
-			params.rightMargin = getResources().getDimensionPixelSize(R.dimen.indicator_right_padding);
-			params.gravity = Gravity.TOP | Gravity.RIGHT;
+			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorFactory(getContext(), Mode.PULL_FROM_START);
+			ViewGroup.LayoutParams params = mIndicatorIvTop.createApplicableHeaderLayoutParams();
+//			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+//					ViewGroup.LayoutParams.WRAP_CONTENT);
+//			params.rightMargin = getResources().getDimensionPixelSize(R.dimen.indicator_right_padding);
+//			params.gravity = Gravity.TOP | Gravity.RIGHT;
 			refreshableViewWrapper.addView(mIndicatorIvTop, params);
 
 		} else if (!mode.showHeaderLoadingLayout() && null != mIndicatorIvTop) {
@@ -353,11 +355,12 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showFooterLoadingLayout() && null == mIndicatorIvBottom) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvBottom = new IndicatorLayout(getContext(), Mode.PULL_FROM_END);
-			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT);
-			params.rightMargin = getResources().getDimensionPixelSize(R.dimen.indicator_right_padding);
-			params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorFactory(getContext(), Mode.PULL_FROM_END);
+			ViewGroup.LayoutParams params = mIndicatorIvBottom.createApplicableFooterLayoutParams();
+//			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+//					ViewGroup.LayoutParams.WRAP_CONTENT);
+//			params.rightMargin = getResources().getDimensionPixelSize(R.dimen.indicator_right_padding);
+//			params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
 			refreshableViewWrapper.addView(mIndicatorIvBottom, params);
 
 		} else if (!mode.showFooterLoadingLayout() && null != mIndicatorIvBottom) {

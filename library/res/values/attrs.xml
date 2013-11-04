@@ -54,7 +54,10 @@
           	<flag name="rotate" value="0" />
           	<flag name="flip" value="1" />
         </attr>
-
+        <!--  -->
+        <attr name="ptrIndicatorStyle">
+          	<flag name="default" value="0" />
+        </attr>
         <!-- Whether the user can scroll while the View is Refreshing -->
         <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean" />
 
@@ -77,9 +80,4 @@
         <attr name="ptrDrawableBottom" format="reference" />
      
     </declare-styleable>
-	<!-- @Concept -->
-    <string-array name="ptrLoadingLayouts">
-        <item name="rotate">com.handmark.pulltorefresh.library.internal.RotateLoadingLayout</item>
-        <item name="flip">com.handmark.pulltorefresh.library.internal.FlipLoadingLayout</item>
-    </string-array>
 </resources>

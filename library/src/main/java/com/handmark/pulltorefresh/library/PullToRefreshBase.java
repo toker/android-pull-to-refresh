@@ -1129,13 +1129,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				break;
 		}
 
-//		setGravity(Gravity.CENTER);
-
 		ViewConfiguration config = ViewConfiguration.get(context);
 		mTouchSlop = config.getScaledTouchSlop();
 
 		// Styleables from XML
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
+
+		// Default value of PTR View's gravity is center. so let the value be set center when the gravity is not set yet in XML.
+		if (!a.hasValue(android.R.attr.gravity)) {
+			setGravity(Gravity.CENTER);
+		}
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
 			mMode = Mode.mapIntToValue(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
@@ -1143,7 +1146,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
 			int loadingLayoutCode = a.getInteger(R.styleable.PullToRefresh_ptrAnimationStyle, 0);
-			PullToRefreshConfiguration<Integer, Integer> configuration = PullToRefreshConfigurationFactory.createConfiguration(context);
+			PullToRefreshConfiguration configuration = PullToRefreshConfigurationFactory.createConfiguration(context);
 			mLoadingLayoutClazz = configuration.getLoadingLayout(loadingLayoutCode);
 			
 		}
@@ -1333,52 +1336,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				smoothScrollTo(0, SMOOTH_SCROLL_DURATION_MS, DEMO_SCROLL_INTERVAL, null);
 			}
 		});
-	}
-
-	public static enum AnimationStyle {
-		/**
-		 * This is the default for Android-PullToRefresh. Allows you to use any
-		 * drawable, which is automatically rotated and used as a Progress Bar.
-		 */
-		ROTATE,
-
-		/**
-		 * This is the old default, and what is commonly used on iOS. Uses an
-		 * arrow image which flips depending on where the user has scrolled.
-		 */
-		FLIP;
-
-		static AnimationStyle getDefault() {
-			return ROTATE;
-		}
-
-		/**
-		 * Maps an int to a specific mode. This is needed when saving state, or
-		 * inflating the view from XML where the mode is given through a attr
-		 * int.
-		 * 
-		 * @param modeInt - int to map a Mode to
-		 * @return Mode that modeInt maps to, or ROTATE by default.
-		 */
-		static AnimationStyle mapIntToValue(int modeInt) {
-			switch (modeInt) {
-				case 0x0:
-				default:
-					return ROTATE;
-				case 0x1:
-					return FLIP;
-			}
-		}
-
-		LoadingLayout createLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
-			switch (this) {
-				case ROTATE:
-				default:
-					return new RotateLoadingLayout(context, mode, scrollDirection, attrs);
-				case FLIP:
-					return new FlipLoadingLayout(context, mode, scrollDirection, attrs);
-			}
-		}
 	}
 
 	public static enum Mode {

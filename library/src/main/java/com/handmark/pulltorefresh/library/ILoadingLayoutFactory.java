@@ -6,7 +6,7 @@ import android.content.res.TypedArray;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
-
+@Deprecated
 interface ILoadingLayoutFactory {
 	Class<? extends LoadingLayout> createLoadingLayoutClazz(String clazzName);
 
