@@ -8,9 +8,8 @@ import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
 @Root(name="IndicatorLayouts")
-class IndicatorLayoutsNode {
-	
-	@ElementMap(entry="layout",key="value", attribute=true, required=false) 
+public class IndicatorLayoutsNode {
+	@ElementMap(entry="layout", key = "value",keyType=Integer.class, attribute = true, required = false, inline=true)
 	private Map<Integer, String> layoutMap;
 	
 	public String getLayoutClazzName(Integer layoutCode) {

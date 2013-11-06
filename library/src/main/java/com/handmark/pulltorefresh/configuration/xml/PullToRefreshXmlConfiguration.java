@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.transform.RegistryMatcher;
+import org.simpleframework.xml.transform.Transform;
 
 import com.handmark.pulltorefresh.library.R;
 import com.handmark.pulltorefresh.library.internal.Utils;
@@ -51,6 +53,18 @@ public class PullToRefreshXmlConfiguration {
 		
 		// parser the xml
 		try {
+//			RegistryMatcher m = new RegistryMatcher();
+//			m.bind(Integer.class, new Transform<Integer>() {
+//
+//				@Override
+//				public Integer read(String value) throws Exception {
+//					return Integer.parseInt(value);
+//				}
+//
+//				@Override
+//				public String write(Integer value) throws Exception {
+//					return Integer.toString(value);
+//				}});
 			node = new Persister().read(PullToRefreshNode.class, br);
 		} catch (Exception e) {
 			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
