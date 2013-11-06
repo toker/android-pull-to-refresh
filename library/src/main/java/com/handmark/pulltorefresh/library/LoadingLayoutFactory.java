@@ -30,7 +30,7 @@ class LoadingLayoutFactory {
 	 * @return
 	 */
 	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(Integer layoutCode) {
-		String clazzName = PullToRefreshXmlConfiguration.getInstance().getIndicatorLayoutClazzName(layoutCode);
+		String clazzName = PullToRefreshXmlConfiguration.getInstance().getLoadingLayoutClazzName(layoutCode);
 		return createLoadingLayoutClazz(clazzName);
 	}
 	/**
@@ -77,7 +77,6 @@ class LoadingLayoutFactory {
 			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {
 		LoadingLayout layout = null;
-
 		try {
 			Constructor<? extends LoadingLayout> constructor = clazz
 					.getConstructor(Context.class, Mode.class,
