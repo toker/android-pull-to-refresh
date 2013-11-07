@@ -58,6 +58,11 @@
         <attr name="ptrIndicatorStyle">
           	<flag name="def" value="0" />
         </attr>
+        
+        <attr name="ptrFriction" format="float" value="2.0" />
+        <attr name="ptrSmoothScrollDuration" format="integer" value="200" />
+        <attr name="ptrSmoothScrollLongDuration" format="integer" value="325" />
+        
         <!-- Whether the user can scroll while the View is Refreshing -->
         <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean" />
 

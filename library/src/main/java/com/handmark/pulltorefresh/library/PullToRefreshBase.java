@@ -51,10 +51,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 	static final String LOG_TAG = "PullToRefresh";
 
-	static final float FRICTION = 2.0f;
+	public static final float DEFAULT_FRICTION = 2.0f;
+	public static final int DEFAULT_SMOOTH_SCROLL_DURATION_MS = 200;
+	public static final int DEFAULT_SMOOTH_SCROLL_LONG_DURATION_MS = 325;
 
-	public static final int SMOOTH_SCROLL_DURATION_MS = 200;
-	public static final int SMOOTH_SCROLL_LONG_DURATION_MS = 325;
 	static final int DEMO_SCROLL_INTERVAL = 225;
 
 	static final String STATE_STATE = "ptr_state";
@@ -67,11 +67,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	// ===========================================================
 	// Fields
 	// ===========================================================
-
+	
 	private int mTouchSlop;
 	private float mLastMotionX, mLastMotionY;
 	private float mInitialMotionX, mInitialMotionY;
-
+	
+	// needed properties while scrolling
+	private float mFriction;
+	private int mSmoothScrollDurationMs = 200;
+	private int mSmoothScrollLongDurationMs = 325;
+	
 	private boolean mIsBeingDragged = false;
 	private State mState = State.RESET;
 	private Mode mMode = Mode.getDefault();
@@ -657,11 +662,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	protected int getPullToRefreshScrollDuration() {
-		return SMOOTH_SCROLL_DURATION_MS;
+		return mSmoothScrollDurationMs;
 	}
 
 	protected int getPullToRefreshScrollDurationLonger() {
-		return SMOOTH_SCROLL_LONG_DURATION_MS;
+		return mSmoothScrollLongDurationMs;
 	}
 
 	protected FrameLayout getRefreshableViewWrapper() {
@@ -1000,7 +1005,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 	/**
 	 * Smooth Scroll to position using the default duration of
-	 * {@value #SMOOTH_SCROLL_DURATION_MS} ms.
+	 * {@value #mSmoothScrollDurationMs} ms.
 	 * 
 	 * @param scrollValue - Position to scroll to
 	 */
@@ -1010,7 +1015,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 	/**
 	 * Smooth Scroll to position using the default duration of
-	 * {@value #SMOOTH_SCROLL_DURATION_MS} ms.
+	 * {@value #mSmoothScrollDurationMs} ms.
 	 * 
 	 * @param scrollValue - Position to scroll to
 	 * @param listener - Listener for scroll
@@ -1021,7 +1026,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 	/**
 	 * Smooth Scroll to position using the longer default duration of
-	 * {@value #SMOOTH_SCROLL_LONG_DURATION_MS} ms.
+	 * {@value #mSmoothScrollLongDurationMs} ms.
 	 * 
 	 * @param scrollValue - Position to scroll to
 	 */
@@ -1151,7 +1156,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mScrollingWhileRefreshingEnabled = a.getBoolean(
 					R.styleable.PullToRefresh_ptrScrollingWhileRefreshingEnabled, false);
 		}
-
+		
+		// set scroll properties from attributes 
+		mFriction = a.getFloat(R.styleable.PullToRefresh_ptrFriction, DEFAULT_FRICTION);
+		mSmoothScrollDurationMs = a.getInt(R.styleable.PullToRefresh_ptrSmoothScrollDuration, DEFAULT_SMOOTH_SCROLL_DURATION_MS);
+		mSmoothScrollLongDurationMs = a.getInt(R.styleable.PullToRefresh_ptrSmoothScrollLongDuration, DEFAULT_SMOOTH_SCROLL_LONG_DURATION_MS);
+		
 		// Let the derivative classes have a go at handling attributes, then
 		// recycle them...
 		handleStyledAttributes(a);
@@ -1199,12 +1209,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		switch (mCurrentMode) {
 			case PULL_FROM_END:
-				newScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / FRICTION);
+				newScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / mFriction);
 				itemDimension = getFooterSize();
 				break;
 			case PULL_FROM_START:
 			default:
-				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / FRICTION);
+				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / mFriction);
 				itemDimension = getHeaderSize();
 				break;
 		}
@@ -1246,10 +1256,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private int getMaximumPullScroll() {
 		switch (getPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
-				return Math.round(getWidth() / FRICTION);
+				return Math.round(getWidth() / mFriction);
 			case VERTICAL:
 			default:
-				return Math.round(getHeight() / FRICTION);
+				return Math.round(getHeight() / mFriction);
 		}
 	}
 
@@ -1296,11 +1306,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	private final void smoothScrollToAndBack(int y) {
-		smoothScrollTo(y, SMOOTH_SCROLL_DURATION_MS, 0, new OnSmoothScrollFinishedListener() {
+		smoothScrollTo(y, mSmoothScrollDurationMs, 0, new OnSmoothScrollFinishedListener() {
 
 			@Override
 			public void onSmoothScrollFinished() {
-				smoothScrollTo(0, SMOOTH_SCROLL_DURATION_MS, DEMO_SCROLL_INTERVAL, null);
+				smoothScrollTo(0, mSmoothScrollDurationMs, DEMO_SCROLL_INTERVAL, null);
 			}
 		});
 	}
