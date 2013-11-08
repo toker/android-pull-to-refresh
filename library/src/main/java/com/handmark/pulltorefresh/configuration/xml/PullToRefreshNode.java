@@ -2,7 +2,7 @@ package com.handmark.pulltorefresh.configuration.xml;
 
 import java.util.Map;
 
-public class PullToRefreshNode {
+class PullToRefreshNode {
 
 	private final Map<Integer, String> loadingLayoutClazzNameMap;
 	private final Map<Integer, String> indicatorLayoutClazzNameMap;

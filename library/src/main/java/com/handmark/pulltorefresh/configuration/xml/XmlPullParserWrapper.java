@@ -10,7 +10,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.handmark.pulltorefresh.library.internal.Assert;
 
-public class XmlPullParserWrapper implements XmlPullParser {
+class XmlPullParserWrapper implements XmlPullParser {
 
 	private final XmlPullParser parser;
 

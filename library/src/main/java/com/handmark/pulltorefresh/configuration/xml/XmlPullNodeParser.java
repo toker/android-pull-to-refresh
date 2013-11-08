@@ -16,7 +16,7 @@ import com.handmark.pulltorefresh.library.internal.Assert;
  *
  * @param <R>
  */
-public abstract class XmlPullNodeParser<R> {
+abstract class XmlPullNodeParser<R> {
 	private final XmlPullParserWrapper parser;
 	private final XmlPullNode rootNode;
 	

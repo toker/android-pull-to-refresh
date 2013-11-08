@@ -11,7 +11,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.handmark.pulltorefresh.library.internal.Assert;
 
-public class XmlPullNode {
+class XmlPullNode {
 
 	public static final int INFINITE = -1;
 
