@@ -30,23 +30,42 @@ public class PullToRefreshXmlConfiguration {
 	private static final int XML_PATH_ID = R.xml.pulltorefresh;
 	private PullToRefreshNode node = null; 
 	private boolean initialized = false;
-	
+	/**
+	 * nothing to do
+	 */
 	private PullToRefreshXmlConfiguration() {}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public static PullToRefreshXmlConfiguration getInstance() {
 		return InstanceHolder.getInstance();
 	}
-	
+	/**
+	 *  
+	 * @param context
+	 */
 	public void init(Context context) {
 		// get resources
 		Resources resources = context.getResources();
 		// read the file
 		XmlPullParser parser = resources.getXml(XML_PATH_ID);
 		// parser the xml
-		try {
-			XmlPullParserWrapper wrapper = new XmlPullParserWrapper(parser);
+		XmlPullParserWrapper wrapper = new XmlPullParserWrapper(parser);
 		
-			node = new PullToRefreshConfigXmlParser(wrapper).parse();
+		try {
+				node = new PullToRefreshConfigXmlParser(wrapper).parse();
+			
+
+			// load extended xml 
+			XmlPullParser extendedXmlParser = ExtendedConfigXmlParserFactory.createParser(context);
+			if ( extendedXmlParser != null) {
+				XmlPullParserWrapper extendedXmlWrapper = new XmlPullParserWrapper(extendedXmlParser);
+				// NOTE : if some exception throws from PullToRefreshConfigXmlParser, Extended xml will be skipped.
+				PullToRefreshNode extendedNode = new PullToRefreshConfigXmlParser(extendedXmlWrapper).parse();
+				node.extendProperties(extendedNode);
+			}
+			
 		} catch (Exception e) {
 			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
 		}
@@ -54,7 +73,11 @@ public class PullToRefreshXmlConfiguration {
 		// Intialization can be done whether reading XML has failed or not! 
 		initialized = true;
 	}
-	
+	/**
+	 * 
+	 * @param layoutCode
+	 * @return
+	 */
 	public String getLoadingLayoutClazzName(Integer layoutCode) {
 		assertInitialized();
 		if ( isNodeNull() ) {
@@ -62,7 +85,11 @@ public class PullToRefreshXmlConfiguration {
 		}
 		return node.loadingLayoutsNode.getLayoutClazzName(layoutCode);
 	}
-
+	/**
+	 * 
+	 * @param layoutCode
+	 * @return
+	 */
 	public String getIndicatorLayoutClazzName(Integer layoutCode) {
 		assertInitialized();
 		if ( isNodeNull() ) {
@@ -70,15 +97,23 @@ public class PullToRefreshXmlConfiguration {
 		}
 		return node.indicatorLayoutsNode.getLayoutClazzName(layoutCode);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean isNodeNull() {
 		return node == null;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean notInitialized() {
 		return !initialized;
 	}
-	
+	/**
+	 * 
+	 */
 	private void assertInitialized() {
 		if ( notInitialized() ) {
 			throw new IllegalStateException(PullToRefreshXmlConfiguration.class.getName()+" has not initialized. Call init() method first.");
