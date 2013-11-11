@@ -1,6 +1,9 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import com.handmark.pulltorefresh.library.internal.Assert;
 
 class PullToRefreshNode {
 
@@ -19,6 +22,15 @@ class PullToRefreshNode {
 
 	public String getLoadingLayoutClazzName(Integer layoutCode) {
 		return loadingLayoutClazzNameMap.get(layoutCode);
+	}
+
+	public void extendProperties(PullToRefreshNode extendedNode) {
+		Assert.notNull(extendedNode, "Extended Node");
+		Map<Integer, String> indicatorMap = extendedNode.indicatorLayoutClazzNameMap;
+		Map<Integer, String> loadingMap = extendedNode.loadingLayoutClazzNameMap;
+		
+		indicatorLayoutClazzNameMap.putAll(indicatorMap);
+		loadingLayoutClazzNameMap.putAll(loadingMap);
 	}
 
 	
