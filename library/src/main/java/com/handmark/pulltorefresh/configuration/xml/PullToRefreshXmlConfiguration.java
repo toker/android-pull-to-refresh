@@ -54,8 +54,7 @@ public class PullToRefreshXmlConfiguration {
 		XmlPullParserWrapper wrapper = new XmlPullParserWrapper(parser);
 		
 		try {
-				node = new PullToRefreshConfigXmlParser(wrapper).parse();
-			
+			node = new PullToRefreshConfigXmlParser(wrapper).parse();
 
 			// load extended xml 
 			XmlPullParser extendedXmlParser = ExtendedConfigXmlParserFactory.createParser(context);
@@ -65,10 +64,14 @@ public class PullToRefreshXmlConfiguration {
 				PullToRefreshNode extendedNode = new PullToRefreshConfigXmlParser(extendedXmlWrapper).parse();
 				node.extendProperties(extendedNode);
 			}
-			
-		} catch (Exception e) {
+		} catch (XmlPullParserException e) {
+			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
+		} catch (IOException e) {
 			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
 		}
+//		catch (Exception e) {
+//			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
+//		}
 		
 		// Intialization can be done whether reading XML has failed or not! 
 		initialized = true;
@@ -78,7 +81,7 @@ public class PullToRefreshXmlConfiguration {
 	 * @param layoutCode
 	 * @return
 	 */
-	public String getLoadingLayoutClazzName(Integer layoutCode) {
+	public String getLoadingLayoutClazzName(String layoutCode) {
 		assertInitialized();
 		if ( isNodeNull() ) {
 			return null;
@@ -90,7 +93,7 @@ public class PullToRefreshXmlConfiguration {
 	 * @param layoutCode
 	 * @return
 	 */
-	public String getIndicatorLayoutClazzName(Integer layoutCode) {
+	public String getIndicatorLayoutClazzName(String layoutCode) {
 		assertInitialized();
 		if ( isNodeNull() ) {
 			return null;
