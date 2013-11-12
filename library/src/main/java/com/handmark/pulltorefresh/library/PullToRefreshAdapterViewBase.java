@@ -34,7 +34,6 @@ import android.widget.ListAdapter;
 
 import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
-import com.handmark.pulltorefresh.library.internal.DefaultIndicatorLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
 public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends PullToRefreshBase<T> implements
@@ -66,7 +65,14 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 	private boolean mShowIndicator;
 	private boolean mScrollEmptyView = true;
-	private String mIndicatorStyle;
+	/**
+	 * <p>
+	 * Indicator Layout Class Token <br /> {@link IndicatorLayoutFactory} will create instances by using this class token.
+	 * The token must not be null. {@link IndicatorLayoutFacoty} ensures that class token exists always.
+	 * Assignment some class token into this variable is implemented at {@link #handleStyledAttributes(TypedArray)}.
+	 * </p>
+	 */
+	private Class<? extends IndicatorLayout> mIndicatorLayoutClazz;
 
 	public PullToRefreshAdapterViewBase(Context context) {
 		super(context);
@@ -304,9 +310,16 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 	protected void handleStyledAttributes(TypedArray a) {
 		// Set Show Indicator to the XML value, or default value
 		mShowIndicator = a.getBoolean(R.styleable.PullToRefresh_ptrShowIndicator, !isPullToRefreshOverScrollEnabled());
+		
+		// Get IndicatorLayout class token   
+		String indicatorLayoutClazzName = null;
 		if (a.hasValue(R.styleable.PullToRefresh_ptrIndicatorStyle)) {
-			mIndicatorStyle = a.getString(R.styleable.PullToRefresh_ptrIndicatorStyle);	
-		}
+			indicatorLayoutClazzName = a.getString(R.styleable.PullToRefresh_ptrIndicatorStyle);
+			 
+		} 
+		
+		// assign class token into mIndicatorLayoutClazz
+		mIndicatorLayoutClazz = IndicatorLayoutFactory.createIndicatorLayoutClazz(indicatorLayoutClazzName);
 			
 	}
 
@@ -344,12 +357,8 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showHeaderLoadingLayout() && null == mIndicatorIvTop) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorLayout(mIndicatorStyle, getContext(), Mode.PULL_FROM_START);
+			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorLayout(mIndicatorLayoutClazz, getContext(), Mode.PULL_FROM_START);
 			ViewGroup.LayoutParams params = mIndicatorIvTop.createApplicableHeaderLayoutParams();
-//			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-//					ViewGroup.LayoutParams.WRAP_CONTENT);
-//			params.rightMargin = getResources().getDimensionPixelSize(R.dimen.indicator_right_padding);
-//			params.gravity = Gravity.TOP | Gravity.RIGHT;
 			refreshableViewWrapper.addView(mIndicatorIvTop, params);
 
 		} else if (!mode.showHeaderLoadingLayout() && null != mIndicatorIvTop) {
@@ -360,7 +369,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showFooterLoadingLayout() && null == mIndicatorIvBottom) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorLayout(mIndicatorStyle, getContext(), Mode.PULL_FROM_END);
+			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorLayout(mIndicatorLayoutClazz, getContext(), Mode.PULL_FROM_END);
 			ViewGroup.LayoutParams params = mIndicatorIvBottom.createApplicableFooterLayoutParams();
 			refreshableViewWrapper.addView(mIndicatorIvBottom, params);
 
