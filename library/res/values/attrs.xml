@@ -50,10 +50,13 @@
         <attr name="ptrSubHeaderTextAppearance" format="reference" />
 
         <!-- Style of Animation should be used displayed when pulling. -->
-        <attr name="ptrAnimationStyle" format="string">
+        <attr name="ptrAnimationStyle">
+          	<flag name="rotate" value="0" />
+          	<flag name="flip" value="1" />
         </attr>
         <!--  -->
-        <attr name="ptrIndicatorStyle" format="string">
+        <attr name="ptrIndicatorStyle">
+          	<flag name="def" value="0" />
         </attr>
         
         <attr name="ptrFriction" format="float" value="2.0" />

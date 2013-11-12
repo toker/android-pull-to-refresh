@@ -7,27 +7,27 @@ import com.handmark.pulltorefresh.library.internal.Assert;
 
 class PullToRefreshNode {
 
-	private final Map<String, String> loadingLayoutClazzNameMap;
-	private final Map<String, String> indicatorLayoutClazzNameMap;
+	private final Map<Integer, String> loadingLayoutClazzNameMap;
+	private final Map<Integer, String> indicatorLayoutClazzNameMap;
 
-	public PullToRefreshNode(Map<String, String> loadingLayoutClazzNameMap,
-			Map<String, String> indicatorLayoutClazzNameMap) {
+	public PullToRefreshNode(Map<Integer, String> loadingLayoutClazzNameMap,
+			Map<Integer, String> indicatorLayoutClazzNameMap) {
 		this.loadingLayoutClazzNameMap = loadingLayoutClazzNameMap;
 		this.indicatorLayoutClazzNameMap = indicatorLayoutClazzNameMap;
 	}
 
-	public String getIndicatorLayoutClazzName(String layoutCode) {
+	public String getIndicatorLayoutClazzName(Integer layoutCode) {
 		return indicatorLayoutClazzNameMap.get(layoutCode);
 	}
 
-	public String getLoadingLayoutClazzName(String layoutCode) {
+	public String getLoadingLayoutClazzName(Integer layoutCode) {
 		return loadingLayoutClazzNameMap.get(layoutCode);
 	}
 
 	public void extendProperties(PullToRefreshNode extendedNode) {
 		Assert.notNull(extendedNode, "Extended Node");
-		Map<String, String> indicatorMap = extendedNode.indicatorLayoutClazzNameMap;
-		Map<String, String> loadingMap = extendedNode.loadingLayoutClazzNameMap;
+		Map<Integer, String> indicatorMap = extendedNode.indicatorLayoutClazzNameMap;
+		Map<Integer, String> loadingMap = extendedNode.loadingLayoutClazzNameMap;
 		
 		indicatorLayoutClazzNameMap.putAll(indicatorMap);
 		loadingLayoutClazzNameMap.putAll(loadingMap);

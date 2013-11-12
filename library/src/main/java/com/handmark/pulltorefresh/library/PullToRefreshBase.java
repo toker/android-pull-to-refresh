@@ -1119,9 +1119,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
-			String loadingLayoutCode = a.getString(R.styleable.PullToRefresh_ptrAnimationStyle);
-//			int loadingLayoutCode = a.getInteger(R.styleable.PullToRefresh_ptrAnimationStyle, 0);
-			mLoadingLayoutClazz = LoadingLayoutFactory.createLoadingLayoutClazzByLayoutCode(loadingLayoutCode);
+			int loadingLayoutCode = a.getInteger(R.styleable.PullToRefresh_ptrAnimationStyle, 0);
+			mLoadingLayoutClazz = LoadingLayoutFactory.createLoadingLayoutClazz(loadingLayoutCode);
 		}
 
 		// Refreshable View

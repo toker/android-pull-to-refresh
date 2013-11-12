@@ -23,7 +23,7 @@ public class IndicatorLayoutFactory {
 	 * @param mode
 	 * @return
 	 */
-	public static IndicatorLayout createIndicatorFactory(String layoutCode, Context context, PullToRefreshBase.Mode mode) {
+	public static IndicatorLayout createIndicatorFactory(Integer layoutCode, Context context, PullToRefreshBase.Mode mode) {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getIndicatorLayoutClazzName(layoutCode);
 		Class<? extends IndicatorLayout> clazz = createIndicatorLayoutClazz(clazzName);
 		return createIndicatorLayout(layoutCode, context, mode);
@@ -33,7 +33,7 @@ public class IndicatorLayoutFactory {
 	 * @param layoutCode
 	 * @return
 	 */
-	public static Class<? extends IndicatorLayout> createIndicatorLayoutClazzByLayoutCode(String layoutCode) {
+	public static Class<? extends IndicatorLayout> createIndicatorLayoutClazz(Integer layoutCode) {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getIndicatorLayoutClazzName(layoutCode);
 		return createIndicatorLayoutClazz(clazzName);
 	}
@@ -68,7 +68,7 @@ public class IndicatorLayoutFactory {
 	 * @param mode
 	 * @return
 	 */
-	public static IndicatorLayout createIndicatorLayout(String layoutCode, Context context, PullToRefreshBase.Mode mode) {
+	public static IndicatorLayout createIndicatorLayout(Integer layoutCode, Context context, PullToRefreshBase.Mode mode) {
 		Class<? extends IndicatorLayout> clazz = createIndicatorLayoutClazz(layoutCode);
 		return createIndicatorLayout(clazz, context, mode);
 	}
