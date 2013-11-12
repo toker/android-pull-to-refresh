@@ -29,7 +29,7 @@ class LoadingLayoutFactory {
 	 * @param layoutCode
 	 * @return
 	 */
-	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(Integer layoutCode) {
+	public static Class<? extends LoadingLayout> createLoadingLayoutClazzByLayoutCode(String layoutCode) {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getLoadingLayoutClazzName(layoutCode);
 		return createLoadingLayoutClazz(clazzName);
 	}
@@ -59,7 +59,7 @@ class LoadingLayoutFactory {
 		return loadingLayoutClazz;
 	}
 
-	public static LoadingLayout createLoadingLayout(Integer layoutCode, Context context, Mode mode,
+	public static LoadingLayout createLoadingLayout(String layoutCode, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {
 		Class<? extends LoadingLayout> clazz = createLoadingLayoutClazz(layoutCode);
 		return createLoadingLayout(clazz, context, mode, orientation, attrs);

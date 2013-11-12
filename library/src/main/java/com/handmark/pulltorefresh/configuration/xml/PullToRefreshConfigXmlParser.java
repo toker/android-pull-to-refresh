@@ -70,8 +70,8 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 	 *
 	 */
 	private static class PullToRefreshResult {
-		public final Map<Integer, String> loadingLayoutClazzNameMap = new HashMap<Integer, String>();
-		public final Map<Integer, String> indicatorLayoutClazzNameMap = new HashMap<Integer, String>();
+		public final Map<String, String> loadingLayoutClazzNameMap = new HashMap<String, String>();
+		public final Map<String, String> indicatorLayoutClazzNameMap = new HashMap<String, String>();
 	}
 		
 	/**
@@ -83,12 +83,12 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 		/**
 		 * 
 		 */
-		private Map<Integer, String> layoutClazzNameMap;
+		private Map<String, String> layoutClazzNameMap;
 		/**
 		 * 
 		 * @param layoutClazzNameMap
 		 */
-		public LayoutNodeCallback(Map<Integer, String> layoutClazzNameMap) {
+		public LayoutNodeCallback(Map<String, String> layoutClazzNameMap) {
 			Assert.notNull(layoutClazzNameMap, "Class Map");
 			this.layoutClazzNameMap = layoutClazzNameMap;
 		}
@@ -100,20 +100,24 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 			// TODO : IMPLEMENT!
 			int attributesCount = parser.getAttributeCount();
 			String attributeName, attributeValue;
-			int layoutKey;
 			
 			for (int i = 0; i < attributesCount; ++i) {
 				attributeName = parser.getAttributeName(i);
 				attributeValue = parser.getAttributeValue(i);
 				
-				if ( "value".equals(attributeName)) {
-					// TODO: what if attributeValue has not integer format?
-					layoutKey = Integer.valueOf(attributeValue);
+				if ( "name".equals(attributeName)) {
+
+					if ( attributeValue == null || attributeValue.length() == 0 ) {
+						continue;
+					}
 					
 					String clazzName = parser.nextText();
 					
 					// Insert new class name 
-					layoutClazzNameMap.put(layoutKey, clazzName);
+					layoutClazzNameMap.put(attributeValue, clazzName);
+					
+					// 'break' because nextText() method has been called
+					break;
 				}
 			}
 		}

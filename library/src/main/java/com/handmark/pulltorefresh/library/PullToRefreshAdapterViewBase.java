@@ -66,7 +66,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 	private boolean mShowIndicator;
 	private boolean mScrollEmptyView = true;
-	private int mIndicatorStyle;
+	private String mIndicatorStyle;
 
 	public PullToRefreshAdapterViewBase(Context context) {
 		super(context);
@@ -305,7 +305,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		// Set Show Indicator to the XML value, or default value
 		mShowIndicator = a.getBoolean(R.styleable.PullToRefresh_ptrShowIndicator, !isPullToRefreshOverScrollEnabled());
 		if (a.hasValue(R.styleable.PullToRefresh_ptrIndicatorStyle)) {
-			mIndicatorStyle = a.getInteger(R.styleable.PullToRefresh_ptrIndicatorStyle, 0);	
+			mIndicatorStyle = a.getString(R.styleable.PullToRefresh_ptrIndicatorStyle);	
 		}
 			
 	}
@@ -344,7 +344,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showHeaderLoadingLayout() && null == mIndicatorIvTop) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorFactory(mIndicatorStyle, getContext(), Mode.PULL_FROM_START);
+			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorLayout(mIndicatorStyle, getContext(), Mode.PULL_FROM_START);
 			ViewGroup.LayoutParams params = mIndicatorIvTop.createApplicableHeaderLayoutParams();
 //			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 //					ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -360,7 +360,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showFooterLoadingLayout() && null == mIndicatorIvBottom) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorFactory(mIndicatorStyle, getContext(), Mode.PULL_FROM_END);
+			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorLayout(mIndicatorStyle, getContext(), Mode.PULL_FROM_END);
 			ViewGroup.LayoutParams params = mIndicatorIvBottom.createApplicableFooterLayoutParams();
 			refreshableViewWrapper.addView(mIndicatorIvBottom, params);
 
