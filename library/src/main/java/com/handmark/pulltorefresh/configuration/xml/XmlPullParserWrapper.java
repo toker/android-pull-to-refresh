@@ -1,6 +1,5 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -162,6 +161,7 @@ class XmlPullParserWrapper implements XmlPullParser {
 			if (documentState.equals(DocumentState.END)) {
 				return documentState;
 			}
+			
 			if (matchCurrentTagName(tagName)) {
 				break;
 			}
