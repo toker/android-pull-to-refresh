@@ -92,7 +92,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private boolean mLayoutVisibilityChangesEnabled = true;
 
 	private Interpolator mScrollAnimationInterpolator;
-//	private AnimationStyle mLoadingAnimationStyle = AnimationStyle.getDefault();
 	private Class<? extends LoadingLayout> mLoadingLayoutClazz = null;
 	
 	private LoadingLayout mHeaderLayout;
@@ -124,13 +123,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		init(context, null);
 	}
 
-//	public PullToRefreshBase(Context context, Mode mode, AnimationStyle animStyle) {
-//		super(context);
-//		mMode = mode;
-//		mLoadingAnimationStyle = animStyle;
-//		init(context, null);
-//	}
-	
 	public PullToRefreshBase(Context context, Mode mode, Class<? extends LoadingLayout> loadingLayoutClazz) {
 		super(context);
 		mMode = mode;
@@ -1120,7 +1112,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
 			String loadingLayoutCode = a.getString(R.styleable.PullToRefresh_ptrAnimationStyle);
-//			int loadingLayoutCode = a.getInteger(R.styleable.PullToRefresh_ptrAnimationStyle, 0);
 			mLoadingLayoutClazz = LoadingLayoutFactory.createLoadingLayoutClazzByLayoutCode(loadingLayoutCode);
 		}
 
