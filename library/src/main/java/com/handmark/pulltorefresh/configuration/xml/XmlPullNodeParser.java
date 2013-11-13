@@ -12,39 +12,46 @@ import com.handmark.pulltorefresh.configuration.xml.XmlPullParserWrapper.Documen
 import com.handmark.pulltorefresh.library.internal.Assert;
 /**
  * 
- * @author NBP
- *
- * @param <R>
+ * {@code XmlPullNode}-based Parser using XmlPullParser <br />
+ * When you override this class, you must define parse strategies, and return the root node (in {@link #generateRootNode()} of {@code XmlPullNode}s containing each parse strategy, 
+ * and return the result (in {@link #getResult()} for which provide that to client after parse.  
+ * @author Wonjun Kim
+ * @param <R> Result type 
  */
 abstract class XmlPullNodeParser<R> {
 	private final XmlPullParserWrapper parser;
 	private final XmlPullNode rootNode;
-	
+	/**
+	 * this flag prevents duplicate parse.
+	 */
 	private boolean isParsed = false;
-	
+	/**
+	 * @param parser which has not been read yet. <br /> throw {@code NullPointerException} if {@code parser} is null
+	 */
 	public XmlPullNodeParser(XmlPullParserWrapper parser) {
 		Assert.notNull(parser, "XmlPullParser");
-//		Assert.notNull(rootNode, "XmlPullNode");
 		this.parser = parser;
-//		this.rootNode = rootNode;
 		this.rootNode = generateRootNode();
 	}
-
+	/**
+	 * @return entry point for {@code XmlPullNode}-based parse
+	 */
 	protected abstract XmlPullNode generateRootNode();
 	/**
-	 * 
-	 * @return
+	 * Parse the data and return {@code <R>} type result <br />
+	 * even if you call this methods several times, parsing happens once and no more duplicate parse
+	 * @return parsed data
 	 * @throws XmlPullParserException
 	 * @throws IOException
 	 */
 	public final R parse() throws XmlPullParserException, IOException {
 
-		// avoid duplicate parsing 
+		// avoid duplicate parse 
 		if ( isParsed == true ) {
 			return getResult();
 		}
 		
-		// First, search the root node.
+		// First, Find the root node.
 		DocumentState documentState;
 		
 		String rootName = rootNode.getName();
@@ -53,28 +60,35 @@ abstract class XmlPullNodeParser<R> {
 		if ( documentState.END.equals(documentState)) {
 			throw new XmlPullParserException(rootName + " tag has not found.");
 		}
+		// deeply parsing
 		parseInternal(rootNode);
 		isParsed = true;
 		return getResult();
 	}
 	/**
-	 * 
-	 * @return
+	 * Return a result after parse <br />Be called from {@link #parse()} method 
+	 * @return result value to return after parsing is done
 	 */
 	protected abstract R getResult();
-
+	/**
+	 * Call {@link XmlPullNode.XmlPullNodeCallback#process(XmlPullParser)} and parse child nodes of current node
+	 * 
+	 * @param currentNode target of which call a callback and parse children
+	 * @throws XmlPullParserException
+	 * @throws IOException
+	 */
 	private void parseInternal(XmlPullNode currentNode) throws XmlPullParserException, IOException {
-		// WARNING : too many permissions to node
+		// NOTE : too many permissions to node
 		currentNode.getCallback().process(parser);
 		
 		while ( true ) {
 	
-			// if document is end without end tag of this current node, it throws the exception below. 
+			// if document is end during finding the end tag of this current node, it throws the exception below. 
 			if ( parser.isEndDocument() ) {
 				throw new XmlPullParserException("XML document is invalid.");
 			}			
 			
-			// if the end tag has found, parsing this scope is being ended.
+			// if the end tag is found, parsing this scope is being ended.
 			if ( parser.isEndTag() && parser.matchCurrentTagName(currentNode.getName())) {
 				break;
 			}
@@ -82,7 +96,7 @@ abstract class XmlPullNodeParser<R> {
 			// get next tag
 			parser.next();
 			
-			// when a child node has found, deeply parsing
+			// when a child node is found, deeply parsing
 			if ( parser.isStartTag() ) {
 				
 				String currentTagName = parser.getName();
@@ -92,8 +106,6 @@ abstract class XmlPullNodeParser<R> {
 					parseInternal(childNode);
 				}
 			}
-		
-
 		}
 	} 
 }
