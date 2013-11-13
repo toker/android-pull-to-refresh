@@ -7,15 +7,11 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import com.handmark.pulltorefresh.library.internal.Utils;
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 /**
- * 
- * @author NBP
- *
+ * @author Wonjun Kim
  */
 class ExtendedConfigXmlParserFactory {
 	

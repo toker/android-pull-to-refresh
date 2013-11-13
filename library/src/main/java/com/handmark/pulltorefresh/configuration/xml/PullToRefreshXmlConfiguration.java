@@ -1,6 +1,5 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
-
 import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -14,7 +13,7 @@ import android.content.res.Resources;
 
 /**
  * 
- * @author NBP
+ * @author Wonjun Kim
  *
  */
 public class PullToRefreshXmlConfiguration {
@@ -69,9 +68,6 @@ public class PullToRefreshXmlConfiguration {
 		} catch (IOException e) {
 			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
 		}
-//		catch (Exception e) {
-//			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
-//		}
 		
 		// Intialization can be done whether reading XML has failed or not! 
 		initialized = true;

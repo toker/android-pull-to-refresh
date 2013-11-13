@@ -10,9 +10,15 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.handmark.pulltorefresh.library.internal.Assert;
-
+/**
+ * 
+ * @author Wonjun Kim
+ *
+ */
 class XmlPullNode {
-
+	/**
+	 * 
+	 */
 	public static final int INFINITE = -1;
 
 	// Must be improved about case sensitivity.

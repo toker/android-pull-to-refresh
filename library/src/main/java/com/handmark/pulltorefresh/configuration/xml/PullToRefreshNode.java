@@ -1,6 +1,5 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.handmark.pulltorefresh.library.internal.Assert;

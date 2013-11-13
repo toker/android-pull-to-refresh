@@ -1,6 +1,5 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +10,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.handmark.pulltorefresh.library.internal.Assert;
 
 final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefreshNode> {
-	private static final String TAG = PullToRefreshConfigXmlParser.class.getName();
 	/**
 	 * 
 	 */ 
@@ -27,7 +25,6 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 	public PullToRefreshConfigXmlParser(XmlPullParserWrapper parser) {
 		super(parser);
 	}
-
 	/**
 	 * 
 	 * @return
@@ -63,7 +60,6 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 	protected PullToRefreshNode getResult() {
 		return new PullToRefreshNode(result.loadingLayoutClazzNameMap, result.indicatorLayoutClazzNameMap);
 	}
-	
 	/**
 	 * 
 	 * @author NBP
