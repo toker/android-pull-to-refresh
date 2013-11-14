@@ -13,12 +13,15 @@ import android.content.Context;
 import android.content.res.Resources;
 
 /**
- * 
+ * {@code PullToRefreshXmlConfiguration} is an information set of PullToRefresh. It contains a list of indicator layouts and of loading layouts. An information set of PullToRefresh is converted from pulltorefresh.xml.<br />
+ * This Class is Singleton, and you <b>MUST</b> call {@link #init(Context)} before using this class.  
  * @author Wonjun Kim
- *
  */
 public class PullToRefreshXmlConfiguration {
-
+	/**
+	 * Singleton instance
+	 * @author Wonjun Kim
+	 */
 	private static class InstanceHolder {
 		private final static PullToRefreshXmlConfiguration instance = new PullToRefreshXmlConfiguration();
 		
@@ -26,24 +29,37 @@ public class PullToRefreshXmlConfiguration {
 			return instance;
 		}
 	} 
-	
-	private static final int XML_PATH_ID = R.xml.pulltorefresh;
+	/**
+	 * Parsed information from pulltorefresh.xml 
+	 */
 	private PullToRefreshNode node = null; 
+	/**
+	 * Default pulltorefresh path id is got from R class.
+	 */
+	private static final int XML_PATH_ID = R.xml.pulltorefresh;
+	/**
+	 * flag whether it has called {@link #init(Context)} 
+	 */
 	private boolean initialized = false;
 	/**
+	 * Constructor <br />
 	 * nothing to do
 	 */
 	private PullToRefreshXmlConfiguration() {}
 	/**
-	 * 
-	 * @return
+	 * Get singleton instance
+	 * @return {@code PullToRefreshXmlConfiguration} instance
 	 */
 	public static PullToRefreshXmlConfiguration getInstance() {
 		return InstanceHolder.getInstance();
 	}
 	/**
-	 *  
-	 * @param context
+	 * Initialize the instance before using. <br />
+	 * Load 'res/xml/pulltorefresh.xml' in PullToRefresh library package and 'assets/pulltofresh.xml' in Android Project if it exists. <br />
+	 * Combine information of 'res/xml/pulltorefresh.xml' and 'assets/pulltofresh.xml', and then save the information into the instance's fields.<br />
+	 * <br />
+	 * NOTE: This method <b>MUST</b> be called before using! 
+	 * @param context Context instance and not null
 	 */
 	public void init(Context context) {
 		Assert.notNull(context, "Context");
@@ -61,7 +77,7 @@ public class PullToRefreshXmlConfiguration {
 			XmlPullParser extendedXmlParser = ExtendedConfigXmlParserFactory.createParser(context);
 			if ( extendedXmlParser != null) {
 				XmlPullParserWrapper extendedXmlWrapper = new XmlPullParserWrapper(extendedXmlParser);
-				// NOTE : if some exception throws from PullToRefreshConfigXmlParser, Extended xml will be skipped.
+				// NOTE : if some exception is thrown from PullToRefreshConfigXmlParser, Loading extended xml will be skipped.
 				PullToRefreshNode extendedNode = new PullToRefreshConfigXmlParser(extendedXmlWrapper).parse();
 				node.extendProperties(extendedNode);
 			}
@@ -75,45 +91,41 @@ public class PullToRefreshXmlConfiguration {
 		initialized = true;
 	}
 	/**
-	 * 
-	 * @param layoutCode
-	 * @return
+	 * @param layoutCode Layout name
+	 * @return Layout Class name ( ex: com.handmark.pulltorefresh.library.internal.FlipLoadingLayout )
 	 */
 	public String getLoadingLayoutClazzName(String layoutCode) {
 		assertInitialized();
 		if ( isNodeNull() ) {
 			return null;
 		}
-		return node.loadingLayoutsNode.getLayoutClazzName(layoutCode);
+		return node.getLoadingLayoutClazzName(layoutCode);
 	}
 	/**
-	 * 
-	 * @param layoutCode
-	 * @return
+	 * @param layoutCode Layout name
+	 * @return Layout Class name ( ex: com.handmark.pulltorefresh.library.internal.DefaultLoadingLayout )
 	 */
 	public String getIndicatorLayoutClazzName(String layoutCode) {
 		assertInitialized();
 		if ( isNodeNull() ) {
 			return null;
 		}
-		return node.indicatorLayoutsNode.getLayoutClazzName(layoutCode);
+		return node.getIndicatorLayoutClazzName(layoutCode);
 	}
 	/**
-	 * 
-	 * @return
+	 * @return true if {@code node} is null
 	 */
 	private boolean isNodeNull() {
 		return node == null;
 	}
 	/**
-	 * 
-	 * @return
+	 * @return true if {@link #init(Context)} method has not been called  
 	 */
 	private boolean notInitialized() {
 		return !initialized;
 	}
 	/**
-	 * 
+	 * @return throw an exception if {@link #init(Context)} method has not been called  
 	 */
 	private void assertInitialized() {
 		if ( notInitialized() ) {
