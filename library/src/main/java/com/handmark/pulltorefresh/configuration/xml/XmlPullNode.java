@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.handmark.pulltorefresh.library.internal.Assert;
 /**
  * 
+ * 
  * @author Wonjun Kim
  *
  */
@@ -26,10 +27,10 @@ class XmlPullNode {
 			String.CASE_INSENSITIVE_ORDER);
 	private final String tagName;
 	private final XmlPullNodeCallback callback;
-	private final XmlPullNodeCallback nullCallback = new XmlPullNodeCallback() {
-
+	private static final XmlPullNodeCallback nullCallback = new XmlPullNodeCallback() {
 		@Override
 		public void process(XmlPullParser parser) {
+			// do nothing
 		}
 	};
 
