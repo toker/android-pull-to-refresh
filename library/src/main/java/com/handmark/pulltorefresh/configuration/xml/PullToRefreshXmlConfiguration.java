@@ -6,6 +6,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.handmark.pulltorefresh.library.R;
+import com.handmark.pulltorefresh.library.internal.Assert;
 import com.handmark.pulltorefresh.library.internal.Utils;
 
 import android.content.Context;
@@ -45,6 +46,7 @@ public class PullToRefreshXmlConfiguration {
 	 * @param context
 	 */
 	public void init(Context context) {
+		Assert.notNull(context, "Context");
 		// get resources
 		Resources resources = context.getResources();
 		// read the file
