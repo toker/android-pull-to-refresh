@@ -8,61 +8,63 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.handmark.pulltorefresh.library.internal.Assert;
-
+/**
+ * {@code PullToRefreshConfigXmlParser} does parsing pulltorefresh.xml as {@code XmlPullNode}s
+ * @author Wonjun Kim
+ */
 final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefreshNode> {
 	/**
-	 * 
+	 * Repetition limit is only one
 	 */ 
 	private static final int ONLY_ONE_REPEAT = 1;
 	/**
-	 * 
+	 * Parsed data
 	 */
 	private PullToRefreshResult result;
 	/**
-	 * 
-	 * @param parser
+	 * @param parser Must be not null 
 	 */
 	public PullToRefreshConfigXmlParser(XmlPullParserWrapper parser) {
 		super(parser);
 	}
 	/**
-	 * 
-	 * @return
+	 * Generate a node tree matched by pulltorefresh.xml
+	 * @return root node of a tree
 	 */
 	private XmlPullNode init() {
-		//
+		// prepare a result instance
 		result = new PullToRefreshResult();
-		//
+		// make nodes 
 		XmlPullNode root = new XmlPullNode("PullToRefresh");
 		XmlPullNode loadingLayouts = new XmlPullNode("LoadingLayouts");
 		XmlPullNode indicatorLayouts = new XmlPullNode("IndicatorLayouts");
 		XmlPullNode loadingLayout = new XmlPullNode("layout",new LayoutNodeCallback(result.loadingLayoutClazzNameMap));
 		XmlPullNode indicatorLayout = new XmlPullNode("layout",new LayoutNodeCallback(result.indicatorLayoutClazzNameMap));
-		//
+		// make a tree structure
 		root.addChildNode(loadingLayouts, ONLY_ONE_REPEAT);
 		root.addChildNode(indicatorLayouts, ONLY_ONE_REPEAT);
 		loadingLayouts.addChildNode(loadingLayout);
 		indicatorLayouts.addChildNode(indicatorLayout);
-		//
+		// return root node
 		return root;
 	}
 	/**
-	 * 
+	 * @return root node of a tree
 	 */
 	@Override
 	protected XmlPullNode generateRootNode() {
 		return init();
 	}
 	/**
-	 *  
+	 *  @return Parsed result data as {@code PullToRefreshNode} instance  
 	 */
 	@Override
 	protected PullToRefreshNode getResult() {
 		return new PullToRefreshNode(result.loadingLayoutClazzNameMap, result.indicatorLayoutClazzNameMap);
 	}
 	/**
-	 * 
-	 * @author NBP
+	 * Parsed Result to be sent to {@code PullToRefreshNode}
+	 * @author Wonjun Kim
 	 *
 	 */
 	private static class PullToRefreshResult {
@@ -71,48 +73,48 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 	}
 		
 	/**
-	 * 
-	 * @author NBP
+	 * Callback of the node 'PullToRefresh/IndicatorLayouts/layout' and 'PullToRefresh/LoadingLayouts/layout' 
+	 * @author Wonjun Kim
 	 *
 	 */
 	private static class LayoutNodeCallback implements XmlPullNode.XmlPullNodeCallback {
 		/**
-		 * 
+		 * {@code Map} storing Layouts' information 
 		 */
 		private Map<String, String> layoutClazzNameMap;
 		/**
-		 * 
-		 * @param layoutClazzNameMap
+		 * @param layoutClazzNameMap Must not be null and be clean for which put new values
 		 */
 		public LayoutNodeCallback(Map<String, String> layoutClazzNameMap) {
 			Assert.notNull(layoutClazzNameMap, "Class Map");
 			this.layoutClazzNameMap = layoutClazzNameMap;
 		}
 		/**
-		 * 
+		 * Be called when parser has found 'layout' node at a time
 		 */
 		@Override
 		public void process(XmlPullParser parser) throws XmlPullParserException, IOException {
-			// TODO : IMPLEMENT!
+
 			int attributesCount = parser.getAttributeCount();
 			String attributeName, attributeValue;
-			
+			// Iterate attributes!			
 			for (int i = 0; i < attributesCount; ++i) {
 				attributeName = parser.getAttributeName(i);
 				attributeValue = parser.getAttributeValue(i);
-				
+				// The 'name' attribute is as a layout code of each layout's class  
 				if ( "name".equals(attributeName)) {
-
+					// Skip if attribute value is null or empty 
 					if ( attributeValue == null || attributeValue.length() == 0 ) {
 						continue;
 					}
 					
+					// Get layout's class name
 					String clazzName = parser.nextText();
 					
 					// Insert new class name 
 					layoutClazzNameMap.put(attributeValue, clazzName);
-					
-					// 'break' because nextText() method has been called
+
+					// Do 'break' because nextText() method has been called
 					break;
 				}
 			}
