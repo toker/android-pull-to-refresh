@@ -39,7 +39,7 @@ public class Utils {
 	 */
 	public static void closeSilently(InputStream is) {
 		// If the instance is null, do nothing and return
-		if ( is == null ) {
+		if (is == null) {
 			return;
 		}
 		
@@ -60,6 +60,10 @@ public class Utils {
 	 * @param br {@code Reader} instance to close
 	 */
 	public static void closeSilently(Reader br) {
+		// If the instance is null, do nothing and return
+		if (br == null) {
+			return;
+		}
 		try {
 			// try to close
 			br.close();
@@ -100,6 +104,10 @@ public class Utils {
 	 * @return true if the {@code attribute} exists
 	 */
 	public static boolean existAttributeIntValue(AttributeSet attrs, String namespace, String attribute, int invalidValue) {
+		Assert.notNull(attrs, "attrs");
+		Assert.notNull(attrs, "namespace");
+		Assert.notNull(attrs, "attribute");
+		
 		boolean isExist = true;
 		int value = attrs.getAttributeIntValue(namespace, attribute, invalidValue);
 		if ( value == invalidValue ) {
