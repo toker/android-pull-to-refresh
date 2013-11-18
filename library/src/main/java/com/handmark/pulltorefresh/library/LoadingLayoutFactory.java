@@ -39,6 +39,7 @@ class LoadingLayoutFactory {
 	 * @param mode 
 	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code FlipLoadingLayout} instance if not  
 	 */
+	@SuppressWarnings("unchecked")
 	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 			String clazzName) {
 		Class<? extends LoadingLayout> loadingLayoutClazz = null;
@@ -48,7 +49,6 @@ class LoadingLayoutFactory {
 		}
 		
 		try {
-			// FIXME unchecked
 			loadingLayoutClazz = (Class<LoadingLayout>) Class.forName(clazzName);
 
 		} catch (ClassNotFoundException e) {
