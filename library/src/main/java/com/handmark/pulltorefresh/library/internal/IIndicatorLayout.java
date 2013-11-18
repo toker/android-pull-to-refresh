@@ -2,8 +2,9 @@ package com.handmark.pulltorefresh.library.internal;
 /**
  * Indicator layout which react pulling or releasing of Pull To Refresh
  * <br />
- * NOTE : You have to override {@link IndicatorLayout} instead of IIndicatorLayout to make new Indicator layout. 
- * <br /> {@link PullToRefreshAdapterViewBase} uses indicator layouts as {@link IndicatorLayout} class
+ * NOTE : To make new Indicator layout, You have to override {@link IndicatorLayout} instead of IIndicatorLayout. 
+ * <br /> Because {@link PullToRefreshAdapterViewBase} uses indicator layouts as a kind of View component. {@link IndicatorLayout} is a descendant class of {@code View}.
+ * 
  * @author Wonjun Kim
  */
 public interface IIndicatorLayout {
