@@ -23,12 +23,10 @@ public interface IIndicatorLayout {
 	public boolean isVisible();
 	/**
 	 * Make a Action when "PullToRefresh" event has been fired
-	 * <br />(Be called when {@link PullToRefreshAdapterViewBase#onPullToRefresh()} event occurs)
 	 */
 	public void pullToRefresh();
 	/**
 	 * Make a Action when "ReleaseToRefresh" event has been fired
-	 * <br />(Be called when {@link PullToRefreshAdapterViewBase#onReleaseToRefresh()} event occurs)
 	 */
 	public void releaseToRefresh();
 }
