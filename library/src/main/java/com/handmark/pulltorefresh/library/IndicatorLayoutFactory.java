@@ -104,7 +104,7 @@ public class IndicatorLayoutFactory {
 		return layout;
 	}	
 	/**
-	 * Create a default indicator layout instance. This is used when {@code IndicatorLayoutFactory} fails to create a instance
+	 * Factory which creates a default indicator layout instance. This is used when {@code IndicatorLayoutFactory} fails to create a instance
 	 * @author Wonjun Kim
 	 *
 	 */
