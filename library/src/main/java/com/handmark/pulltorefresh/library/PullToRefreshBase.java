@@ -64,6 +64,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	static final String STATE_SHOW_REFRESHING_VIEW = "ptr_show_refreshing_view";
 	static final String STATE_SUPER = "ptr_super";
 
+	static final int LAYER_TYPE_HARDWARE = 2;
+	static final int LAYER_TYPE_NONE = 0;
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -981,8 +983,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			 * all. We don't use them on the Header/Footer Views as they change
 			 * often, which would negate any HW layer performance boost.
 			 */
-			ViewCompat.setLayerType(mRefreshableViewWrapper, value != 0 ? View.LAYER_TYPE_HARDWARE
-					: View.LAYER_TYPE_NONE);
+			ViewCompat.setLayerType(mRefreshableViewWrapper, value != 0 ? LAYER_TYPE_HARDWARE 
+					: LAYER_TYPE_NONE /* View.LAYER_TYPE_NONE */);
 		}
 
 		switch (getPullToRefreshScrollDirection()) {
