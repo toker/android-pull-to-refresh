@@ -52,7 +52,7 @@ public class ViewCompat {
 			try {
 				viewClazz = (Class<? extends View>) Class.forName("android.view.View");
 			} catch (ClassNotFoundException e) {
-				Utils.error("android.view.View class has not been found. Maybe Pull To Refresh might work not correctly. \n" + e.getMessage());
+				Log.e(LOG_TAG, "android.view.View class has not been found. Maybe Pull To Refresh might work not correctly.", e);
 			} 
 			
 			// If viewClazz fails to initialize, skip creating methods
