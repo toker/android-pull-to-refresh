@@ -174,7 +174,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	}
 	
 	/**
-	 * Load labels of pull, refresh, release. 
+	 * Load labels of pull, refresh, release, and assign into fields
 	 * <br />Convert an each attribute value such as {@code ptrPullLabel}, {@code ptrRefreshLabel} or {@code ptrReleaseLabel} to each label field if each value exists.
 	 * <br />Or if not, then the each label is assigned some string as default
 	 * <br />
@@ -183,29 +183,76 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	 * @param mode Current mode
 	 */
 	private void loadLoadingLayoutLabels(Context context, TypedArray attrs, Mode mode) {
+		mPullLabel = loadPullLabel(context, attrs, mode);
+		mRefreshingLabel = loadRefreshingLabel(context, attrs, mode);
+		mReleaseLabel = loadReleaseLabel(context, attrs, mode);
+	}
+	/**
+	 * Load labels of pull
+	 * <br />Convert an {@code ptrPullLabel} attribute value to {@code mPullLabel} field if each value exists.
+	 * <br />Or if not, then the pull label is assigned some string as default
+	 * <br />If you want to set some custom pull label at sub class, you have to override this method and implement.
+	 * NOTE : This method <b>Must</b> be modified if kinds of {@code Mode} are increased.
+	 * @param context
+	 * @param attrs
+	 * @param mode
+	 * @return String to be a pull label  
+	 */
+	protected String loadPullLabel(Context context, TypedArray attrs, Mode mode) {
 		// Pull Label
 		if (attrs.hasValue(R.styleable.PullToRefresh_ptrPullLabel)) {
-			mPullLabel = attrs.getString(R.styleable.PullToRefresh_ptrPullLabel);
-		} else {
-			int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_pull_label : R.string.pull_to_refresh_pull_label;
-			mPullLabel = context.getString(stringId);
-		}
+			return attrs.getString(R.styleable.PullToRefresh_ptrPullLabel);
+		} 
+		
+		int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_pull_label : R.string.pull_to_refresh_pull_label;
+		return context.getString(stringId);
+	}	
+	/**
+	 * Load labels of refreshing
+	 * <br />Convert an {@code ptrRefreshLabel} attribute value to {@code mRefreshingLabel} field if each value exists.
+	 * <br />Or if not, then the refreshing label is assigned some string as default
+	 * <br />If you want to set some custom refreshing label at sub class, you have to override this method and implement.
+	 * NOTE : This method <b>Must</b> be modified if kinds of {@code Mode} are increased.
+	 * @param context
+	 * @param attrs
+	 * @param mode
+	 * @return String to be a refreshing label  
+	 */
+	protected String loadRefreshingLabel(Context context, TypedArray attrs,
+			Mode mode) {
 		// Refresh Label
 		if (attrs.hasValue(R.styleable.PullToRefresh_ptrRefreshLabel)) {
-			mRefreshingLabel = attrs.getString(R.styleable.PullToRefresh_ptrRefreshLabel);
-		} else {
-			int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_refreshing_label : R.string.pull_to_refresh_refreshing_label;
-			mRefreshingLabel = context.getString(stringId);
-		}
+			return attrs.getString(R.styleable.PullToRefresh_ptrRefreshLabel);
+		} 
+		
+		int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_refreshing_label : R.string.pull_to_refresh_refreshing_label;
+		return context.getString(stringId);
+	}	
+	/**
+	 * Load labels of release
+	 * <br />Convert an {@code ptrReleaseLabel} attribute value to {@code mReleaseLabel} field if each value exists.
+	 * <br />Or if not, then the release label is assigned some string as default
+	 * <br />If you want to set some custom release label at sub class, you have to override this method and implement.
+	 * NOTE : This method <b>Must</b> be modified if kinds of {@code Mode} are increased.
+	 * @param context
+	 * @param attrs
+	 * @param mode
+	 * @return String to be a refreshing label  
+	 */
+	protected String loadReleaseLabel(Context context, TypedArray attrs, Mode mode) {
 		// Release Label
 		if (attrs.hasValue(R.styleable.PullToRefresh_ptrReleaseLabel)) {
-			mReleaseLabel = attrs.getString(R.styleable.PullToRefresh_ptrReleaseLabel);
-		} else {
-			int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_release_label : R.string.pull_to_refresh_release_label;
-			mReleaseLabel = context.getString(stringId);
-		}
+			return attrs.getString(R.styleable.PullToRefresh_ptrReleaseLabel);
+		} 
+		
+		int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_release_label : R.string.pull_to_refresh_release_label;
+		return context.getString(stringId);
 		
 	}
+
+
+
+
 
 	public final void setHeight(int height) {
 		ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) getLayoutParams();
