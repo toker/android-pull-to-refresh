@@ -90,24 +90,17 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		switch (mode) {
 			case PULL_FROM_END:
 				lp.gravity = scrollDirection == Orientation.VERTICAL ? Gravity.TOP : Gravity.LEFT;
-
-				// Load in labels
-				mPullLabel = context.getString(R.string.pull_to_refresh_from_bottom_pull_label);
-				mRefreshingLabel = context.getString(R.string.pull_to_refresh_from_bottom_refreshing_label);
-				mReleaseLabel = context.getString(R.string.pull_to_refresh_from_bottom_release_label);
 				break;
 
 			case PULL_FROM_START:
 			default:
 				lp.gravity = scrollDirection == Orientation.VERTICAL ? Gravity.BOTTOM : Gravity.RIGHT;
-
-				// Load in labels
-				mPullLabel = context.getString(R.string.pull_to_refresh_pull_label);
-				mRefreshingLabel = context.getString(R.string.pull_to_refresh_refreshing_label);
-				mReleaseLabel = context.getString(R.string.pull_to_refresh_release_label);
 				break;
 		}
-
+		
+		// Load Loading Layout Labels
+		loadLoadingLayoutLabels(context, attrs, mode);
+		
 		if (attrs.hasValue(R.styleable.PullToRefresh_ptrHeaderBackground)) {
 			Drawable background = attrs.getDrawable(R.styleable.PullToRefresh_ptrHeaderBackground);
 			if (null != background) {
@@ -178,6 +171,40 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		setLoadingDrawable(imageDrawable);
 
 		reset();
+	}
+	
+	/**
+	 * Load labels of pull, refresh, release. 
+	 * <br />Convert an each attribute value such as {@code ptrPullLabel}, {@code ptrRefreshLabel} or {@code ptrReleaseLabel} to each label field if each value exists.
+	 * <br />Or if not, then the each label is assigned some string as default
+	 * <br />
+	 * NOTE : This method <b>Must</b> be modified if kinds of {@code Mode} are increased.
+	 * @param attrs 
+	 * @param mode Current mode
+	 */
+	private void loadLoadingLayoutLabels(Context context, TypedArray attrs, Mode mode) {
+		// Pull Label
+		if (attrs.hasValue(R.styleable.PullToRefresh_ptrPullLabel)) {
+			mPullLabel = attrs.getString(R.styleable.PullToRefresh_ptrPullLabel);
+		} else {
+			int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_pull_label : R.string.pull_to_refresh_pull_label;
+			mPullLabel = context.getString(stringId);
+		}
+		// Refresh Label
+		if (attrs.hasValue(R.styleable.PullToRefresh_ptrRefreshLabel)) {
+			mRefreshingLabel = attrs.getString(R.styleable.PullToRefresh_ptrRefreshLabel);
+		} else {
+			int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_refreshing_label : R.string.pull_to_refresh_refreshing_label;
+			mRefreshingLabel = context.getString(stringId);
+		}
+		// Release Label
+		if (attrs.hasValue(R.styleable.PullToRefresh_ptrReleaseLabel)) {
+			mReleaseLabel = attrs.getString(R.styleable.PullToRefresh_ptrReleaseLabel);
+		} else {
+			int stringId = (mode == Mode.PULL_FROM_END) ? R.string.pull_to_refresh_from_bottom_release_label : R.string.pull_to_refresh_release_label;
+			mReleaseLabel = context.getString(stringId);
+		}
+		
 	}
 
 	public final void setHeight(int height) {

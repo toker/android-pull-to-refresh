@@ -56,6 +56,11 @@
         <attr name="ptrIndicatorStyle" format="string">
         </attr>
         
+        <!-- Label attributes of Loading layout -->
+        <attr name="ptrPullLabel" format="string" />
+        <attr name="ptrRefreshLabel" format="string" />
+        <attr name="ptrReleaseLabel" format="string" />
+        
         <attr name="ptrFriction" format="float" value="2.0" />
         <attr name="ptrSmoothScrollDuration" format="integer" value="200" />
         <attr name="ptrSmoothScrollLongDuration" format="integer" value="325" />
