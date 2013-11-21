@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.nhncorp.pulltorefresh</groupId>
 	<artifactId>library</artifactId>
 	<packaging>apklib</packaging>
@@ -16,7 +15,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<android.version>4.1.1.4</android.version>
-		<android.platform>17</android.platform>
+		<android.platform>16</android.platform>
 		<android-support.version>r7</android-support.version>
 		<java.version>1.6</java.version>
 	</properties>
@@ -42,12 +41,10 @@
 				<artifactId>android-maven-plugin</artifactId>
 				<version>3.7.0</version> 
 			</plugin>
-			
 			<plugin>
-
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version> 
+				<version>3.1</version> 
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
