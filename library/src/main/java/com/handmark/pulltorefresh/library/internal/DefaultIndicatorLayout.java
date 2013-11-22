@@ -32,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.handmark.pulltorefresh.library.internal.IIndicatorLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.R;
 
@@ -97,7 +98,9 @@ public class DefaultIndicatorLayout extends IndicatorLayout implements IIndicato
 		mResetRotateAnimation.setFillAfter(true);
 
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public final boolean isVisible() {
 		Animation currentAnim = getAnimation();
 		if (null != currentAnim) {
@@ -106,11 +109,15 @@ public class DefaultIndicatorLayout extends IndicatorLayout implements IIndicato
 
 		return getVisibility() == View.VISIBLE;
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public void hide() {
 		startAnimation(mOutAnim);
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	public void show() {
 		mArrowImageView.clearAnimation();
 		startAnimation(mInAnim);
@@ -137,20 +144,23 @@ public class DefaultIndicatorLayout extends IndicatorLayout implements IIndicato
 	public void onAnimationStart(Animation animation) {
 		setVisibility(View.VISIBLE);
 	}
-	
+	/**
+	 * {@inheritDoc}
+	 */	
 	@Override
 	public void releaseToRefresh() {
 		mArrowImageView.startAnimation(mRotateAnimation);
 	}
-	
+	/**
+	 * {@inheritDoc}
+	 */	
 	@Override
 	public void pullToRefresh() {
 		mArrowImageView.startAnimation(mResetRotateAnimation);
 	}
 
 	/**
-	 * 
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public LayoutParams createApplicableHeaderLayoutParams() {
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -160,8 +170,7 @@ public class DefaultIndicatorLayout extends IndicatorLayout implements IIndicato
 		return params;
 	}
 	/**
-	 * 
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public LayoutParams createApplicableFooterLayoutParams() {
 		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
