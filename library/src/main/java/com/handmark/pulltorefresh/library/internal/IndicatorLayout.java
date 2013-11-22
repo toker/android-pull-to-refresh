@@ -1,6 +1,6 @@
 package com.handmark.pulltorefresh.library.internal;
 
-import com.handmark.pulltorefresh.library.internal.IIndicatorLayout;
+import com.handmark.pulltorefresh.library.IIndicatorLayout;
 
 import android.content.Context;
 import android.util.AttributeSet;

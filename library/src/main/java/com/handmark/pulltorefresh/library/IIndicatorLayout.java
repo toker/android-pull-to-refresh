@@ -1,4 +1,7 @@
-package com.handmark.pulltorefresh.library.internal;
+package com.handmark.pulltorefresh.library;
+
+import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
+
 /**
  * Indicator layout which react pulling or releasing of Pull To Refresh
  * <br />
