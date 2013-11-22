@@ -11,6 +11,7 @@ import com.handmark.pulltorefresh.library.internal.Utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 /**
  * {@code PullToRefreshXmlConfiguration} is an information set of PullToRefresh. It contains a list of indicator layouts and of loading layouts. An information set of PullToRefresh is converted from pulltorefresh.xml.<br />
@@ -18,6 +19,9 @@ import android.content.res.Resources;
  * @author Wonjun Kim
  */
 public class PullToRefreshXmlConfiguration {
+	
+	private static final String LOG_TAG = PullToRefreshXmlConfiguration.class.getName();
+	
 	/**
 	 * Singleton instance
 	 * @author Wonjun Kim
@@ -82,9 +86,9 @@ public class PullToRefreshXmlConfiguration {
 				node.extendProperties(extendedNode);
 			}
 		} catch (XmlPullParserException e) {
-			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
+			Log.d(LOG_TAG, "It has failed to parse the xmlpullparser xml.", e);
 		} catch (IOException e) {
-			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
+			Log.d(LOG_TAG, "It has failed to parse the xmlpullparser xml.\n ", e);
 		}
 		
 		// Intialization can be done whether reading XML has failed or not! 

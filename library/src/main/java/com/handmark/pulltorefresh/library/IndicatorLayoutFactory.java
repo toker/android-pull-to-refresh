@@ -46,7 +46,7 @@ public class IndicatorLayoutFactory {
 			clazz = (Class<? extends IndicatorLayout> )Class.forName(clazzName);
 			
 		} catch (ClassNotFoundException e) {
-			Utils.error("Class Not Found. It will be used default IndicatorLayout." +e.getMessage());
+			Log.e(LOG_TAG, "Class Not Found. It will be used default IndicatorLayout.", e);
 			clazz = DefaultIndicatorLayoutFactory.createIndicatorLayoutClazz(clazzName);
 			
 		}
@@ -81,19 +81,19 @@ public class IndicatorLayoutFactory {
 			layout = (IndicatorLayout) constructor.newInstance(context, mode);
 
 		} catch (IllegalArgumentException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		} catch (InvocationTargetException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		} catch (SecurityException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		} catch (NoSuchMethodException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		} catch (InstantiationException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		} catch (IllegalAccessException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		} catch (NullPointerException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
 		}
 
 		if (layout == null) {

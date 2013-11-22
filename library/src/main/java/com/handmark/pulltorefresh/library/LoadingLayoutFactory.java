@@ -90,19 +90,19 @@ class LoadingLayoutFactory {
 					orientation, attrs);
 
 		} catch (IllegalArgumentException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		} catch (InvocationTargetException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		} catch (SecurityException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		} catch (NoSuchMethodException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		} catch (InstantiationException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		} catch (IllegalAccessException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		} catch (NullPointerException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. " + e);
+			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
 		}
 
 		if (layout == null) {

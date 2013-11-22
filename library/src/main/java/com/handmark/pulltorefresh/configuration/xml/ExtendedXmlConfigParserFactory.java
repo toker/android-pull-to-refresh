@@ -16,7 +16,7 @@ import android.util.Log;
  */
 class ExtendedConfigXmlParserFactory {
 	
-	private static final String LOG_TAG = ExtendedConfigXmlParserFactory.class.getSimpleName();
+	private static final String LOG_TAG = ExtendedConfigXmlParserFactory.class.getName();
 	/**
 	 * pulltorefresh.xml path in assets folder
 	 */
@@ -39,11 +39,11 @@ class ExtendedConfigXmlParserFactory {
 			parser.setInput(is, DEFAULT_ENCODING_TYPE);
 			
 		} catch (XmlPullParserException e) {
-			Log.w(LOG_TAG, "The error occurs below when generating parser.\n"+e.getMessage());
+			Log.w(LOG_TAG, "The error occurs below when generating parser.", e);
 			// explicitly assign null
 			parser = null;
 		} catch (IOException e) {
-			Log.w(LOG_TAG, "Loading "+XML_PATH_IN_ASSETS+" file has failed.\n"+e.getMessage());
+			Log.w(LOG_TAG, "Loading "+XML_PATH_IN_ASSETS+" file has failed.", e);
 			// explicitly assign null
 			parser = null;
 		}
