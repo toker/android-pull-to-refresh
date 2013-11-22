@@ -96,28 +96,6 @@ class XmlPullParserWrapper implements XmlPullParser {
 		return getEventType() == COMMENT;
 	}
 	/**
-	 * Call {@link XmlPullParser#nextText()} method without any exceptions
-	 * @return value of {@link XmlPullParser#nextText()} when successfully calling {@link XmlPullParser#nextText()}, or empty string when it has failed to call
-	 */
-	public String nextTextPeacefully() {
-		String text = null;
-		// try to call nextText()
-		try {
-			text = nextText();
-		} catch (XmlPullParserException e) {
-			// ignore
-		} catch (IOException e) {
-			// ignore
-		}
-		
-		// When it has failed to take next text, assign empty text into the text variable below. 
-		if (text == null) {
-			text = "";
-		}
-
-		return text;
-	}
-	/**
 	 * <p>
 	 * Find next start tag by calling {@link XmlPullParser#next()} again and again 
 	 * If the parser reaches the end of a document, this method will returns {@code DocumentState.END}
