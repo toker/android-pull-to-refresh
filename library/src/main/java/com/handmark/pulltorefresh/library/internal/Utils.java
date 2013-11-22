@@ -27,13 +27,6 @@ public class Utils {
 		Log.w(LOG_TAG, "You're using the deprecated " + depreacted + " attr, please switch over to " + replacement);
 	}
 	/**
-	 * Delegate error logs
-	 * @param message
-	 */
-	public static void error(String message) {
-		Log.e(LOG_TAG, message);
-	} 
-	/**
 	 * Try to close {@code InputStream} without any exceptions, and ignore if some exception occurs
 	 * @param is {@code InputStream} instance to close
 	 */
