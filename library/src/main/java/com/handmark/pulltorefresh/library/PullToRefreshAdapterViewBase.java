@@ -311,15 +311,15 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		// Set Show Indicator to the XML value, or default value
 		mShowIndicator = a.getBoolean(R.styleable.PullToRefresh_ptrShowIndicator, !isPullToRefreshOverScrollEnabled());
 		
-		// Get IndicatorLayout class token   
-		String indicatorLayoutClazzName = null;
+		// Get IndicatorLayout code
+		String layoutCode = null;
 		if (a.hasValue(R.styleable.PullToRefresh_ptrIndicatorStyle)) {
-			indicatorLayoutClazzName = a.getString(R.styleable.PullToRefresh_ptrIndicatorStyle);
+			layoutCode = a.getString(R.styleable.PullToRefresh_ptrIndicatorStyle);
 			 
 		} 
 		
-		// assign class token into mIndicatorLayoutClazz
-		mIndicatorLayoutClazz = IndicatorLayoutFactory.createIndicatorLayoutClazz(indicatorLayoutClazzName);
+		// Convert layoutCode to a class token, and assign the class token into mIndicatorLayoutClazz
+		mIndicatorLayoutClazz = IndicatorLayoutFactory.createIndicatorLayoutClazzByLayoutCode(layoutCode);
 			
 	}
 
