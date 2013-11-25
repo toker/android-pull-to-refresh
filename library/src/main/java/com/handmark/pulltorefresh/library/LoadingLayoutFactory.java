@@ -52,8 +52,7 @@ class LoadingLayoutFactory {
 			loadingLayoutClazz = (Class<LoadingLayout>) Class.forName(clazzName);
 
 		} catch (ClassNotFoundException e) {
-			Log.e(LOG_TAG,
-					"Selected loading layout class has not been found.");
+			Log.e(LOG_TAG,"The loading layout you have chosen class has not been found.", e);
 			loadingLayoutClazz = FlipLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
 		} 
 

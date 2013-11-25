@@ -46,7 +46,7 @@ public class IndicatorLayoutFactory {
 			clazz = (Class<? extends IndicatorLayout> )Class.forName(clazzName);
 			
 		} catch (ClassNotFoundException e) {
-			Log.e(LOG_TAG, "Class Not Found. It will be used default IndicatorLayout.", e);
+			Log.e(LOG_TAG, "The indicator layout you have chosen class has not been found.", e);
 			clazz = DefaultIndicatorLayoutFactory.createIndicatorLayoutClazz(clazzName);
 			
 		}
