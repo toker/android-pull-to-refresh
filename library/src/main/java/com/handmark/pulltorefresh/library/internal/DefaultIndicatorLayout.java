@@ -50,7 +50,7 @@ public class DefaultIndicatorLayout extends IndicatorLayout implements IIndicato
 		super(context);
 		mArrowImageView = new ImageView(context);
 
-		Drawable arrowD = getResources().getDrawable(R.drawable.indicator_arrow);
+		Drawable arrowD = getIconDrawable(context, mode);
 		mArrowImageView.setImageDrawable(arrowD);
 		
 		final int padding = getResources().getDimensionPixelSize(R.dimen.indicator_internal_padding);
@@ -97,6 +97,15 @@ public class DefaultIndicatorLayout extends IndicatorLayout implements IIndicato
 		mResetRotateAnimation.setDuration(DEFAULT_ROTATION_ANIMATION_DURATION);
 		mResetRotateAnimation.setFillAfter(true);
 
+	}
+	/**
+	 * Create an icon that default indicator layout will use 
+	 * @param context
+	 * @param mode
+	 * @return Indicator icon
+	 */
+	protected Drawable getIconDrawable(Context context, PullToRefreshBase.Mode mode) {
+		return getResources().getDrawable(R.drawable.indicator_arrow);
 	}
 	/**
 	 * {@inheritDoc}
