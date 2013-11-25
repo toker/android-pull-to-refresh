@@ -35,6 +35,7 @@ public interface IPullToRefresh<T extends View> {
 	 * 
 	 * @return true - if the Demo has been started, false if not.
 	 */
+	@Deprecated
 	public boolean demo();
 
 	/**
