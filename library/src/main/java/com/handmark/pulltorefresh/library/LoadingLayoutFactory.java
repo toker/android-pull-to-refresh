@@ -12,7 +12,7 @@ import android.view.View;
 import com.handmark.pulltorefresh.configuration.xml.PullToRefreshXmlConfiguration;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
-import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
+import com.handmark.pulltorefresh.library.internal.RotateLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 /**
  * Factory which creates loading layouts 
@@ -26,7 +26,7 @@ class LoadingLayoutFactory {
 	/**
 	 * Create the class token matched by <b>{@code layoutCode}</b>
 	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml 
-	 * @return Class token which is matched by {@code layoutCode}, or the class token of {@code FlipLoadingLayout} instance if not
+	 * @return Class token which is matched by {@code layoutCode}, or the class token of {@code RotateLoadingLayout} instance if not
 	 */
 	public static Class<? extends LoadingLayout> createLoadingLayoutClazzByLayoutCode(String layoutCode) {
 		String clazzName = PullToRefreshXmlConfiguration.getInstance().getLoadingLayoutClazzName(layoutCode);
@@ -37,14 +37,14 @@ class LoadingLayoutFactory {
 	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
 	 * @param context 
 	 * @param mode 
-	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code FlipLoadingLayout} instance if not  
+	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not  
 	 */
 	@SuppressWarnings("unchecked")
 	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 			String clazzName) {
 		Class<? extends LoadingLayout> loadingLayoutClazz = null;
 		if ( clazzName == null ) {
-			loadingLayoutClazz = FlipLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
+			loadingLayoutClazz = RotateLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
 			return loadingLayoutClazz;
 		}
 		
@@ -53,7 +53,7 @@ class LoadingLayoutFactory {
 
 		} catch (ClassNotFoundException e) {
 			Log.e(LOG_TAG,"The loading layout you have chosen class has not been found.", e);
-			loadingLayoutClazz = FlipLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
+			loadingLayoutClazz = RotateLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
 		} 
 
 		return loadingLayoutClazz;
@@ -63,7 +63,7 @@ class LoadingLayoutFactory {
 	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
 	 * @param context 
 	 * @param mode 
-	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code FlipLoadingLayout} instance if not  
+	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not  
 	 */
 	public static LoadingLayout createLoadingLayout(String layoutCode, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {
@@ -75,7 +75,7 @@ class LoadingLayoutFactory {
 	 * @param layoutCode Loading layout code, which must be defined in pulltorefresh.xml
 	 * @param context 
 	 * @param mode 
-	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code FlipLoadingLayout} instance if not  
+	 * @return {@code LoadingLayout} instance if the class matched by {@code layoutCode} exists, or {@code RotateLoadingLayout} instance if not  
 	 */
 	public static LoadingLayout createLoadingLayout(
 			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
@@ -105,7 +105,7 @@ class LoadingLayoutFactory {
 		}
 
 		if (layout == null) {
-			layout = FlipLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
+			layout = RotateLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
 		}
 
 		layout.setVisibility(View.INVISIBLE);
@@ -116,26 +116,26 @@ class LoadingLayoutFactory {
 	 * @author Wonjun Kim
 	 *
 	 */
-	private static class FlipLoadingLayoutFactory {
+	private static class RotateLoadingLayoutFactory {
 		/**
 		 * @param clazzName This class name is being ignored
-		 * @return Class token of {@code FlipLoadingLayout}
+		 * @return Class token of {@code RotateLoadingLayout}
 		 */
 		public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 				String clazzName) {
-			return FlipLoadingLayout.class;
+			return RotateLoadingLayout.class;
 		}
 		/**
 		 * @param clazz Class token is being ignored.
 		 * @param context
 		 * @param mode
-		 * @return {@code FlipLoadingLayout} instance
+		 * @return {@code RotateLoadingLayout} instance
 		 */
 		public static LoadingLayout createLoadingLayout(
 				Class<? extends LoadingLayout> clazz, Context context,
 				Mode mode, Orientation orientation, TypedArray attrs) {
 
-			return new FlipLoadingLayout(context, mode, orientation, attrs);
+			return new RotateLoadingLayout(context, mode, orientation, attrs);
 		}
 
 	}
