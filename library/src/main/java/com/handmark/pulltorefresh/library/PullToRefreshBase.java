@@ -15,9 +15,6 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -37,12 +34,8 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.handmark.pulltorefresh.configuration.DefaultPullToRefreshConfiguration;
-import com.handmark.pulltorefresh.configuration.PullToRefreshConfigurationFactory;
-import com.handmark.pulltorefresh.configuration.PullToRefreshConfiguration;
-import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
+import com.handmark.pulltorefresh.configuration.xml.PullToRefreshXmlConfiguration;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
-import com.handmark.pulltorefresh.library.internal.RotateLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.Utils;
 import com.handmark.pulltorefresh.library.internal.ViewCompat;
 
@@ -236,33 +229,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	public final boolean isScrollingWhileRefreshingEnabled() {
 		return mScrollingWhileRefreshingEnabled;
 	}
-
-//	/**
-//	 *  Must be deleted.
-//	 */
-//	@Concept
-//	@Override
-//	protected void onFinishInflate() {
-//		int sizeOfChildViews = getChildCount();
-//		for(int i = 0; i< sizeOfChildViews;++i) {
-//			View view = getChildAt(i);
-//			if ( view instanceof LoadingLayout) {
-//				if (mMode.showHeaderLoadingLayout()) {
-//					// ? Header? Footer?
-//					mHeaderLayout = (LoadingLayout) view;
-//					
-//				}
-////			} else if ( view instanceof IndicatorLayout) {
-////				
-//			} else {
-//				addView(view, -1, view.getLayoutParams());
-//			}
-//
-//			removeViewAt(i);
-//		}
-//		
-//		updateUIForMode();
-//	}
 	
 	@Override
 	public final boolean onInterceptTouchEvent(MotionEvent event) {
@@ -634,7 +600,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * @return
 	 */
 	protected LoadingLayout createLoadingLayout(Context context, Mode mode, TypedArray attrs) {
-		return LoadingLayoutFactory.getInstance().createLoadingLayout(mLoadingLayoutClazz, context, mode, getPullToRefreshScrollDirection(), attrs);
+		return LoadingLayoutFactory.createLoadingLayout(mLoadingLayoutClazz, context, mode, getPullToRefreshScrollDirection(), attrs);
 	}
 
 	/**
@@ -1119,6 +1085,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 	@SuppressWarnings("deprecation")
 	private void init(Context context, AttributeSet attrs) {
+		// PullToRefreshXmlConfiguration must be initialized.
+		PullToRefreshXmlConfiguration.getInstance().init(context);
+		// start initialization 
 		switch (getPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				setOrientation(LinearLayout.HORIZONTAL);
@@ -1146,9 +1115,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
 			int loadingLayoutCode = a.getInteger(R.styleable.PullToRefresh_ptrAnimationStyle, 0);
-			PullToRefreshConfiguration configuration = PullToRefreshConfigurationFactory.createConfiguration(context);
-			mLoadingLayoutClazz = configuration.getLoadingLayout(loadingLayoutCode);
-			
+			mLoadingLayoutClazz = LoadingLayoutFactory.createLoadingLayoutClazz(loadingLayoutCode);
 		}
 
 		// Refreshable View

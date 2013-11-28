@@ -66,6 +66,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 	private boolean mShowIndicator;
 	private boolean mScrollEmptyView = true;
+	private int mIndicatorStyle;
 
 	public PullToRefreshAdapterViewBase(Context context) {
 		super(context);
@@ -303,6 +304,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 	protected void handleStyledAttributes(TypedArray a) {
 		// Set Show Indicator to the XML value, or default value
 		mShowIndicator = a.getBoolean(R.styleable.PullToRefresh_ptrShowIndicator, !isPullToRefreshOverScrollEnabled());
+		mIndicatorStyle = a.getInteger(R.attr.ptrIndicatorStyle, 0);	
 	}
 
 	protected boolean isReadyForPullStart() {
@@ -339,7 +341,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showHeaderLoadingLayout() && null == mIndicatorIvTop) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorFactory(getContext(), Mode.PULL_FROM_START);
+			mIndicatorIvTop = IndicatorLayoutFactory.createIndicatorFactory(mIndicatorStyle, getContext(), Mode.PULL_FROM_START);
 			ViewGroup.LayoutParams params = mIndicatorIvTop.createApplicableHeaderLayoutParams();
 //			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 //					ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -355,12 +357,8 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 
 		if (mode.showFooterLoadingLayout() && null == mIndicatorIvBottom) {
 			// If the mode can pull down, and we don't have one set already
-			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorFactory(getContext(), Mode.PULL_FROM_END);
+			mIndicatorIvBottom = IndicatorLayoutFactory.createIndicatorFactory(mIndicatorStyle, getContext(), Mode.PULL_FROM_END);
 			ViewGroup.LayoutParams params = mIndicatorIvBottom.createApplicableFooterLayoutParams();
-//			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-//					ViewGroup.LayoutParams.WRAP_CONTENT);
-//			params.rightMargin = getResources().getDimensionPixelSize(R.dimen.indicator_right_padding);
-//			params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
 			refreshableViewWrapper.addView(mIndicatorIvBottom, params);
 
 		} else if (!mode.showFooterLoadingLayout() && null != mIndicatorIvBottom) {

@@ -1,6 +1,7 @@
 package com.handmark.pulltorefresh.library;
 
 import java.lang.reflect.Constructor;
+
 import java.lang.reflect.InvocationTargetException;
 
 import android.content.Context;
@@ -8,27 +9,36 @@ import android.content.res.TypedArray;
 import android.util.Log;
 import android.view.View;
 
+import com.handmark.pulltorefresh.configuration.xml.PullToRefreshXmlConfiguration;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Orientation;
 import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
-@Deprecated
-class LoadingLayoutFactory implements ILoadingLayoutFactory {
+/**
+ * 
+ * @author NBP
+ *
+ */
+class LoadingLayoutFactory {
 
-	private final static LoadingLayoutFactory instance = new LoadingLayoutFactory();
 	private static final String LOG_TAG = LoadingLayoutFactory.class
 			.getSimpleName();
-
+	
 	/**
 	 * 
+	 * @param layoutCode
 	 * @return
 	 */
-	public static ILoadingLayoutFactory getInstance() {
-		return instance;
+	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(Integer layoutCode) {
+		String clazzName = PullToRefreshXmlConfiguration.getInstance().getIndicatorLayoutClazzName(layoutCode);
+		return createLoadingLayoutClazz(clazzName);
 	}
-	
-	
-	public Class<? extends LoadingLayout> createLoadingLayoutClazz(
+	/**
+	 * 
+	 * @param clazzName
+	 * @return
+	 */
+	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 			String clazzName) {
 		Class<? extends LoadingLayout> loadingLayoutClazz = null;
 		try {
@@ -37,14 +47,19 @@ class LoadingLayoutFactory implements ILoadingLayoutFactory {
 
 		} catch (ClassNotFoundException e) {
 			Log.e(LOG_TAG,
-					"Selected loading layout class has not been founded.");
-			loadingLayoutClazz = DefaultLoadingLayoutFactory.getInstance()
-					.createLoadingLayoutClazz(clazzName);
+					"Selected loading layout class has not been found.");
+			loadingLayoutClazz = DefaultLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
 		}
 
 		return loadingLayoutClazz;
 	}
 
+	public static LoadingLayout createLoadingLayout(Integer layoutCode, Context context, Mode mode,
+			Orientation orientation, TypedArray attrs) {
+		Class<? extends LoadingLayout> clazz = createLoadingLayoutClazz(layoutCode);
+		return createLoadingLayout(clazz, context, mode, orientation, attrs);
+	}
+	
 	/**
 	 * 
 	 * @param context
@@ -53,7 +68,7 @@ class LoadingLayoutFactory implements ILoadingLayoutFactory {
 	 * @comment Need to be refactored!
 	 * @return
 	 */
-	public LoadingLayout createLoadingLayout(
+	public static LoadingLayout createLoadingLayout(
 			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {
 		LoadingLayout layout = null;
@@ -82,37 +97,26 @@ class LoadingLayoutFactory implements ILoadingLayoutFactory {
 		}
 
 		if (layout == null) {
-			layout = DefaultLoadingLayoutFactory.getInstance()
-					.createLoadingLayout(clazz, context, mode, orientation,
-							attrs);
+			layout = DefaultLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
 		}
-
-		// old
-		// LoadingLayout layout =
-		// mLoadingAnimationStyle.createLoadingLayout(context, mode,
-		// getPullToRefreshScrollDirection(), attrs);
 
 		layout.setVisibility(View.INVISIBLE);
 		return layout;
 	}
+	
+	/**
+	 * 
+	 * @author NBP
+	 *
+	 */
+	private static class DefaultLoadingLayoutFactory {
 
-	private static class DefaultLoadingLayoutFactory implements
-			ILoadingLayoutFactory {
-
-		private static final DefaultLoadingLayoutFactory instance = new DefaultLoadingLayoutFactory();
-
-		public static ILoadingLayoutFactory getInstance() {
-			return instance;
-		}
-
-		@Override
-		public Class<? extends LoadingLayout> createLoadingLayoutClazz(
+		public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 				String clazzName) {
 			return FlipLoadingLayout.class;
 		}
 
-		@Override
-		public LoadingLayout createLoadingLayout(
+		public static LoadingLayout createLoadingLayout(
 				Class<? extends LoadingLayout> clazz, Context context,
 				Mode mode, Orientation orientation, TypedArray attrs) {
 
