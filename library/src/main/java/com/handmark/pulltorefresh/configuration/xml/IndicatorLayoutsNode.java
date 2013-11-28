@@ -7,7 +7,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
-@Root
+@Root(name="IndicatorLayouts")
 class IndicatorLayoutsNode {
 	
 	@ElementMap(entry="layout",key="value", attribute=true, required=false) 
