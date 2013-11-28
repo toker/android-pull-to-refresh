@@ -45,7 +45,7 @@ public class PullToRefreshXmlConfiguration {
 	public void init(Context context) {
 		// get resources
 		Resources resources = context.getResources();
-		// read the file 
+		// read the file
 		InputStream is = resources.openRawResource(XML_PATH_ID);
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		
