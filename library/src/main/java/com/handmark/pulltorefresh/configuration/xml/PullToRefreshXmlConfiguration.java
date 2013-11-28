@@ -65,14 +65,24 @@ public class PullToRefreshXmlConfiguration {
 	
 	public String getLoadingLayoutClazzName(Integer layoutCode) {
 		assertInitialized();
+		if ( isNodeNull() ) {
+			return null;
+		}
 		return node.loadingLayoutsNode.getLayoutClazzName(layoutCode);
 	}
 
 	public String getIndicatorLayoutClazzName(Integer layoutCode) {
 		assertInitialized();
+		if ( isNodeNull() ) {
+			return null;
+		}
 		return node.indicatorLayoutsNode.getLayoutClazzName(layoutCode);
 	}
 	
+	private boolean isNodeNull() {
+		return node == null;
+	}
+
 	private boolean notInitialized() {
 		return !initialized;
 	}
