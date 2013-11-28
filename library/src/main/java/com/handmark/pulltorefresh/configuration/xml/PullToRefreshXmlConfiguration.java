@@ -1,21 +1,17 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-import org.simpleframework.xml.core.Persister;
-import org.simpleframework.xml.transform.RegistryMatcher;
-import org.simpleframework.xml.transform.Transform;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import com.handmark.pulltorefresh.library.R;
 import com.handmark.pulltorefresh.library.internal.Utils;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
+
 /**
  * 
  * @author NBP
@@ -31,11 +27,9 @@ public class PullToRefreshXmlConfiguration {
 		}
 	} 
 	
-	
-	private static final int XML_PATH_ID = R.raw.pulltorefresh;
+	private static final int XML_PATH_ID = R.xml.pulltorefresh;
 	private PullToRefreshNode node = null; 
 	private boolean initialized = false;
-	
 	
 	private PullToRefreshXmlConfiguration() {}
 	
@@ -43,38 +37,22 @@ public class PullToRefreshXmlConfiguration {
 		return InstanceHolder.getInstance();
 	}
 	
-	
 	public void init(Context context) {
 		// get resources
 		Resources resources = context.getResources();
 		// read the file
-		InputStream is = resources.openRawResource(XML_PATH_ID);
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		
+		XmlPullParser parser = resources.getXml(XML_PATH_ID);
 		// parser the xml
 		try {
-//			RegistryMatcher m = new RegistryMatcher();
-//			m.bind(Integer.class, new Transform<Integer>() {
-//
-//				@Override
-//				public Integer read(String value) throws Exception {
-//					return Integer.parseInt(value);
-//				}
-//
-//				@Override
-//				public String write(Integer value) throws Exception {
-//					return Integer.toString(value);
-//				}});
-			node = new Persister().read(PullToRefreshNode.class, br);
+			XmlPullParserWrapper wrapper = new XmlPullParserWrapper(parser);
+		
+			node = new PullToRefreshConfigXmlParser(wrapper).parse();
 		} catch (Exception e) {
 			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
 		}
 		
 		// Intialization can be done whether reading XML has failed or not! 
 		initialized = true;
-		
-		Utils.closeSilently(br);
-		Utils.closeSilently(is);
 	}
 	
 	public String getLoadingLayoutClazzName(Integer layoutCode) {

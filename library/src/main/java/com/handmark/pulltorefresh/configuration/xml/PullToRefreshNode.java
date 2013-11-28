@@ -2,19 +2,24 @@ package com.handmark.pulltorefresh.configuration.xml;
 
 import java.util.Map;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementMap;
-import org.simpleframework.xml.Path;
-import org.simpleframework.xml.Root;
-
-import android.util.Log;
-
-
-@Root(name="PullToRefresh")
 public class PullToRefreshNode {
-	@Element(name = "LoadingLayouts")
-	public LoadingLayoutsNode loadingLayoutsNode;
-	@Element(name = "IndicatorLayouts")
-	public IndicatorLayoutsNode indicatorLayoutsNode;
 
+	private final Map<Integer, String> loadingLayoutClazzNameMap;
+	private final Map<Integer, String> indicatorLayoutClazzNameMap;
+
+	public PullToRefreshNode(Map<Integer, String> loadingLayoutClazzNameMap,
+			Map<Integer, String> indicatorLayoutClazzNameMap) {
+		this.loadingLayoutClazzNameMap = loadingLayoutClazzNameMap;
+		this.indicatorLayoutClazzNameMap = indicatorLayoutClazzNameMap;
+	}
+
+	public String getIndicatorLayoutClazzName(Integer layoutCode) {
+		return indicatorLayoutClazzNameMap.get(layoutCode);
+	}
+
+	public String getLoadingLayoutClazzName(Integer layoutCode) {
+		return loadingLayoutClazzNameMap.get(layoutCode);
+	}
+
+	
 }
