@@ -56,7 +56,7 @@
         </attr>
         <!--  -->
         <attr name="ptrIndicatorStyle">
-          	<flag name="default" value="0" />
+          	<flag name="def" value="0" />
         </attr>
         <!-- Whether the user can scroll while the View is Refreshing -->
         <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean" />
