@@ -26,7 +26,7 @@ public class PullToRefreshXmlConfiguration {
 	} 
 	
 	
-	private static final int XML_PATH_ID = R.xml.pulltorefresh;
+	private static final int XML_PATH_ID = R.raw.pulltorefresh;
 	private PullToRefreshNode node = null; 
 	private boolean initialized = false;
 	
