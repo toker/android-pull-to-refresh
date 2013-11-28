@@ -14,7 +14,11 @@ import com.handmark.pulltorefresh.library.internal.Utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-
+/**
+ * 
+ * @author NBP
+ *
+ */
 public class PullToRefreshXmlConfiguration {
 
 	private static class InstanceHolder {
