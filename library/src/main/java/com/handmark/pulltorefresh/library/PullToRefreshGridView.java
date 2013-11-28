@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
+import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
 public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView> {
 
@@ -39,8 +40,8 @@ public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView
 		super(context, mode);
 	}
 
-	public PullToRefreshGridView(Context context, Mode mode, AnimationStyle style) {
-		super(context, mode, style);
+	public PullToRefreshGridView(Context context, Mode mode, Class<? extends LoadingLayout> loadingLayoutClazz) {
+		super(context, mode, loadingLayoutClazz);
 	}
 
 	@Override

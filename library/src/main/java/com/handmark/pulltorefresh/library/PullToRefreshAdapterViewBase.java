@@ -34,6 +34,7 @@ import android.widget.ListAdapter;
 
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
+import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
 public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends PullToRefreshBase<T> implements
 		OnScrollListener {
@@ -80,8 +81,8 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		mRefreshableView.setOnScrollListener(this);
 	}
 
-	public PullToRefreshAdapterViewBase(Context context, Mode mode, AnimationStyle animStyle) {
-		super(context, mode, animStyle);
+	public PullToRefreshAdapterViewBase(Context context, Mode mode, Class<? extends LoadingLayout> loadingLayoutClazz) {
+		super(context, mode, loadingLayoutClazz);
 		mRefreshableView.setOnScrollListener(this);
 	}
 

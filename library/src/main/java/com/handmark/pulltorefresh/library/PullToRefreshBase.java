@@ -15,6 +15,9 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -34,6 +37,7 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.handmark.pulltorefresh.experimental.Concept;
 import com.handmark.pulltorefresh.library.internal.FlipLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 import com.handmark.pulltorefresh.library.internal.RotateLoadingLayout;
@@ -88,8 +92,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private boolean mLayoutVisibilityChangesEnabled = true;
 
 	private Interpolator mScrollAnimationInterpolator;
-	private AnimationStyle mLoadingAnimationStyle = AnimationStyle.getDefault();
-
+//	private AnimationStyle mLoadingAnimationStyle = AnimationStyle.getDefault();
+	private Class<? extends LoadingLayout> mLoadingLayoutClazz = null;
+	
 	private LoadingLayout mHeaderLayout;
 	private LoadingLayout mFooterLayout;
 
@@ -119,13 +124,20 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		init(context, null);
 	}
 
-	public PullToRefreshBase(Context context, Mode mode, AnimationStyle animStyle) {
+//	public PullToRefreshBase(Context context, Mode mode, AnimationStyle animStyle) {
+//		super(context);
+//		mMode = mode;
+//		mLoadingAnimationStyle = animStyle;
+//		init(context, null);
+//	}
+	
+	public PullToRefreshBase(Context context, Mode mode, Class<? extends LoadingLayout> loadingLayoutClazz) {
 		super(context);
 		mMode = mode;
-		mLoadingAnimationStyle = animStyle;
+		mLoadingLayoutClazz = loadingLayoutClazz;
 		init(context, null);
 	}
-
+	
 	@Override
 	public void addView(View child, int index, ViewGroup.LayoutParams params) {
 		if (DEBUG) {
@@ -140,7 +152,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			throw new UnsupportedOperationException("Refreshable View is not a ViewGroup so can't addView");
 		}
 	}
-
+	
+	@Deprecated
 	@Override
 	public final boolean demo() {
 		if (mMode.showHeaderLoadingLayout() && isReadyForPullStart()) {
@@ -222,6 +235,33 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		return mScrollingWhileRefreshingEnabled;
 	}
 
+	/**
+	 *  Must be deleted.
+	 */
+	@Concept
+	@Override
+	protected void onFinishInflate() {
+		int sizeOfChildViews = getChildCount();
+		for(int i = 0; i< sizeOfChildViews;++i) {
+			View view = getChildAt(i);
+			if ( view instanceof LoadingLayout) {
+				if (mMode.showHeaderLoadingLayout()) {
+					// ? Header? Footer?
+					mHeaderLayout = (LoadingLayout) view;
+					
+				}
+//			} else if ( view instanceof IndicatorLayout) {
+//				
+			} else {
+				addView(view, -1, view.getLayoutParams());
+			}
+
+			removeViewAt(i);
+		}
+		
+		updateUIForMode();
+	}
+	
 	@Override
 	public final boolean onInterceptTouchEvent(MotionEvent event) {
 
@@ -583,11 +623,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		super.addView(child, -1, params);
 	}
 
+	/**
+	 * 
+	 * @param context
+	 * @param mode
+	 * @param attrs
+	 * @comment Need to be refactored!
+	 * @return
+	 */
 	protected LoadingLayout createLoadingLayout(Context context, Mode mode, TypedArray attrs) {
-		LoadingLayout layout = mLoadingAnimationStyle.createLoadingLayout(context, mode,
-				getPullToRefreshScrollDirection(), attrs);
-		layout.setVisibility(View.INVISIBLE);
-		return layout;
+		return LoadingLayoutFactory.getInstance().createLoadingLayout(mLoadingLayoutClazz, context, mode, getPullToRefreshScrollDirection(), attrs);
 	}
 
 	/**
@@ -1082,7 +1127,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				break;
 		}
 
-		setGravity(Gravity.CENTER);
+//		setGravity(Gravity.CENTER);
 
 		ViewConfiguration config = ViewConfiguration.get(context);
 		mTouchSlop = config.getScaledTouchSlop();
@@ -1095,8 +1140,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
-			mLoadingAnimationStyle = AnimationStyle.mapIntToValue(a.getInteger(
-					R.styleable.PullToRefresh_ptrAnimationStyle, 0));
+			// This sentence is incorrect now -_-;;
+			@Concept
+			String loadingLayoutClazzName = a.getString(R.styleable.PullToRefresh_ptrAnimationStyle);
+			mLoadingLayoutClazz = LoadingLayoutFactory.getInstance().createLoadingLayoutClazz(loadingLayoutClazzName);
+			
+			// old logic 
+//			mLoadingAnimationStyle = AnimationStyle.mapIntToValue(a.getInteger(
+//					R.styleable.PullToRefresh_ptrAnimationStyle, 0));
 		}
 
 		// Refreshable View

@@ -53,8 +53,8 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		super(context, mode);
 	}
 
-	public PullToRefreshListView(Context context, Mode mode, AnimationStyle style) {
-		super(context, mode, style);
+	public PullToRefreshListView(Context context, Mode mode, Class<? extends LoadingLayout> loadingLayoutClazz) {
+		super(context, mode, loadingLayoutClazz);
 	}
 
 	@Override
