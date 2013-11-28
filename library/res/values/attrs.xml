@@ -51,8 +51,8 @@
 
         <!-- Style of Animation should be used displayed when pulling. -->
         <attr name="ptrAnimationStyle">
-            <flag name="rotate" value="0x0" />
-            <flag name="flip" value="0x1" />
+          	<flag name="rotate" value="0x01" />
+          	<flag name="flip" value="0x02" />
         </attr>
 
         <!-- Whether the user can scroll while the View is Refreshing -->
@@ -75,6 +75,14 @@
         <attr name="ptrAdapterViewBackground" format="reference|color" />
         <attr name="ptrDrawableTop" format="reference" />
         <attr name="ptrDrawableBottom" format="reference" />
+        
+        <!-- This attr is super experimental!. it must be deleted! ~_~ -->
+        <!-- @Concept -->
+        <attr name="configuration" value="pulltorefresh.xml" />
     </declare-styleable>
-
+	<!-- @Concept -->
+    <array name="ptrLoadingLayouts">
+        <item>com.handmark.pulltorefresh.library.internal.RotateLoadingLayout</item>
+        <item>com.handmark.pulltorefresh.library.internal.FlipLoadingLayout</item>
+    </array>
 </resources>
