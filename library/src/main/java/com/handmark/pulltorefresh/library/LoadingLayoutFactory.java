@@ -41,6 +41,11 @@ class LoadingLayoutFactory {
 	public static Class<? extends LoadingLayout> createLoadingLayoutClazz(
 			String clazzName) {
 		Class<? extends LoadingLayout> loadingLayoutClazz = null;
+		if ( clazzName == null ) {
+			loadingLayoutClazz = DefaultLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
+			return loadingLayoutClazz;
+		}
+		
 		try {
 			// FIXME unchecked
 			loadingLayoutClazz = (Class<LoadingLayout>) Class.forName(clazzName);
@@ -49,7 +54,7 @@ class LoadingLayoutFactory {
 			Log.e(LOG_TAG,
 					"Selected loading layout class has not been found.");
 			loadingLayoutClazz = DefaultLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
-		}
+		} 
 
 		return loadingLayoutClazz;
 	}
