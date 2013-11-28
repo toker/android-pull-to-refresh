@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pulltorefresh>
+    <loadinglayout>
+        <item name="rotate">com.handmark.pulltorefresh.library.internal.RotateLoadingLayout</item>
+        <item name="flip">com.handmark.pulltorefresh.library.internal.FlipLoadingLayout</item>
+    </loadinglayout>
+</pulltorefresh>
