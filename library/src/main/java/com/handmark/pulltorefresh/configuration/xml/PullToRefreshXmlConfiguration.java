@@ -52,10 +52,12 @@ public class PullToRefreshXmlConfiguration {
 		// parser the xml
 		try {
 			node = new Persister().read(PullToRefreshNode.class, br);
-			initialized = true;
 		} catch (Exception e) {
 			Utils.error("It has failed to parse the xmlpullparser xml.\n " + e.getMessage());
 		}
+		
+		// Intialization can be done whether reading XML has failed or not! 
+		initialized = true;
 		
 		Utils.closeSilently(br);
 		Utils.closeSilently(is);
