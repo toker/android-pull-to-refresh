@@ -1103,9 +1103,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		// Styleables from XML
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
-
-		// Default value of PTR View's gravity is center. so let the value be set center when the gravity is not set yet in XML.
-		if (!a.hasValue(android.R.attr.gravity)) {
+		
+		// Default value of PTR View's gravity is center. So let the value be set center when the gravity is not set yet in XML.
+		if (!Utils.existAttributeIntValue(attrs, "gravity")) {
 			setGravity(Gravity.CENTER);
 		}
 
