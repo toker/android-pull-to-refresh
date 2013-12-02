@@ -1,5 +1,6 @@
 package com.handmark.pulltorefresh.configuration.xml;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,6 +39,10 @@ class ExtendedConfigXmlParserFactory {
 			parser = XmlPullParserFactory.newInstance().newPullParser();
 			parser.setInput(is, DEFAULT_ENCODING_TYPE);
 			
+		} catch (FileNotFoundException e) {
+			Log.d(LOG_TAG, "The configuration file 'assets/" + XML_PATH_IN_ASSETS + "' is missing. But the file is just an option. It is necessary only if you want to customize something in Pull To Refresh.");
+			// explicitly assign null
+			parser = null;
 		} catch (XmlPullParserException e) {
 			Log.w(LOG_TAG, "The error occurs below when generating parser.", e);
 			// explicitly assign null
