@@ -97,7 +97,10 @@ public class Utils {
 	 * @return true if the {@code attribute} exists
 	 */
 	public static boolean existAttributeIntValue(AttributeSet attrs, String namespace, String attribute, int invalidValue) {
-		Assert.notNull(attrs, "attrs");
+		// If attrs is null, assume the attribute is not set.
+		if ( attrs == null ) {
+			return false;
+		}
 		Assert.notNull(attrs, "namespace");
 		Assert.notNull(attrs, "attribute");
 		
