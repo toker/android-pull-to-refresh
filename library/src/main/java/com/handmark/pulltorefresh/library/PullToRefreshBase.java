@@ -1111,12 +1111,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
 			mMode = Mode.mapIntToValue(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
 		}
-
+		
+		// Get a loading layout class token
+		String loadingLayoutCode = null;
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
-			String loadingLayoutCode = a.getString(R.styleable.PullToRefresh_ptrAnimationStyle);
-			mLoadingLayoutClazz = LoadingLayoutFactory.createLoadingLayoutClazzByLayoutCode(loadingLayoutCode);
-		}
-
+			loadingLayoutCode = a.getString(R.styleable.PullToRefresh_ptrAnimationStyle);
+		} 
+		
+		mLoadingLayoutClazz = LoadingLayoutFactory.createLoadingLayoutClazzByLayoutCode(loadingLayoutCode);
+		
 		// Refreshable View
 		// By passing the attrs, we can add ListView/GridView params via XML
 		mRefreshableView = createRefreshableView(context, attrs);
