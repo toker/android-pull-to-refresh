@@ -7,14 +7,14 @@
 - Configurable friction and smooth scroll duration. 
 - This fork project is __not__ being deprecated. Please send issues or pull requests to me, and I will provide you with feedbacks.
 
-- __Are you are using Pull To Refresh v2.1.x? You'd better [MIGRATE](http://hive.nhncorp.com/weblab/Android-PullToRefresh/post/5) to v3.0 now! __
+- __Are you are using Pull To Refresh v2.1.x? You'd better [MIGRATE](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Migration-from-v2.1.x-to-v3.0.0) to v3.0 now! _
 
 ### Introduction
 * * *
 
 
 
-![Screenshot](https://github.com/chrisbanes/Android-PullToRefresh/raw/master/header_graphic.png)
+![Screenshot](https://github.com/nhnopensource/android-pull-to-refresh/raw/master/header_graphic.png)
 
 This project aims to provide a reusable Pull to Refresh widget for Android. It was originally based on Johan Nilsson's [library](https://github.com/johannilsson/android-pulltorefresh) (mainly for graphics, strings and animations), but these have been replaced since.
 
@@ -35,29 +35,24 @@ This project aims to provide a reusable Pull to Refresh widget for Android. It w
  * Maven Support.
  * Indicators to show the user when a Pull-to-Refresh is available.
  * Support for **ListFragment**!
- * Lots of [Customization](http://yobi.navercorp.com/weblab/Android-PullToRefresh/post/4) options!
+ * Lots of [Customization](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Customization) options!
 
-Repository at <http://yobi.navercorp.com:80/weblab/Android-PullToRefresh>.
-
-## Sample Application
-Sample application is available on Google Play (the source is in the repository):
-
-[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](http://play.google.com/store/apps/details?id=com.handmark.pulltorefresh.samples)
+Repository at <https://github.com/nhnopensource/android-pull-to-refresh>.
 
 ## Usage
-To begin using the library, please see the [Quick Start Guide](http://hive.nhncorp.com/weblab/Android-PullToRefresh/post/1).
+To begin using the library, please see the [Quick Start Guide](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Quick-Start-Guide).
 
 ### Customization
-Our [Customization](http://yobi.navercorp.com/weblab/Android-PullToRefresh/post/4) page contains detailed information on how to change the behaviour and look of the View.
+Our [Customization](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Customization) page contains detailed information on how to change the behaviour and look of the View.
 
 ### Pull Up to Refresh
-By default this library is set to Pull Down to Refresh, but if you want to allow Pull Up to Refresh then you can do so. You can even set the View to enable both Pull Up and Pull Down using the 'both' setting. See the [Customization](http://yobi.navercorp.com/weblab/Android-PullToRefresh/post/4) page for more information on how to set this.
+By default this library is set to Pull Down to Refresh, but if you want to allow Pull Up to Refresh then you can do so. You can even set the View to enable both Pull Up and Pull Down using the 'both' setting. See the [Customization](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Customization) page for more information on how to set this.
 
 ## Apps
-Want to see which Apps are already using Android-PullToRefresh? Have a look [here](https://github.com/chrisbanes/Android-PullToRefresh/wiki/Apps). 
+Want to see which Apps are already using Android-PullToRefresh? Have a look [here](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Apps). 
 
 ## Changelog
-Please see the new [Changelog](http://hive.nhncorp.com/weblab/Android-PullToRefresh/post/2) page to see what's recently changed.
+Please see the new [Changelog](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Changelog) page to see what's recently changed.
 
 ## Pull Requests
 
