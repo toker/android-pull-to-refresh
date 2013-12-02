@@ -12,8 +12,6 @@
 ### Introduction
 * * *
 
-
-
 ![Screenshot](https://github.com/nhnopensource/android-pull-to-refresh/raw/master/header_graphic.png)
 
 This project aims to provide a reusable Pull to Refresh widget for Android. It was originally based on Johan Nilsson's [library](https://github.com/johannilsson/android-pulltorefresh) (mainly for graphics, strings and animations), but these have been replaced since.
@@ -70,11 +68,11 @@ I will gladly accept pull requests for fixes and feature enhancements but please
 * [Maxim Galkin](https://github.com/mgalkin)
 * [Scorcher](https://github.com/Scorcher)
 
-
 ## License
 
     Copyright 2011, 2012 Chris Banes
     Copyright 2013 Naver Business Platform Corp.
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
