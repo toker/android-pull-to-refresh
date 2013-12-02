@@ -81,6 +81,7 @@ class LoadingLayoutFactory {
 			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {
 		LoadingLayout layout = null;
+		
 		try {
 			Constructor<? extends LoadingLayout> constructor = clazz
 					.getConstructor(Context.class, Mode.class,
@@ -89,19 +90,19 @@ class LoadingLayoutFactory {
 					orientation, attrs);
 
 		} catch (IllegalArgumentException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		} catch (InvocationTargetException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		} catch (SecurityException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		} catch (NoSuchMethodException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		} catch (InstantiationException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		} catch (IllegalAccessException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		} catch (NullPointerException e) {
-			Log.e(LOG_TAG, "loading layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		}
 
 		if (layout == null) {

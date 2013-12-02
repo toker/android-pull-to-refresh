@@ -81,19 +81,19 @@ public class IndicatorLayoutFactory {
 			layout = (IndicatorLayout) constructor.newInstance(context, mode);
 
 		} catch (IllegalArgumentException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		} catch (InvocationTargetException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		} catch (SecurityException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		} catch (NoSuchMethodException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		} catch (InstantiationException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		} catch (IllegalAccessException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		} catch (NullPointerException e) {
-			Log.e(LOG_TAG, "indicator layout has failed while creating. ", e);
+			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		}
 
 		if (layout == null) {
