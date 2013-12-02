@@ -66,7 +66,7 @@ public class IndicatorLayoutFactory {
 	}
 	/**
 	 * Create a {@code IndicatorLayout} instance matched by <b>{@code clazz} token</b> 
-	 * @param layoutCode Indicator layout code, which must be defined in pulltorefresh.xml
+	 * @param clazz Indicator layout class token, which must be defined in pulltorefresh.xml
 	 * @param context 
 	 * @param mode 
 	 * @return {@code IndicatorLayout} instance if the class matched by {@code layoutCode} exists, or {@code DefaultIndicatorLayout} instance if not  

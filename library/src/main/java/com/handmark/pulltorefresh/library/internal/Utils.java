@@ -72,7 +72,6 @@ public class Utils {
 	/**
 	 * Check whether android {@code attribute} exists and is set in {@code attributeSet} 
 	 * @param attrs {@code AttributeSet} where the {@code attribute} is included (if that is set)
-	 * @param namespace Namespace where the {@code attribute} is defined 
 	 * @return true if the {@code attribute} exists
 	 */
 	public static boolean existAttributeIntValue(AttributeSet attrs, String attribute) {

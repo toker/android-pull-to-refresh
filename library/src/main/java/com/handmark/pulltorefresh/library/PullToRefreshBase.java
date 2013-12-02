@@ -591,12 +591,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	/**
-	 * 
+	 * Create a new loading layout instance by using the class token {@link #mLoadingLayoutClazz}
 	 * @param context
 	 * @param mode
 	 * @param attrs
-	 * @comment Need to be refactored!
-	 * @return
+	 * @return Loading layout instance which was created by using the class token {@link #mLoadingLayoutClazz}
 	 */
 	protected LoadingLayout createLoadingLayout(Context context, Mode mode, TypedArray attrs) {
 		return LoadingLayoutFactory.createLoadingLayout(mLoadingLayoutClazz, context, mode, getPullToRefreshScrollDirection(), attrs);
@@ -998,8 +997,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	/**
-	 * Smooth Scroll to position using the default duration of
-	 * {@value #mSmoothScrollDurationMs} ms.
+	 * Smooth Scroll to position using the duration of
+	 * {@link #mSmoothScrollDurationMs} ms.
 	 * 
 	 * @param scrollValue - Position to scroll to
 	 */
@@ -1008,8 +1007,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	/**
-	 * Smooth Scroll to position using the default duration of
-	 * {@value #mSmoothScrollDurationMs} ms.
+	 * Smooth Scroll to position using the the duration of
+	 * {@link #mSmoothScrollDurationMs} ms.
 	 * 
 	 * @param scrollValue - Position to scroll to
 	 * @param listener - Listener for scroll
@@ -1019,8 +1018,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	/**
-	 * Smooth Scroll to position using the longer default duration of
-	 * {@value #mSmoothScrollLongDurationMs} ms.
+	 * Smooth Scroll to position using the longer the duration of
+	 * {@link #mSmoothScrollLongDurationMs} ms.
 	 * 
 	 * @param scrollValue - Position to scroll to
 	 */
