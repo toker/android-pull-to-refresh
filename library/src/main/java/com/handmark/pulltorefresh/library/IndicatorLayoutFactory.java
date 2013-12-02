@@ -74,7 +74,26 @@ public class IndicatorLayoutFactory {
 	public static IndicatorLayout createIndicatorLayout(
 			Class<? extends IndicatorLayout> clazz, Context context, Mode mode) {
 		IndicatorLayout layout = null;
+		// Prevent NullPointerException 
+		if ( clazz == null ) {
+			Log.i(LOG_TAG, "The Class token of the Indicator Layout is missing. Default Indicator Layout will be used.");
+			clazz = DefaultIndicatorLayoutFactory.createIndicatorLayoutClazz("");
+		}
+		
+		layout = tryNewInstance(clazz, context, mode);
+		
+		// If trying to create new instance has failed,
+		if (layout == null) {
+			layout = DefaultIndicatorLayoutFactory.createIndicatorLayout(clazz, context, mode);
+		}
 
+		layout.setVisibility(View.INVISIBLE);
+		return layout;
+	}
+	
+	private static IndicatorLayout tryNewInstance(
+			Class<? extends IndicatorLayout> clazz, Context context, Mode mode) {
+		IndicatorLayout layout = null;
 		try {
 			Constructor<? extends IndicatorLayout> constructor = clazz
 					.getConstructor(Context.class, Mode.class);
@@ -95,12 +114,7 @@ public class IndicatorLayoutFactory {
 		} catch (NullPointerException e) {
 			Log.e(LOG_TAG, "The indicator layout has failed to be created. ", e);
 		}
-
-		if (layout == null) {
-			layout = DefaultIndicatorLayoutFactory.createIndicatorLayout(clazz, context, mode);
-		}
-
-		layout.setVisibility(View.INVISIBLE);
+		
 		return layout;
 	}	
 	/**

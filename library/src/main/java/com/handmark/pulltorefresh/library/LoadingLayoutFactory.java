@@ -81,7 +81,26 @@ class LoadingLayoutFactory {
 			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
 			Orientation orientation, TypedArray attrs) {
 		LoadingLayout layout = null;
+		// Prevent NullPointerException
+		if ( clazz == null ) {
+			Log.i(LOG_TAG, "The Class token of the Loading Layout is missing. Default Loading Layout will be used.");
+			clazz = RotateLoadingLayoutFactory.createLoadingLayoutClazz("");
+		}
 		
+		layout = tryNewInstance(clazz, context, mode, orientation, attrs);
+
+		// If trying to create new instance has failed,
+		if (layout == null) {
+			layout = RotateLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
+		}
+
+		layout.setVisibility(View.INVISIBLE);
+		return layout;
+	}
+	private static LoadingLayout tryNewInstance(
+			Class<? extends LoadingLayout> clazz, Context context, Mode mode,
+			Orientation orientation, TypedArray attrs) {
+		LoadingLayout layout = null;
 		try {
 			Constructor<? extends LoadingLayout> constructor = clazz
 					.getConstructor(Context.class, Mode.class,
@@ -104,12 +123,6 @@ class LoadingLayoutFactory {
 		} catch (NullPointerException e) {
 			Log.e(LOG_TAG, "The loading layout has failed to be created. ", e);
 		}
-
-		if (layout == null) {
-			layout = RotateLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
-		}
-
-		layout.setVisibility(View.INVISIBLE);
 		return layout;
 	}
 	/**
