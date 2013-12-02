@@ -7,7 +7,7 @@
 - Configurable friction and smooth scroll duration. 
 - This fork project is __not__ being deprecated. Please send issues or pull requests to me, and I will provide you with feedbacks.
 
-- __Are you are using Pull To Refresh v2.1.x? You'd better [MIGRATE](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Migration-from-v2.1.x-to-v3.0.0) to v3.0 now! _
+- __Are you are using Pull To Refresh v2.1.x? You'd better [MIGRATE](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Migration-from-v2.1.x-to-v3.0.0) to v3.0 now!__
 
 ### Introduction
 * * *
@@ -38,6 +38,11 @@ This project aims to provide a reusable Pull to Refresh widget for Android. It w
  * Lots of [Customization](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Customization) options!
 
 Repository at <https://github.com/nhnopensource/android-pull-to-refresh>.
+
+## Sample Application
+Sample application is being provided as APK file (the source is in the repository):
+
+[Download Here!](https://github.com/nhnopensource/android-pull-to-refresh/raw/master/downloads/sample-3.0.0.apk)
 
 ## Usage
 To begin using the library, please see the [Quick Start Guide](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Quick-Start-Guide).
