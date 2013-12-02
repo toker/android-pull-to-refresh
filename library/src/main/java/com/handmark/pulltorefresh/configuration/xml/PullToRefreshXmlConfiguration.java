@@ -66,6 +66,10 @@ public class PullToRefreshXmlConfiguration {
 	 * @param context Context instance and not null
 	 */
 	public void init(Context context) {
+		// If an initialization was happened already, skip.
+		if ( initialized == true ) {
+			return;
+		}
 		Assert.notNull(context, "Context");
 		// get resources
 		Resources resources = context.getResources();
