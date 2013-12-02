@@ -44,7 +44,7 @@ class LoadingLayoutFactory {
 			String clazzName) {
 		Class<? extends LoadingLayout> loadingLayoutClazz = null;
 		if ( clazzName == null ) {
-			loadingLayoutClazz = RotateLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
+			loadingLayoutClazz = DefaultLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
 			return loadingLayoutClazz;
 		}
 		
@@ -53,7 +53,7 @@ class LoadingLayoutFactory {
 
 		} catch (ClassNotFoundException e) {
 			Log.e(LOG_TAG,"The loading layout you have chosen class has not been found.", e);
-			loadingLayoutClazz = RotateLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
+			loadingLayoutClazz = DefaultLoadingLayoutFactory.createLoadingLayoutClazz(clazzName);
 		} 
 
 		return loadingLayoutClazz;
@@ -84,14 +84,14 @@ class LoadingLayoutFactory {
 		// Prevent NullPointerException
 		if ( clazz == null ) {
 			Log.i(LOG_TAG, "The Class token of the Loading Layout is missing. Default Loading Layout will be used.");
-			clazz = RotateLoadingLayoutFactory.createLoadingLayoutClazz("");
+			clazz = DefaultLoadingLayoutFactory.createLoadingLayoutClazz("");
 		}
 		
 		layout = tryNewInstance(clazz, context, mode, orientation, attrs);
 
 		// If trying to create new instance has failed,
 		if (layout == null) {
-			layout = RotateLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
+			layout = DefaultLoadingLayoutFactory.createLoadingLayout(clazz, context, mode, orientation, attrs);
 		}
 
 		layout.setVisibility(View.INVISIBLE);
@@ -130,7 +130,7 @@ class LoadingLayoutFactory {
 	 * @author Wonjun Kim
 	 *
 	 */
-	private static class RotateLoadingLayoutFactory {
+	private static class DefaultLoadingLayoutFactory {
 		/**
 		 * @param clazzName This class name is being ignored
 		 * @return Class token of {@code RotateLoadingLayout}
