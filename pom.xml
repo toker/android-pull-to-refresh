@@ -21,9 +21,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/chrisbanes/Android-PullToRefresh</url>
-		<connection>scm:git:git://github.com/chrisbanes/Android-PullToRefresh.git</connection>
-		<developerConnection>scm:git:git@github.com:chrisbanes/Android-PullToRefresh.git</developerConnection>
+		<url>https://github.com/nhnopensource/android-pull-to-refresh</url>
+		<connection>scm:git:git://github.com/nhnopensource/android-pull-to-refresh.git</connection>
+		<developerConnection>scm:git:git@github.com:nhnopensource/android-pull-to-refresh.git</developerConnection>
 	  <tag>HEAD</tag>
   </scm>
 	<developers>
