@@ -1177,9 +1177,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 		
 		// set scroll properties from attributes 
-		mFriction = a.getFloat(R.styleable.PullToRefresh_ptrFriction, DEFAULT_FRICTION);
-		mSmoothScrollDurationMs = a.getInt(R.styleable.PullToRefresh_ptrSmoothScrollDuration, DEFAULT_SMOOTH_SCROLL_DURATION_MS);
-		mSmoothScrollLongDurationMs = a.getInt(R.styleable.PullToRefresh_ptrSmoothScrollLongDuration, DEFAULT_SMOOTH_SCROLL_LONG_DURATION_MS);
+		float friction = a.getFloat(R.styleable.PullToRefresh_ptrFriction, DEFAULT_FRICTION);
+		int smoothScrollDuration = a.getInt(R.styleable.PullToRefresh_ptrSmoothScrollDuration, DEFAULT_SMOOTH_SCROLL_DURATION_MS);
+		int smoothScrollLongDuration = a.getInt(R.styleable.PullToRefresh_ptrSmoothScrollLongDuration, DEFAULT_SMOOTH_SCROLL_LONG_DURATION_MS);
+		
+		setFriction(friction);
+		setSmoothScrollDuration(smoothScrollDuration);
+		setSmoothScrollLongDuration(smoothScrollLongDuration);
 		
 		// Let the derivative classes have a go at handling attributes, then
 		// recycle them...
