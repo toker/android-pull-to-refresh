@@ -66,7 +66,8 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>
-				     <!-- sourceFileExcludes doesn't work in 2.9 and 2.9.1 both. :( -->
+				     <!-- TODO: sourceFileExcludes doesn't work in 2.9 and 2.9.1 both. :(
+				     			I hope that this feature works well. -->
 				    <sourceFileExcludes>
 				        <sourceFileExclude>**/R.java</sourceFileExclude>
 				    </sourceFileExcludes>
