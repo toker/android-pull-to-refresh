@@ -379,11 +379,33 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		return false;
 	}
-
+	/**
+	 * Set new friction
+	 * @param friction New friction value. Must be float. The default value is {@value #DEFAULT_FRICTION}.
+	 */
+	public final void setFriction(float friction) {
+		this.mFriction = friction;
+	}
+	/**
+	 * Set new smooth scroll duration
+	 * @param smoothScrollDurationMs Milliseconds. The default value is {@value #DEFAULT_SMOOTH_SCROLL_DURATION_MS}.
+	 */
+	public final void setSmoothScrollDuration(int smoothScrollDurationMs) {
+		this.mSmoothScrollDurationMs = smoothScrollDurationMs;
+	} 
+	/**
+	 * Set new smooth scroll <b>longer</b> duration. <br /> This duration is only used by calling {@link #smoothScrollToLonger(int)}. 
+	 * @param smoothScrollLongDurationMs Milliseconds. The default value is {@value #DEFAULT_SMOOTH_SCROLL_LONG_DURATION_MS}.
+	 */
+	public final void setSmoothScrollLongDuration(int smoothScrollLongDurationMs) {
+		this.mSmoothScrollLongDurationMs = smoothScrollLongDurationMs;
+	} 
+	/**
+	 * 
+	 */
 	public final void setScrollingWhileRefreshingEnabled(boolean allowScrollingWhileRefreshing) {
 		mScrollingWhileRefreshingEnabled = allowScrollingWhileRefreshing;
 	}
-
 	/**
 	 * @deprecated See {@link #setScrollingWhileRefreshingEnabled(boolean)}
 	 */
