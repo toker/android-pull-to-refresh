@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -1200,6 +1201,22 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		// Finally update the UI for the modes
 		updateUIForMode();
+	}
+	/**
+	 * {@link //stackoverflow.com/questions/7165830/what-is-the-size-of-actionbar-in-pixels}
+	 * @param context
+	 * @return
+	 */
+	private int getActionBarSize(Context context) {
+		// Calculate ActionBar height
+		int actionBarHeight = 0;
+		TypedValue tv = new TypedValue();
+		if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+		{
+		    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+		}
+		
+		return actionBarHeight;
 	}
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
