@@ -108,7 +108,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Top DecorView for containing google style-ptr 
 	 */
 	private FrameLayout mTopViewLayout; 
-
+	private boolean mWindowAttached = false;
+	
 	private OnRefreshListener<T> mOnRefreshListener;
 	private OnRefreshListener2<T> mOnRefreshListener2;
 	private OnPullEventListener<T> mOnPullEventListener;
@@ -1094,6 +1095,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	protected void updateUIForViewOnTopMode() {
+		if ( mWindowAttached == false ) {
+			return;
+		}
+
 		if ( mMode.showViewOnTop() == false ) {
             return;
         }
@@ -1254,6 +1259,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
+		mWindowAttached = true;
 		initTopViewGroup();
 		updateUIForViewOnTopMode();
 	}
