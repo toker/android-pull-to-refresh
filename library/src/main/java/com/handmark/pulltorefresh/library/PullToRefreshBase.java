@@ -1218,7 +1218,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		
 		return actionBarHeight;
 	}
-	
+    
+	@Override
+	protected void onAttachedToWindow() {
+		super.onAttachedToWindow();
+		initTopViewGroup();
+	}
+    
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void initTopViewGroup() {
 
