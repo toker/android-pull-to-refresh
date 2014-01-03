@@ -99,6 +99,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	
 	private LoadingLayout mHeaderLayout;
 	private LoadingLayout mFooterLayout;
+	private LoadingLayout mViewOnTopLoadingLayout;
 
 	private OnRefreshListener<T> mOnRefreshListener;
 	private OnRefreshListener2<T> mOnRefreshListener2;
@@ -1150,6 +1151,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// We need to create now layouts now
 		mHeaderLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 		mFooterLayout = createLoadingLayout(context, Mode.PULL_FROM_END, a);
+		mViewOnTopLoadingLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 
 		/**
 		 * Styleables from XML
