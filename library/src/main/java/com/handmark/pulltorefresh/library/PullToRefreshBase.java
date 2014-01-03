@@ -108,6 +108,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Top DecorView for containing google style-ptr 
 	 */
 	private FrameLayout mTopViewLayout; 
+
 	private OnRefreshListener<T> mOnRefreshListener;
 	private OnRefreshListener2<T> mOnRefreshListener2;
 	private OnPullEventListener<T> mOnPullEventListener;
@@ -1231,6 +1232,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Finally update the UI for the modes
 		updateUIForMode();
 	}
+
 	/**
 	 * {@link //stackoverflow.com/questions/7165830/what-is-the-size-of-actionbar-in-pixels}
 	 * @param context
