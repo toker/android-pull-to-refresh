@@ -37,6 +37,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.handmark.pulltorefresh.configuration.xml.PullToRefreshXmlConfiguration;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
@@ -109,7 +110,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 */
 	private FrameLayout mTopViewLayout; 
 	private boolean mWindowAttached = false;
-	
+	private ProgressBar mProgressBar;
+
 	private OnRefreshListener<T> mOnRefreshListener;
 	private OnRefreshListener2<T> mOnRefreshListener2;
 	private OnPullEventListener<T> mOnPullEventListener;
@@ -963,7 +965,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					mHeaderLayout.setHeight(maximumPullScroll);
 					pTop = -maximumPullScroll;
 				} else if (mMode.showViewOnTop() && mWindowAttached == true ) {
-					// WANING : There is a magic number!
+					// WARNING : There is a magic number!
 					mViewOnTopLoadingLayout.setHeight(96 * 2);
 					pTop = 0;
 				} else {
@@ -1232,6 +1234,20 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mViewOnTopLoadingLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 
 		/**
+         * ProgressBar for ViEW_ON_TOP Mode
+         */
+        if (mMode.showViewOnTop()) {
+            mProgressBar = new ProgressBar(context);
+            mProgressBar.setIndeterminate(true);
+            mProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
+            // WARNING : There is a magic number!
+            FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(200, 200);
+            barParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mRefreshableViewWrapper.addView(mProgressBar, -1, barParams);        	
+        }
+
+		/**
 		 * Styleables from XML
 		 */
 		if (a.hasValue(R.styleable.PullToRefresh_ptrRefreshableViewBackground)) {
@@ -1314,6 +1330,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		mWindowAttached = true;
+		
 		initTopViewGroup();
 		updateUIForViewOnTopMode();
 	}
@@ -1340,7 +1357,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			topViewGroup = (ViewGroup) view;
 		}
 		
-		// WARNING: Some magic number is here
 		int actionBarHeight = getActionBarSize(context);  
 		FrameLayout layout = new FrameLayout(context);
 
