@@ -1477,6 +1477,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			} else {
 				post(mCurrentSmoothScrollRunnable);
 			}
+			
+		} else if ( listener != null ) { 
+			// Call listener immediately
+			listener.onSmoothScrollFinished();
 		}
 	}
 
