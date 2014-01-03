@@ -70,7 +70,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		 * the header/footer views won't show so we use the normal method.
 		 */
 		ListAdapter adapter = mRefreshableView.getAdapter();
-		if (!mListViewExtrasEnabled || !getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty()) {
+		if (!mListViewExtrasEnabled || !getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty() || getCurrentMode() == Mode.VIEW_ON_TOP) {
 			super.onRefreshing(doScroll);
 			return;
 		}
@@ -132,7 +132,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		/**
 		 * If the extras are not enabled, just call up to super and return.
 		 */
-		if (!mListViewExtrasEnabled) {
+		if (!mListViewExtrasEnabled || getCurrentMode() == Mode.VIEW_ON_TOP) {
 			super.onReset();
 			return;
 		}
@@ -227,7 +227,10 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		super.handleStyledAttributes(a);
 
 		mListViewExtrasEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrListViewExtrasEnabled, true);
-
+		if ( getMode() == Mode.VIEW_ON_TOP) {
+			mListViewExtrasEnabled = false;
+		}
+		
 		if (mListViewExtrasEnabled) {
 			final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
