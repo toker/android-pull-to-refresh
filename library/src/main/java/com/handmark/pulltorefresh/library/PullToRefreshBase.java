@@ -285,7 +285,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					absDiff = Math.abs(diff);
 
 					if (absDiff > mTouchSlop && (!mFilterTouchEvents || absDiff > Math.abs(oppositeDiff))) {
-						if (mMode.showHeaderLoadingLayout() && diff >= 1f && isReadyForPullStart()) {
+						if ((mMode.showHeaderLoadingLayout() || mMode.showViewOnTop()) && diff >= 1f && isReadyForPullStart()) {
 							mLastMotionY = y;
 							mLastMotionX = x;
 							mIsBeingDragged = true;
@@ -688,6 +688,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		return mHeaderLayout.getContentSize();
 	}
 
+	protected final int getViewOnTopSize() {
+		return mViewOnTopLoadingLayout.getContentSize();
+	}
+
 	protected int getPullToRefreshScrollDuration() {
 		return mSmoothScrollDurationMs;
 	}
@@ -754,6 +758,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			case PULL_FROM_END:
 				mFooterLayout.pullToRefresh();
 				break;
+			case VIEW_ON_TOP:
+				mViewOnTopLoadingLayout.pullToRefresh();
+				break;
 			case PULL_FROM_START:
 				mHeaderLayout.pullToRefresh();
 				break;
@@ -775,6 +782,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 		if (mMode.showFooterLoadingLayout()) {
 			mFooterLayout.refreshing();
+		}
+		if (mMode.showViewOnTop()) {
+			mViewOnTopLoadingLayout.refreshing();
 		}
 
 		if (doScroll) {
@@ -816,6 +826,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			case PULL_FROM_END:
 				mFooterLayout.releaseToRefresh();
 				break;
+			case VIEW_ON_TOP:
+				mViewOnTopLoadingLayout.releaseToRefresh();
+				break;
 			case PULL_FROM_START:
 				mHeaderLayout.releaseToRefresh();
 				break;
@@ -836,6 +849,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Always reset both layouts, just in case...
 		mHeaderLayout.reset();
 		mFooterLayout.reset();
+		if (mMode.showViewOnTop()) {
+			mViewOnTopLoadingLayout.reset();
+		}
 
 		smoothScrollTo(0);
 	}
@@ -944,6 +960,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				if (mMode.showHeaderLoadingLayout()) {
 					mHeaderLayout.setHeight(maximumPullScroll);
 					pTop = -maximumPullScroll;
+				} else if (mMode.showViewOnTop() && mWindowAttached == true ) {
+					// WANING : There is a magic number!
+					mViewOnTopLoadingLayout.setHeight(96 * 2);
+					pTop = 0;
 				} else {
 					pTop = 0;
 				}
@@ -1001,7 +1021,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		if (mLayoutVisibilityChangesEnabled) {
 			if (value < 0) {
-				mHeaderLayout.setVisibility(View.VISIBLE);
+				switch (mCurrentMode) {
+					case VIEW_ON_TOP:
+						mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
+						break;
+					default:	
+					case PULL_FROM_START:
+						mHeaderLayout.setVisibility(View.VISIBLE);
+						break;
+				}
 			} else if (value > 0) {
 				mFooterLayout.setVisibility(View.VISIBLE);
 			} else {
@@ -1140,7 +1168,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (null != mOnRefreshListener) {
 			mOnRefreshListener.onRefresh(this);
 		} else if (null != mOnRefreshListener2) {
-			if (mCurrentMode == Mode.PULL_FROM_START) {
+			if (mCurrentMode == Mode.PULL_FROM_START || mCurrentMode == Mode.VIEW_ON_TOP) {
 				mOnRefreshListener2.onPullDownToRefresh(this);
 			} else if (mCurrentMode == Mode.PULL_FROM_END) {
 				mOnRefreshListener2.onPullUpToRefresh(this);
@@ -1308,6 +1336,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private boolean isReadyForPull() {
 		switch (mMode) {
 			case PULL_FROM_START:
+			case VIEW_ON_TOP:
 				return isReadyForPullStart();
 			case PULL_FROM_END:
 				return isReadyForPullEnd();
@@ -1346,6 +1375,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				newScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / mFriction);
 				itemDimension = getFooterSize();
 				break;
+			case VIEW_ON_TOP:
+				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / mFriction);
+				itemDimension = getViewOnTopSize();
+				break;
 			case PULL_FROM_START:
 			default:
 				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / mFriction);
@@ -1360,6 +1393,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			switch (mCurrentMode) {
 				case PULL_FROM_END:
 					mFooterLayout.onPull(scale);
+					break;
+				case VIEW_ON_TOP:
+					mViewOnTopLoadingLayout.onPull(scale);
 					break;
 				case PULL_FROM_START:
 				default:
