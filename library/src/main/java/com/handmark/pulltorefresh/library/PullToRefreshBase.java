@@ -1048,6 +1048,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					: LAYER_TYPE_NONE /* View.LAYER_TYPE_NONE */);
 		}
 
+		// skip ScrollTo(...) 
+		if (mMode.showViewOnTop() ) {
+			return;
+		}
+
 		switch (getPullToRefreshScrollDirection()) {
 			case VERTICAL:
 				scrollTo(0, value);
