@@ -1254,6 +1254,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		initTopViewGroup();
+		updateUIForViewOnTopMode();
 	}
     
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
