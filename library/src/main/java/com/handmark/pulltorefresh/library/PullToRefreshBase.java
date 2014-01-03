@@ -1369,8 +1369,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		 * setting the Refresh state via
 		 * {@link PullToRefreshBase#setRefreshing() setRefreshing()}.
 		 */
-		MANUAL_REFRESH_ONLY(0x4);
+		MANUAL_REFRESH_ONLY(0x4),
 
+		/**
+		 * Google style pull-to-refresh mode
+		 *
+		 */
+		VIEW_ON_TOP(0x5);
+		
 		/**
 		 * @deprecated Use {@link #PULL_FROM_START} from now on.
 		 */
@@ -1430,6 +1436,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		 */
 		public boolean showFooterLoadingLayout() {
 			return this == PULL_FROM_END || this == BOTH || this == MANUAL_REFRESH_ONLY;
+		}
+
+		/**
+		 * @return true if this mode wants the Loading Layout to be shown like Google style pull-to-refresh
+		 */
+		public boolean showViewOnTop() {
+			return this == VIEW_ON_TOP;
 		}
 
 		int getIntValue() {
