@@ -16,9 +16,11 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -101,6 +103,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private LoadingLayout mFooterLayout;
 	private LoadingLayout mViewOnTopLoadingLayout;
 
+	/**
+	 * Top DecorView for containing google style-ptr 
+	 */
+	private FrameLayout mTopViewLayout; 
 	private OnRefreshListener<T> mOnRefreshListener;
 	private OnRefreshListener2<T> mOnRefreshListener2;
 	private OnPullEventListener<T> mOnPullEventListener;
@@ -1195,7 +1201,48 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Finally update the UI for the modes
 		updateUIForMode();
 	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void initTopViewGroup() {
 
+        if ( mMode.showViewOnTop() == false ) {
+            return;
+        }
+
+		View view = this.getRootView();
+		ViewGroup topViewGroup = null;
+		Context context = getContext();
+		if (view instanceof ViewGroup == false) {
+			Log.w(LOG_TAG, "Current root view is not ViewGroup type. VIEW_ON_TYPE mode will be disabled.");
+			topViewGroup = new ViewGroup(context) {
+				@Override
+				protected void onLayout(boolean changed, int l, int t, int r, int b) {
+					// do nothing
+				}};
+
+		} else {
+			topViewGroup = (ViewGroup) view;
+		}
+		
+		// WARNING: Some magic number is here
+		int actionBarHeight = 96;  
+		FrameLayout layout = new FrameLayout(context);
+
+		@SuppressWarnings("deprecation")
+		int matchParent = (VERSION.SDK_INT >= 8) ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.FILL_PARENT;
+		
+		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, actionBarHeight);
+		
+		topViewGroup.addView(layout, params);
+		// NOTE : Set background just for test
+		layout.setBackgroundColor(0xFFEEEEEE); 
+
+		// WARNING : setY(...) method is supported over API 11
+		layout.setY(-actionBarHeight);
+		mTopViewLayout = layout;
+
+	}
+	
 	private boolean isReadyForPull() {
 		switch (mMode) {
 			case PULL_FROM_START:
