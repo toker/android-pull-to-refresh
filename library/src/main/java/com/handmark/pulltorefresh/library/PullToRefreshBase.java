@@ -1242,7 +1242,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 		
 		// WARNING: Some magic number is here
-		int actionBarHeight = 96;  
+		int actionBarHeight = getActionBarSize(context);  
 		FrameLayout layout = new FrameLayout(context);
 
 		@SuppressWarnings("deprecation")
