@@ -1091,6 +1091,35 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
 	}
 
+	protected void updateUIForViewOnTopMode() {
+		if ( mMode.showViewOnTop() == false ) {
+            return;
+        }
+
+		// We need to use the correct LayoutParam values, based on scroll
+		// direction
+		int actionBarHeight = 96;
+		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, actionBarHeight);  
+		lp.gravity = Gravity.CENTER;
+		//
+		if ( mTopViewLayout == mViewOnTopLoadingLayout.getParent()) {
+			mTopViewLayout.removeView(mViewOnTopLoadingLayout);
+		}
+
+		if (mMode.showViewOnTop()) {
+			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mViewOnTopLoadingLayout);
+			mTopViewLayout.addView(mViewOnTopLoadingLayout, lp);
+			mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
+		}
+		
+		// Hide Loading Views
+		refreshLoadingViewsSize();
+
+		// If we're not using Mode.BOTH, set mCurrentMode to mMode, otherwise
+		// set it to pull down
+		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
+	}
+
 	private void addRefreshableView(Context context, T refreshableView) {
 		mRefreshableViewWrapper = new FrameLayout(context);
 		mRefreshableViewWrapper.addView(refreshableView, ViewGroup.LayoutParams.MATCH_PARENT,
