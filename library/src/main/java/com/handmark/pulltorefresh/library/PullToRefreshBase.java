@@ -759,6 +759,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				mFooterLayout.pullToRefresh();
 				break;
 			case VIEW_ON_TOP:
+				showViewTopLayout();
 				mViewOnTopLoadingLayout.pullToRefresh();
 				break;
 			case PULL_FROM_START:
@@ -851,6 +852,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mFooterLayout.reset();
 		if (mMode.showViewOnTop()) {
 			mViewOnTopLoadingLayout.reset();
+			hideViewTopLayout();
 		}
 
 		smoothScrollTo(0);
@@ -1288,6 +1290,25 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		
 		return actionBarHeight;
 	}
+    
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	private void showViewTopLayout() {
+    	if (mMode.showViewOnTop() == false ) {
+    		return;
+    	}
+    	// WARNING : There is a magic number!
+    	mTopViewLayout.setAlpha(0);
+    	mTopViewLayout.animate().alpha(1).translationY(75).setDuration(100).start();
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	private void hideViewTopLayout() {
+    	if (mMode.showViewOnTop() == false ) {
+    		return;
+    	}
+    	// WARNING : There is a magic number!
+    	mTopViewLayout.animate().alpha(0).translationY(- 96/2).setDuration(100).start();
+    }
     
 	@Override
 	protected void onAttachedToWindow() {
