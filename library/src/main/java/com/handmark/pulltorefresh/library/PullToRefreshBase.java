@@ -963,7 +963,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					mHeaderLayout.setHeight(maximumPullScroll);
 					pTop = -maximumPullScroll;
 				} else if (mMode.showViewOnTop() && mWindowAttached == true ) {
-					// WANING : There is a magic number!
+					// WARNING : There is a magic number!
 					mViewOnTopLoadingLayout.setHeight(96 * 2);
 					pTop = 0;
 				} else {
@@ -1296,7 +1296,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     	if (mMode.showViewOnTop() == false ) {
     		return;
     	}
-    	// WARNING : There is a magic number!
+
     	mTopViewLayout.setAlpha(0);
     	mTopViewLayout.animate().alpha(1).translationY(75).setDuration(100).start();
     }
@@ -1314,6 +1314,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		mWindowAttached = true;
+
 		initTopViewGroup();
 		updateUIForViewOnTopMode();
 	}
