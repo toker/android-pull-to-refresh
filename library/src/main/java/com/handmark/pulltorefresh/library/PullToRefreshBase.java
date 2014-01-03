@@ -779,6 +779,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * 
 	 * @param doScroll - Whether the UI should scroll for this event.
 	 */
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	protected void onRefreshing(final boolean doScroll) {
 		if (mMode.showHeaderLoadingLayout()) {
 			mHeaderLayout.refreshing();
@@ -787,6 +788,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mFooterLayout.refreshing();
 		}
 		if (mMode.showViewOnTop()) {
+			// Progressbar animation
+			// WARNING : There are magic numbers!
+			mRefreshableView.animate().alpha(0).setDuration(500).start();
+			mProgressBar.setVisibility(View.VISIBLE);
+			mProgressBar.animate().alpha(1).setDuration(200).start();
+			
 			mViewOnTopLoadingLayout.refreshing();
 		}
 
@@ -845,6 +852,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Called when the UI has been to be updated to be in the
 	 * {@link State#RESET} state.
 	 */
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	protected void onReset() {
 		mIsBeingDragged = false;
 		mLayoutVisibilityChangesEnabled = true;
@@ -855,6 +863,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (mMode.showViewOnTop()) {
 			mViewOnTopLoadingLayout.reset();
 			hideViewTopLayout();
+
+			// Progressbar animation
+			// WARNING: There are magic numbers!
+			mRefreshableView.animate().alpha(1).setDuration(500).start();
+			mProgressBar.animate().alpha(0).setDuration(200).withEndAction(new Runnable(){
+
+				@Override
+				public void run() {
+					mProgressBar.setVisibility(View.INVISIBLE);
+				}}).start();
 		}
 
 		smoothScrollTo(0);
