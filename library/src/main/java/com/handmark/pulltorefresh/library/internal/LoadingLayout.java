@@ -251,10 +251,6 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		
 	}
 
-
-
-
-
 	public final void setHeight(int height) {
 		ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) getLayoutParams();
 		lp.height = height;
@@ -464,5 +460,4 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 			mSubHeaderText.setTextColor(color);
 		}
 	}
-
 }
