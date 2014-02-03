@@ -82,6 +82,20 @@
         -->
         <attr name="ptrRotateDrawableWhilePulling" format="reference|boolean" />
 
+        <!-- Animation Options only for google Style mode  -->
+		<!--  Whether Google style view layout's fade-in animation is shown when pulling -->
+        <attr name="ptrShowGoogleStyleViewAnimationEnabled" format="reference|boolean" />
+       <!-- Whether Refreshable view is hidden when refreshing -->
+        <attr name="ptrHideRefeshableViewWhileRefreshingEnabled" format="reference|boolean" />
+        <!-- Whether Rotating progress bar is shown when refreshing -->
+        <attr name="ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingEnabled" format="reference|boolean" />
+        <!-- Duration of Google style view layout's fade-in/out animation -->
+        <attr name="ptrShowGoogleStyleViewAnimationDuration" format="integer" value="100" />
+        <!-- Duration of  Refreshable view's fade-in/out animation -->
+        <attr name="ptrHideRefeshableViewWhileRefreshingDuration" format="integer" value="500" />
+        <!-- Duration of rotating progress bar's fade-in/out animation -->
+        <attr name="ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingDuration" format="integer" value="200" />
+
         <!-- BELOW HERE ARE DEPRECEATED. DO NOT USE. -->
         <attr name="ptrAdapterViewBackground" format="reference|color" />
         <attr name="ptrDrawableTop" format="reference" />

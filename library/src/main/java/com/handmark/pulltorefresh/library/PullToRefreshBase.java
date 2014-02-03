@@ -71,6 +71,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	static final String STATE_SHOW_REFRESHING_VIEW = "ptr_show_refreshing_view";
 	static final String STATE_SUPER = "ptr_super";
 
+	static final int REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION = 100;
+	static final int REFRESHABLE_VIEW_HIDE_WHILE_REFRESHING_DURATION = 500;
+	static final int GOOGLE_STYLE_VIEW_APPEAREANCE_DURATION = 200;
+
 	static final int LAYER_TYPE_HARDWARE = 2;
 	static final int LAYER_TYPE_NONE = 0;
 	// ===========================================================
@@ -128,7 +132,31 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	/**
 	 * Flag whether {@link #onRefreshing(boolean)} has been called
 	 */
-	private boolean mRefreshing;	
+	private boolean mRefreshing;
+	/**
+	 * Flag whether Google style view layout appearance animation will be shown
+	 */
+	private boolean mShowGoogleStyleViewAnimationEnabled = true;
+	/**
+	 * Duration of Google style view layout appearance animation
+	 */
+	private int mShowGoogleStyleViewAnimationDuration = GOOGLE_STYLE_VIEW_APPEAREANCE_DURATION;
+	/**
+	 * Flag whether {@code mRefreshaleView} will be hidden while refreshing
+	 */
+	private boolean mRefeshableViewHideWhileRefreshingEnabled = true;
+	/**
+	 * {@code mRefreshableView}'s fade-out Duration
+	 */
+	private int mRefeshableViewHideWhileRefreshingDuration = REFRESHABLE_VIEW_HIDE_WHILE_REFRESHING_DURATION;
+	/**
+	 * Flag whether some {@code ProgressBar} will be shown while refreshing
+	 */
+	private boolean mRefeshableViewRefreshingBarViewWhileRefreshingEnabled = true;
+	/**
+	 * {@code mRefreshableViewRefreshingBar}'s fade-in Duration
+	 */
+	private int mRefeshableViewRefreshingBarViewWhileRefreshingDuration = REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION;	
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -1292,6 +1320,26 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mHeaderLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 		mFooterLayout = createLoadingLayout(context, Mode.PULL_FROM_END, a);
 		mViewOnTopLoadingLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
+
+		// Get animation options for Google style mode
+		if (a.hasValue(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationEnabled)) {
+			mShowGoogleStyleViewAnimationEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationEnabled, true);
+		}
+		if (a.hasValue(R.styleable.PullToRefresh_ptrHideRefeshableViewWhileRefreshingEnabled)) {
+			mRefeshableViewHideWhileRefreshingEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrHideRefeshableViewWhileRefreshingEnabled, true);
+		}
+		if (a.hasValue(R.styleable.PullToRefresh_ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingEnabled)) {
+			mRefeshableViewRefreshingBarViewWhileRefreshingEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingEnabled, true);
+		}
+		if (a.hasValue(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationDuration)) {
+			mShowGoogleStyleViewAnimationDuration = a.getInteger(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationDuration, GOOGLE_STYLE_VIEW_APPEAREANCE_DURATION);
+		}
+		if (a.hasValue(R.styleable.PullToRefresh_ptrHideRefeshableViewWhileRefreshingDuration)) {
+			mRefeshableViewHideWhileRefreshingDuration = a.getInteger(R.styleable.PullToRefresh_ptrHideRefeshableViewWhileRefreshingDuration, REFRESHABLE_VIEW_HIDE_WHILE_REFRESHING_DURATION);
+		}
+		if (a.hasValue(R.styleable.PullToRefresh_ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingDuration)) {
+			mRefeshableViewRefreshingBarViewWhileRefreshingDuration = a.getInteger(R.styleable.PullToRefresh_ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingDuration, REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION);
+		}
 
 		/**
 		 * Styleables from XML
