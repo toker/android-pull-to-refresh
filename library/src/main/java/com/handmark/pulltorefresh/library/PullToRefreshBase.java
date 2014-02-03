@@ -125,6 +125,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Current actionbar size
 	 */
 	private int mActionBarHeight;
+	/**
+	 * Flag whether {@link #onRefreshing(boolean)} has been called
+	 */
+	private boolean mRefreshing;	
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -801,6 +805,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * @param doScroll - Whether the UI should scroll for this event.
 	 */
 	protected void onRefreshing(final boolean doScroll) {
+		// Set the flag as below for fade-in animation of mRefreshableView when releasing 
+		mRefreshing = true; 
+
 		if (mMode.showHeaderLoadingLayout()) {
 			mHeaderLayout.refreshing();
 		}
@@ -884,8 +891,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			hideViewTopLayout();
 
 			// Fade-in mRefreshableView
-			mRefreshableView.clearAnimation();
-			AlphaAnimator.fadein(mRefreshableView, 500);
+			if ( mRefreshing == true ) {
+				mRefreshableView.clearAnimation();
+				AlphaAnimator.fadein(mRefreshableView, 500);
+			}
 			// Fade-out refreshing bar on center
 			AlphaAnimator.fadeout(mRefreshableViewProgressBar, 200, new AnimationListener(){
 				@Override
@@ -904,6 +913,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				}});			
 		}
 
+		mRefreshing = false;
 		smoothScrollTo(0);
 	}
 
