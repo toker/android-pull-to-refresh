@@ -1598,8 +1598,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		topViewGroup.addView(mGoogleStyleProgressLayout, mGoogleStyleProgressLayout.createLayoutParams());
 		mGoogleStyleProgressLayout.setVisibility(View.INVISIBLE);
 		// Set height of Google style progress layout
-		int height = mActionBarHeight + mGoogleStyleProgressLayout.getHeight() + 1;
-		mGoogleStyleProgressLayout.setTopMargin(height);
+		post(new Runnable(){
+
+			@Override
+			public void run() {
+				int height = mActionBarHeight + mGoogleStyleProgressLayout.getHeight() + 1;
+				mGoogleStyleProgressLayout.setTopMargin(height);
+				
+			}});
 
 		// Finally assign
 		mTopActionbarLayout = layout;
