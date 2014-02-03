@@ -854,6 +854,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			case GOOGLE_STYLE:
 				showViewTopLayout();
 				mGoogleStyleViewLayout.pullToRefresh();
+				mGoogleStyleProgressLayout.pullToRefresh();
 				break;
 			case PULL_FROM_START:
 				mHeaderLayout.pullToRefresh();
@@ -892,6 +893,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			}
 
 			mGoogleStyleViewLayout.refreshing();
+			mGoogleStyleProgressLayout.refreshing();
 		}
 
 		if (doScroll) {
@@ -935,6 +937,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				break;
 			case GOOGLE_STYLE:
 				mGoogleStyleViewLayout.releaseToRefresh();
+				mGoogleStyleProgressLayout.releaseToRefresh();
 				break;
 			case PULL_FROM_START:
 				mHeaderLayout.releaseToRefresh();
@@ -959,6 +962,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (mMode.showGoogleStyle()) {
 			mGoogleStyleViewLayout.reset();
 			hideViewTopLayout();
+			mGoogleStyleProgressLayout.reset();
 
 			// Fade-in mRefreshableView
 			if ( mRefreshing == true && mRefeshableViewHideWhileRefreshingEnabled == true  ) {
