@@ -1221,8 +1221,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private void init(Context context, AttributeSet attrs) {
 		// PullToRefreshXmlConfiguration must be initialized.
 		PullToRefreshXmlConfiguration.getInstance().init(context);
-		// start initialization
+		/**
+		 *  start initialization
+		 */
 		// Styleables from XML
+
 		// Getting mMode is first, because It uses mMode in getFilteredPullToRefreshScrollDirection()
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
 		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
