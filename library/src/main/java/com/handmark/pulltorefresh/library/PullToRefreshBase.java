@@ -878,7 +878,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 */
 	protected void onRefreshing(final boolean doScroll) {
 		// Set the flag as below for fade-in animation of mRefreshableView when releasing 
-		mRefreshing = true; 
+		mRefreshing = true;
 
 		if (mMode.showHeaderLoadingLayout()) {
 			mHeaderLayout.refreshing();
@@ -970,7 +970,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mGoogleStyleProgressLayout.reset();
 
 			// Fade-in mRefreshableView
-			if ( mRefreshing == true && mRefeshableViewHideWhileRefreshingEnabled == true  ) {
+			if ( mRefreshing == true && mRefeshableViewHideWhileRefreshingEnabled == true ) {
 				mRefreshableView.clearAnimation();
 				AlphaAnimator.fadein(mRefreshableView, mRefeshableViewHideWhileRefreshingDuration);
 			}
@@ -1397,13 +1397,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		String googleStyleViewLayoutCode = null;
 		if (a.hasValue(R.styleable.PullToRefresh_ptrGoogleViewStyle)) {
 			googleStyleViewLayoutCode = a.getString(R.styleable.PullToRefresh_ptrGoogleViewStyle);
-			Log.d(PullToRefreshBase.class.getCanonicalName(), ""+googleStyleViewLayoutCode);
 		} 
 		// Get a Google style progress layout class token
 		String googleStyleProgressLayoutCode = null;
 		if (a.hasValue(R.styleable.PullToRefresh_ptrGoogleViewStyle)) {
 			googleStyleProgressLayoutCode = a.getString(R.styleable.PullToRefresh_ptrGoogleProgressStyle);
-			Log.d(PullToRefreshBase.class.getCanonicalName(), ""+googleStyleProgressLayoutCode);
 		} 
 		// Get a google style view layout
 		mGoogleStyleViewLayout = createGoogleStyleViewLayout(googleStyleViewLayoutCode, context, a);
