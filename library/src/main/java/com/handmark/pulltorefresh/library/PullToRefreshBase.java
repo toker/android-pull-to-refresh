@@ -33,6 +33,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -798,7 +800,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * 
 	 * @param doScroll - Whether the UI should scroll for this event.
 	 */
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	protected void onRefreshing(final boolean doScroll) {
 		if (mMode.showHeaderLoadingLayout()) {
 			mHeaderLayout.refreshing();
@@ -807,11 +808,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mFooterLayout.refreshing();
 		}
 		if (mMode.showGoogleStyle()) {
-			// Progressbar animation
-			// WARNING : There are magic numbers!
-			mRefreshableView.animate().alpha(0).setDuration(500).start();
+			// Fade-out mRefreshableView
+			AlphaAnimator.fadeout(mRefreshableView, 500);
+			// Fade-in refreshing bar on center
 			mRefreshableViewProgressBar.setVisibility(View.VISIBLE);
-			mRefreshableViewProgressBar.animate().alpha(1).setDuration(200).start();
+			AlphaAnimator.fadein(mRefreshableViewProgressBar, 200);	
 			
 			mViewOnTopLoadingLayout.refreshing();
 		}
@@ -871,7 +872,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Called when the UI has been to be updated to be in the
 	 * {@link State#RESET} state.
 	 */
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	protected void onReset() {
 		mIsBeingDragged = false;
 		mLayoutVisibilityChangesEnabled = true;
@@ -883,15 +883,25 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mViewOnTopLoadingLayout.reset();
 			hideViewTopLayout();
 
-			// Progressbar animation
-			// WARNING: There are magic numbers!
-			mRefreshableView.animate().alpha(1).setDuration(500).start();
-			mRefreshableViewProgressBar.animate().alpha(0).setDuration(200).withEndAction(new Runnable(){
+			// Fade-in mRefreshableView
+			mRefreshableView.clearAnimation();
+			AlphaAnimator.fadein(mRefreshableView, 500);
+			// Fade-out refreshing bar on center
+			AlphaAnimator.fadeout(mRefreshableViewProgressBar, 200, new AnimationListener(){
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);					
+				}
 
 				@Override
-				public void run() {
-					mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);
-				}}).start();
+				public void onAnimationRepeat(Animation animation) {
+					// do nothing
+				}
+
+				@Override
+				public void onAnimationStart(Animation animation) {
+					// do nothing
+				}});			
 		}
 
 		smoothScrollTo(0);
