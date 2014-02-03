@@ -468,7 +468,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			}
 			mMode = mode;
 			updateUIForMode();
-			updateUIForViewOnTopMode();
+			updateUIForGoogleStyleMode();
 		}
 	}
 
@@ -690,7 +690,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		return mHeaderLayout.getContentSize();
 	}
 
-	protected final int getViewOnTopSize() {
+	protected final int getGoogleStyleViewSize() {
 		return mViewOnTopLoadingLayout.getContentSize();
 	}
 
@@ -1149,7 +1149,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
 	}
 
-	protected void updateUIForViewOnTopMode() {
+	protected void updateUIForGoogleStyleMode() {
 		if ( mWindowAttached == false ) {
 			return;
 		}
@@ -1350,7 +1350,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mWindowAttached = true;
 		
 		initTopViewGroup();
-		updateUIForViewOnTopMode();
+		updateUIForGoogleStyleMode();
 	}
     
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1364,7 +1364,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		ViewGroup topViewGroup = null;
 		Context context = getContext();
 		if (view instanceof ViewGroup == false) {
-			Log.w(LOG_TAG, "Current root view is not ViewGroup type. VIEW_ON_TYPE mode will be disabled.");
+			Log.w(LOG_TAG, "Current root view is not ViewGroup type. Google Style Pull To Refresh mode will be disabled.");
 			topViewGroup = new ViewGroup(context) {
 				@Override
 				protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -1437,7 +1437,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				break;
 			case GOOGLE_STYLE:
 				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / mFriction);
-				itemDimension = getViewOnTopSize();
+				itemDimension = getGoogleStyleViewSize();
 				break;
 			case PULL_FROM_START:
 			default:
