@@ -113,7 +113,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	/**
 	 * Top DecorView for containing google style-ptr 
 	 */
-	private FrameLayout mTopViewLayout; 
+	private FrameLayout mTopActionbarLayout; 
 	private boolean mWindowAttached = false;
 	private ProgressBar mRefreshableViewProgressBar;
 
@@ -1196,13 +1196,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, mActionBarHeight);  
 		lp.gravity = Gravity.CENTER;
 		//
-		if ( mTopViewLayout == mViewOnTopLoadingLayout.getParent()) {
-			mTopViewLayout.removeView(mViewOnTopLoadingLayout);
+		if ( mTopActionbarLayout == mViewOnTopLoadingLayout.getParent()) {
+			mTopActionbarLayout.removeView(mViewOnTopLoadingLayout);
 		}
 
 		if (mMode.showGoogleStyle()) {
 			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mViewOnTopLoadingLayout);
-			mTopViewLayout.addView(mViewOnTopLoadingLayout, lp);
+			mTopActionbarLayout.addView(mViewOnTopLoadingLayout, lp);
 			mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
 		}
 		
@@ -1352,7 +1352,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 			@Override
 			public void onAnimationStart(Animation anim) {
-				mTopViewLayout.setVisibility(View.VISIBLE);
+				mTopActionbarLayout.setVisibility(View.VISIBLE);
 			}});
     	
     	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, -mActionBarHeight, Animation.ABSOLUTE, mStatusBarHeight);
@@ -1360,7 +1360,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     	set.addAnimation(transAnimation);
     	set.addAnimation(alphaAnimation);
     	// Start animation
-    	mTopViewLayout.startAnimation(set); 
+    	mTopActionbarLayout.startAnimation(set); 
     }
 
 	private void hideViewTopLayout() {
@@ -1375,7 +1375,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 			@Override
 			public void onAnimationEnd(Animation anim) {
-				mTopViewLayout.setVisibility(View.INVISIBLE);
+				mTopActionbarLayout.setVisibility(View.INVISIBLE);
 			}
 
 			@Override
@@ -1386,12 +1386,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			public void onAnimationStart(Animation anim) {
 			}});
     	
-    	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, mTopViewLayout.getTop(), Animation.ABSOLUTE, -mStatusBarHeight);
+    	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, mTopActionbarLayout.getTop(), Animation.ABSOLUTE, -mStatusBarHeight);
     	AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
     	set.addAnimation(transAnimation);
     	set.addAnimation(alphaAnimation);
     	// Start animation
-    	mTopViewLayout.startAnimation(set);
+    	mTopActionbarLayout.startAnimation(set);
     }
     
 	@Override
@@ -1445,7 +1445,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
         // WARNING : setY(...) method is supported over API 11
 		layout.setY(-mActionBarHeight);
-		mTopViewLayout = layout;
+		mTopActionbarLayout = layout;
 
 	}
 	/**
