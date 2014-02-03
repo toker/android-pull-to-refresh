@@ -37,17 +37,31 @@ class PullToRefreshNode {
 	 */
 	private final Map<String, String> indicatorLayoutClazzNameMap;
 	/**
+	 * Map Storing GoogleStyleViewLayout class names<br />
+	 * Key : layout code (String) <br />
+	 * Value : Class name (String)
+	 */	
+	private Map<String, String> googleStyleViewLayoutClazzNameMap;
+	/**
+	 * Map Storing GoogleStyleProgressLayout class names<br />
+	 * Key : layout code (String) <br />
+	 * Value : Class name (String)
+	 */	
+	private Map<String, String> googleStyleProgressLayoutClazzNameMap;	
+	/**
 	 * Constructor needs two class name {@code Map}s, which are LoadingLayout class name map and Indicator class name {@code map}.<br />
 	 * NOTE: Parameters must go in order. First Parameter : loading layout / Second Parameter : indicator layout  
 	 * @param loadingLayoutClazzNameMap LoadingLayout class names
 	 * @param indicatorLayoutClazzNameMap
 	 */
 	public PullToRefreshNode(Map<String, String> loadingLayoutClazzNameMap,
-			Map<String, String> indicatorLayoutClazzNameMap) {
+			Map<String, String> indicatorLayoutClazzNameMap, Map<String, String> googleStyleViewLayoutClazzNameMap, Map<String, String> googleStyleProgressLayoutClazzNameMap) {
 		Assert.notNull(loadingLayoutClazzNameMap, "LoadingLayout Class Name Map");
 		Assert.notNull(indicatorLayoutClazzNameMap, "Loading Layout Class Name Map");
 		this.loadingLayoutClazzNameMap = loadingLayoutClazzNameMap;
 		this.indicatorLayoutClazzNameMap = indicatorLayoutClazzNameMap;
+		this.googleStyleViewLayoutClazzNameMap = googleStyleViewLayoutClazzNameMap;
+		this.googleStyleProgressLayoutClazzNameMap = googleStyleProgressLayoutClazzNameMap;
 	}
 	/**
 	 * @param layoutCode LoadingLayout layout code
@@ -64,6 +78,20 @@ class PullToRefreshNode {
 		return loadingLayoutClazzNameMap.get(layoutCode);
 	}
 	/**
+	 * @param layoutCode GoogleStyleViewLayout layout code
+	 * @return GoogleStyleViewLayout class name
+	 */	
+	public String getGoogleStyleViewLayoutClazzName(String layoutCode) {
+		return googleStyleViewLayoutClazzNameMap.get(layoutCode);
+	}
+	/**
+	 * @param layoutCode GoogleStyleProgressLayout layout code
+	 * @return GoogleStyleProgressLayout class name
+	 */	
+	public String getGoogleStyleProgressLayoutClazzName(String layoutCode) {
+		return googleStyleProgressLayoutClazzNameMap.get(layoutCode);
+	}		
+	/**
 	 * Add an information from other {@code PullToRefreshNode} instance
 	 * @param extendedNode Other {@code PullToRefresNode} to be combined
 	 */
@@ -71,8 +99,13 @@ class PullToRefreshNode {
 		Assert.notNull(extendedNode, "Extended Node");
 		Map<String, String> indicatorMap = extendedNode.indicatorLayoutClazzNameMap;
 		Map<String, String> loadingMap = extendedNode.loadingLayoutClazzNameMap;
+		Map<String, String> googleStyleViewMap = extendedNode.googleStyleViewLayoutClazzNameMap;
+		Map<String, String> googleStyleProgressMap = extendedNode.googleStyleProgressLayoutClazzNameMap;
 		
 		indicatorLayoutClazzNameMap.putAll(indicatorMap);
 		loadingLayoutClazzNameMap.putAll(loadingMap);
+		googleStyleViewLayoutClazzNameMap.putAll(googleStyleViewMap);
+		googleStyleProgressLayoutClazzNameMap.putAll(googleStyleProgressMap);
 	}
+
 }

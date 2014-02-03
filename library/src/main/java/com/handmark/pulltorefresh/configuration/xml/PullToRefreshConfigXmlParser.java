@@ -53,13 +53,21 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 		XmlPullNode root = new XmlPullNode("PullToRefresh");
 		XmlPullNode loadingLayouts = new XmlPullNode("LoadingLayouts");
 		XmlPullNode indicatorLayouts = new XmlPullNode("IndicatorLayouts");
+		XmlPullNode googleStyleViewLayouts = new XmlPullNode("GoogleStyleViewLayouts");
+		XmlPullNode googleStyleProgressLayouts = new XmlPullNode("GoogleStyleProgressLayouts");
 		XmlPullNode loadingLayout = new XmlPullNode("layout",new LayoutNodeCallback(result.loadingLayoutClazzNameMap));
 		XmlPullNode indicatorLayout = new XmlPullNode("layout",new LayoutNodeCallback(result.indicatorLayoutClazzNameMap));
+		XmlPullNode googleStyleViewLayout = new XmlPullNode("layout",new LayoutNodeCallback(result.googleStyleViewLayoutClazzNameMap));
+		XmlPullNode googleStyleProgressLayout = new XmlPullNode("layout",new LayoutNodeCallback(result.googleStyleProgressLayoutClazzNameMap));
 		// make a tree structure
 		root.addChildNode(loadingLayouts, ONLY_ONE_REPEAT);
 		root.addChildNode(indicatorLayouts, ONLY_ONE_REPEAT);
+		root.addChildNode(googleStyleViewLayouts, ONLY_ONE_REPEAT);
+		root.addChildNode(googleStyleProgressLayouts, ONLY_ONE_REPEAT);
 		loadingLayouts.addChildNode(loadingLayout);
 		indicatorLayouts.addChildNode(indicatorLayout);
+		googleStyleViewLayouts.addChildNode(googleStyleViewLayout);
+		googleStyleProgressLayouts.addChildNode(googleStyleProgressLayout);
 		// return root node
 		return root;
 	}
@@ -75,7 +83,7 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 	 */
 	@Override
 	protected PullToRefreshNode getResult() {
-		return new PullToRefreshNode(result.loadingLayoutClazzNameMap, result.indicatorLayoutClazzNameMap);
+		return new PullToRefreshNode(result.loadingLayoutClazzNameMap, result.indicatorLayoutClazzNameMap, result.googleStyleViewLayoutClazzNameMap, result.googleStyleProgressLayoutClazzNameMap);
 	}
 	/**
 	 * Parsed Result to be sent to {@code PullToRefreshNode}
@@ -85,6 +93,8 @@ final class PullToRefreshConfigXmlParser extends XmlPullNodeParser<PullToRefresh
 	private static class PullToRefreshResult {
 		public final Map<String, String> loadingLayoutClazzNameMap = new HashMap<String, String>();
 		public final Map<String, String> indicatorLayoutClazzNameMap = new HashMap<String, String>();
+		public final Map<String, String> googleStyleViewLayoutClazzNameMap = new HashMap<String, String>();
+		public final Map<String, String> googleStyleProgressLayoutClazzNameMap = new HashMap<String, String>();
 	}
 		
 	/**

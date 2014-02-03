@@ -136,6 +136,28 @@ public class PullToRefreshXmlConfiguration {
 		return node.getIndicatorLayoutClazzName(layoutCode);
 	}
 	/**
+	 * @param layoutCode Layout name
+	 * @return Layout Class name ( ex: com.handmark.pulltorefresh.library.internal.DefaultGoogleStyleViewLayout )
+	 */
+	public String getGoogleStyleViewLayoutClazzName(String layoutCode) {
+		assertInitialized();
+		if ( isNodeNull() ) {
+			return null;
+		}
+		return node.getGoogleStyleViewLayoutClazzName(layoutCode);
+	}
+	/**
+	 * @param layoutCode Layout name
+	 * @return Layout Class name ( ex: com.handmark.pulltorefresh.library.internal.DefaultGoogleStyleProgressLayout )
+	 */
+	public String getGoogleStyleProgressLayoutClazzName(String layoutCode) {
+		assertInitialized();
+		if ( isNodeNull() ) {
+			return null;
+		}
+		return node.getGoogleStyleProgressLayoutClazzName(layoutCode);
+	}	
+	/**
 	 * @return true if {@code node} is null
 	 */
 	private boolean isNodeNull() {
