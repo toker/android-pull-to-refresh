@@ -170,6 +170,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * {@code mRefreshableViewRefreshingBar}'s fade-in Duration
 	 */
 	private int mRefeshableViewRefreshingBarViewWhileRefreshingDuration = REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION;	
+	/**
+	 * Flag whether Google style view layout's size is set to ActionBar's size 
+	 * (Don't set to false as possible, it's hard to control height if this flag is false)
+	 */
+	private boolean mSetGoogleViewLayoutSizeToActionbarHeight = true;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -1098,7 +1103,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					mHeaderLayout.setHeight(maximumPullScroll);
 					pTop = -maximumPullScroll;
 				} else if (mMode.showGoogleStyle() && mWindowAttached == true ) {
-					mGoogleStyleViewLayout.setHeight(mActionBarHeight);
+					/**
+					 * Set size of {@code GoogleStyleViewLayout} to ActionBar's size if {@code mSetGoogleViewLayoutSizeToActionbarHeight} is true
+					 * This code is a default action, but if you want to use custom size of {@code GoogleStyleViewLayout}, set {@code ptrSetGoogleViewLayoutSizeToActionbarHeight} to false in layout xml (but not recommended).
+					 */
+					if (mSetGoogleViewLayoutSizeToActionbarHeight == true) {
+						mGoogleStyleViewLayout.setHeight(mActionBarHeight);
+					}
+
 					pTop = 0;
 				} else {
 					pTop = 0;
@@ -1283,13 +1295,19 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mGoogleStyleViewLayout);
 		mTopActionbarLayout.addView(mGoogleStyleViewLayout);
-		// If it has called setHeight(...) method immediately after {@code view} has been added, the height isn't set correct
-		post(new Runnable(){
+		/**
+		 * Set size of {@code GoogleStyleViewLayout} to ActionBar's size if {@code mSetGoogleViewLayoutSizeToActionbarHeight} is true
+		 * This code is a default action, but if you want to use custom size of {@code GoogleStyleViewLayout}, set {@code ptrSetGoogleViewLayoutSizeToActionbarHeight} to false in layout xml (but not recommended).
+		 */
+		if (mSetGoogleViewLayoutSizeToActionbarHeight == true) {
+			// If it has called setHeight(...) method immediately after {@code view} has been added, the height isn't set correct
+			post(new Runnable(){
 
-			@Override
-			public void run() {
-				mGoogleStyleViewLayout.setHeight(mActionBarHeight);
-			}});
+				@Override
+				public void run() {
+					mGoogleStyleViewLayout.setHeight(mActionBarHeight);
+				}});			
+		}
 		// Show Google style view layout to screen
 		mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 		
