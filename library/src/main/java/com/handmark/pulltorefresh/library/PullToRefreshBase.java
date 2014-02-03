@@ -1098,8 +1098,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					mHeaderLayout.setHeight(maximumPullScroll);
 					pTop = -maximumPullScroll;
 				} else if (mMode.showGoogleStyle() && mWindowAttached == true ) {
-					// WARNING : There is a magic number!
-					mGoogleStyleViewLayout.setHeight(96 * 2);
+					mGoogleStyleViewLayout.setHeight(mActionBarHeight);
 					pTop = 0;
 				} else {
 					pTop = 0;
