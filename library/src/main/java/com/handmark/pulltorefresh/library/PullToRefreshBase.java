@@ -273,7 +273,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 					// We need to use the correct values, based on scroll
 					// direction
-					switch (getPullToRefreshScrollDirection()) {
+					switch (getFilteredPullToRefreshScrollDirection()) {
 						case HORIZONTAL:
 							diff = x - mLastMotionX;
 							oppositeDiff = y - mLastMotionY;
@@ -578,6 +578,20 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 *         {@link Orientation#HORIZONTAL} depending on the scroll direction.
 	 */
 	public abstract Orientation getPullToRefreshScrollDirection();
+	/**
+	 * <p>
+	 * Wrap {@link #getPullToRefreshScrollDirection()} method <br />
+	 * Other methods Use this method instead of {@link #getPullToRefreshScrollDirection()} method, because an orientation must be VERTICAL when mode is google style
+	 * </p>
+	 * @return Oreintation.VERTICAL if mMode.showGoogleStyle() is true,<br />Return value of {@link #getPullToRefreshScrollDirection()} method if else 
+	 */
+	public final Orientation getFilteredPullToRefreshScrollDirection() {
+		Orientation orientation = getPullToRefreshScrollDirection();
+		if (mMode.showGoogleStyle() ) {
+			orientation = Orientation.VERTICAL;
+		}
+		return orientation;
+	}
 
 	final void setState(State state, final boolean... params) {
 		mState = state;
@@ -634,7 +648,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * @return Loading layout instance which was created by using the class token {@link #mLoadingLayoutClazz}
 	 */
 	protected LoadingLayout createLoadingLayout(Context context, Mode mode, TypedArray attrs) {
-		return LoadingLayoutFactory.createLoadingLayout(mLoadingLayoutClazz, context, mode, getPullToRefreshScrollDirection(), attrs);
+		return LoadingLayoutFactory.createLoadingLayout(mLoadingLayoutClazz, context, mode, getFilteredPullToRefreshScrollDirection(), attrs);
 	}
 
 	/**
@@ -961,7 +975,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		int pRight = getPaddingRight();
 		int pBottom = getPaddingBottom();
 
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				if (mMode.showHeaderLoadingLayout()) {
 					mHeaderLayout.setWidth(maximumPullScroll);
@@ -1010,7 +1024,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// this layout
 		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRefreshableViewWrapper.getLayoutParams();
 
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				if (lp.width != width) {
 					lp.width = width;
@@ -1075,7 +1089,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			return;
 		}
 
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case VERTICAL:
 				scrollTo(0, value);
 				break;
@@ -1208,7 +1222,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// PullToRefreshXmlConfiguration must be initialized.
 		PullToRefreshXmlConfiguration.getInstance().init(context);
 		// start initialization 
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				setOrientation(LinearLayout.HORIZONTAL);
 				break;
@@ -1418,7 +1432,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		final int itemDimension;
 		final float initialMotionValue, lastMotionValue;
 
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				initialMotionValue = mInitialMotionX;
 				lastMotionValue = mLastMotionX;
@@ -1472,7 +1486,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	private LinearLayout.LayoutParams getLoadingLayoutLayoutParams() {
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 						LinearLayout.LayoutParams.MATCH_PARENT);
@@ -1484,7 +1498,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	private int getMaximumPullScroll() {
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				return Math.round(getWidth() / mFriction);
 			case VERTICAL:
@@ -1510,7 +1524,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 
 		final int oldScrollValue;
-		switch (getPullToRefreshScrollDirection()) {
+		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				oldScrollValue = getScrollX();
 				break;
