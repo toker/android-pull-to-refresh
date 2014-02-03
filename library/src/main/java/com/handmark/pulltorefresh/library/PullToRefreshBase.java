@@ -1289,7 +1289,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			@Override
 			public void run() {
 				mGoogleStyleViewLayout.setHeight(mActionBarHeight);
-			}});		
+			}});
+		// Show Google style view layout to screen
 		mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 		
 		// Hide Loading Views
