@@ -1385,8 +1385,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		initStatusBarSize(context);
 		// Finally update the UI for the modes
 		updateUIForMode();
+		// updateUIForGoogleStyleMode() method will be called when onAttachedToWindow() event has been fired.
 	}
 
+	/**
+	 * Show google view layout and google progress layout when pulling
+	 */
 	private void showViewTopLayout() {
     	if (mMode.showGoogleStyle() == false ) {
     		return;
@@ -1418,6 +1422,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     	mTopActionbarLayout.startAnimation(set); 
     }
 
+	/**
+	 * Hide google view layout and google progress layout when releasing
+	 */
 	private void hideViewTopLayout() {
     	if (mMode.showGoogleStyle() == false ) {
     		return;
