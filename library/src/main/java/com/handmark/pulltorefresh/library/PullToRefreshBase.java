@@ -1276,9 +1276,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		// We need to use the correct LayoutParam values, based on scroll
 		// direction
-		@SuppressWarnings("deprecation")
-		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, mActionBarHeight);  
-		lp.gravity = Gravity.CENTER;
 		//
 		if ( mTopActionbarLayout == mGoogleStyleViewLayout.getParent()) {
 			mTopActionbarLayout.removeView(mGoogleStyleViewLayout);
@@ -1286,7 +1283,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		if (mMode.showGoogleStyle()) {
 			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mGoogleStyleViewLayout);
-			mTopActionbarLayout.addView(mGoogleStyleViewLayout, lp);
+			mTopActionbarLayout.addView(mGoogleStyleViewLayout);
 			mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 		}
 		
