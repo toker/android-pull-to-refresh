@@ -844,11 +844,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 		if (mMode.showGoogleStyle()) {
 			// Fade-out mRefreshableView
-			AlphaAnimator.fadeout(mRefreshableView, 500);
+			if ( mRefeshableViewHideWhileRefreshingEnabled == true ) {
+				AlphaAnimator.fadeout(mRefreshableView, mRefeshableViewHideWhileRefreshingDuration);	
+			}
 			// Fade-in refreshing bar on center
-			mRefreshableViewProgressBar.setVisibility(View.VISIBLE);
-			AlphaAnimator.fadein(mRefreshableViewProgressBar, 200);	
-			
+			if (mRefeshableViewRefreshingBarViewWhileRefreshingEnabled == true ) {
+				mRefreshableViewProgressBar.setVisibility(View.VISIBLE);
+				AlphaAnimator.fadein(mRefreshableViewProgressBar, mRefeshableViewRefreshingBarViewWhileRefreshingDuration);
+			}
+
 			mViewOnTopLoadingLayout.refreshing();
 		}
 
@@ -919,26 +923,28 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			hideViewTopLayout();
 
 			// Fade-in mRefreshableView
-			if ( mRefreshing == true ) {
+			if ( mRefreshing == true && mRefeshableViewHideWhileRefreshingEnabled == true  ) {
 				mRefreshableView.clearAnimation();
-				AlphaAnimator.fadein(mRefreshableView, 500);
+				AlphaAnimator.fadein(mRefreshableView, mRefeshableViewHideWhileRefreshingDuration);
 			}
 			// Fade-out refreshing bar on center
-			AlphaAnimator.fadeout(mRefreshableViewProgressBar, 200, new AnimationListener(){
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);					
-				}
+			if (mRefeshableViewRefreshingBarViewWhileRefreshingEnabled == true ) {
+				AlphaAnimator.fadeout(mRefreshableViewProgressBar, mRefeshableViewRefreshingBarViewWhileRefreshingDuration, new AnimationListener(){
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);					
+					}
 
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-					// do nothing
-				}
+					@Override
+					public void onAnimationRepeat(Animation animation) {
+						// do nothing
+					}
 
-				@Override
-				public void onAnimationStart(Animation animation) {
-					// do nothing
-				}});			
+					@Override
+					public void onAnimationStart(Animation animation) {
+						// do nothing
+					}});	
+			}
 		}
 
 		mRefreshing = false;
@@ -1395,31 +1401,39 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     	if (mMode.showGoogleStyle() == false ) {
     		return;
     	}
+
     	// Initialize Translate and Alpha animation
-    	AnimationSet set = new AnimationSet(true /* share interpolator */);
-    	set.setDuration(100);
-    	set.setFillAfter(true);
-    	set.setAnimationListener(new AnimationListener(){
+    	if ( mShowGoogleStyleViewAnimationEnabled == true ) {
+        	AnimationSet set = new AnimationSet(true /* share interpolator */);
+        	set.setDuration(mShowGoogleStyleViewAnimationDuration);
+        	set.setFillAfter(true);
+        	set.setAnimationListener(new AnimationListener(){
 
-			@Override
-			public void onAnimationEnd(Animation anim) {
-			}
+    			@Override
+    			public void onAnimationEnd(Animation anim) {
+    			}
 
-			@Override
-			public void onAnimationRepeat(Animation anim) {
-			}
+    			@Override
+    			public void onAnimationRepeat(Animation anim) {
+    			}
 
-			@Override
-			public void onAnimationStart(Animation anim) {
-				mTopActionbarLayout.setVisibility(View.VISIBLE);
-			}});
-    	
-    	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, -mActionBarHeight, Animation.ABSOLUTE, mStatusBarHeight);
-    	AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-    	set.addAnimation(transAnimation);
-    	set.addAnimation(alphaAnimation);
-    	// Start animation
-    	mTopActionbarLayout.startAnimation(set); 
+    			@Override
+    			public void onAnimationStart(Animation anim) {
+    				mTopActionbarLayout.setVisibility(View.VISIBLE);
+    			}});
+        	
+        	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, -mActionBarHeight, Animation.ABSOLUTE, mStatusBarHeight);
+        	AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        	set.addAnimation(transAnimation);
+        	set.addAnimation(alphaAnimation);
+        	// Start animation
+        	mTopActionbarLayout.startAnimation(set);    		
+    	} else {
+       		// Show Google style view layout without animation
+    		((FrameLayout.LayoutParams) mTopActionbarLayout.getLayoutParams()).topMargin = mStatusBarHeight;
+    		mTopActionbarLayout.setVisibility(View.VISIBLE);   		
+    	}
+
     }
 
 	/**
@@ -1429,31 +1443,39 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     	if (mMode.showGoogleStyle() == false ) {
     		return;
     	}
-    	// Initialize Translate and Alpha animation
-	   	AnimationSet set = new AnimationSet(true /* share interpolator */);
-    	set.setDuration(100);
-    	set.setFillAfter(true);
-    	set.setAnimationListener(new AnimationListener(){
 
-			@Override
-			public void onAnimationEnd(Animation anim) {
-				mTopActionbarLayout.setVisibility(View.INVISIBLE);
-			}
+    	if ( mShowGoogleStyleViewAnimationEnabled == true ) {
+        	// Initialize Translate and Alpha animation
+    	   	AnimationSet set = new AnimationSet(true /* share interpolator */);
+        	set.setDuration(mShowGoogleStyleViewAnimationDuration);
+        	set.setFillAfter(true);
+        	set.setAnimationListener(new AnimationListener(){
 
-			@Override
-			public void onAnimationRepeat(Animation anim) {
-			}
+    			@Override
+    			public void onAnimationEnd(Animation anim) {
+    				mTopActionbarLayout.setVisibility(View.INVISIBLE);
+    			}
 
-			@Override
-			public void onAnimationStart(Animation anim) {
-			}});
-    	
-    	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, mTopActionbarLayout.getTop(), Animation.ABSOLUTE, -mStatusBarHeight);
-    	AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
-    	set.addAnimation(transAnimation);
-    	set.addAnimation(alphaAnimation);
-    	// Start animation
-    	mTopActionbarLayout.startAnimation(set);
+    			@Override
+    			public void onAnimationRepeat(Animation anim) {
+    			}
+
+    			@Override
+    			public void onAnimationStart(Animation anim) {
+    			}});
+        	
+        	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, mTopActionbarLayout.getTop(), Animation.ABSOLUTE, -mStatusBarHeight);
+        	AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        	set.addAnimation(transAnimation);
+        	set.addAnimation(alphaAnimation);
+        	// Start animation
+        	mTopActionbarLayout.startAnimation(set);
+    	} else {
+      		// Hide Google style view layout without animation
+    		((FrameLayout.LayoutParams) mTopActionbarLayout.getLayoutParams()).topMargin = -mActionBarHeight;
+    		mTopActionbarLayout.setVisibility(View.INVISIBLE);
+    	}
+
     }
     
 	@Override
