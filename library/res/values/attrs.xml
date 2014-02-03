@@ -22,7 +22,7 @@
             <flag name="pullFromEnd" value="0x2" />
             <flag name="both" value="0x3" />
             <flag name="manualOnly" value="0x4" />
-            <flag name="viewOnTop" value="0x5" />
+            <flag name="google" value="0x5" />
 
             <!-- These last two are depreacted -->
             <flag name="pullDownFromTop" value="0x1" />

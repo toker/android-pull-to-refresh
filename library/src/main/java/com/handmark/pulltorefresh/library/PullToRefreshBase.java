@@ -287,7 +287,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					absDiff = Math.abs(diff);
 
 					if (absDiff > mTouchSlop && (!mFilterTouchEvents || absDiff > Math.abs(oppositeDiff))) {
-						if ((mMode.showHeaderLoadingLayout() || mMode.showViewOnTop()) && diff >= 1f && isReadyForPullStart()) {
+						if ((mMode.showHeaderLoadingLayout() || mMode.showGoogleStyle()) && diff >= 1f && isReadyForPullStart()) {
 							mLastMotionY = y;
 							mLastMotionX = x;
 							mIsBeingDragged = true;
@@ -760,7 +760,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			case PULL_FROM_END:
 				mFooterLayout.pullToRefresh();
 				break;
-			case VIEW_ON_TOP:
+			case GOOGLE_STYLE:
 				showViewTopLayout();
 				mViewOnTopLoadingLayout.pullToRefresh();
 				break;
@@ -787,7 +787,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (mMode.showFooterLoadingLayout()) {
 			mFooterLayout.refreshing();
 		}
-		if (mMode.showViewOnTop()) {
+		if (mMode.showGoogleStyle()) {
 			// Progressbar animation
 			// WARNING : There are magic numbers!
 			mRefreshableView.animate().alpha(0).setDuration(500).start();
@@ -836,7 +836,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			case PULL_FROM_END:
 				mFooterLayout.releaseToRefresh();
 				break;
-			case VIEW_ON_TOP:
+			case GOOGLE_STYLE:
 				mViewOnTopLoadingLayout.releaseToRefresh();
 				break;
 			case PULL_FROM_START:
@@ -860,7 +860,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Always reset both layouts, just in case...
 		mHeaderLayout.reset();
 		mFooterLayout.reset();
-		if (mMode.showViewOnTop()) {
+		if (mMode.showGoogleStyle()) {
 			mViewOnTopLoadingLayout.reset();
 			hideViewTopLayout();
 
@@ -982,7 +982,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				if (mMode.showHeaderLoadingLayout()) {
 					mHeaderLayout.setHeight(maximumPullScroll);
 					pTop = -maximumPullScroll;
-				} else if (mMode.showViewOnTop() && mWindowAttached == true ) {
+				} else if (mMode.showGoogleStyle() && mWindowAttached == true ) {
 					// WARNING : There is a magic number!
 					mViewOnTopLoadingLayout.setHeight(96 * 2);
 					pTop = 0;
@@ -1044,7 +1044,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (mLayoutVisibilityChangesEnabled) {
 			if (value < 0) {
 				switch (mCurrentMode) {
-					case VIEW_ON_TOP:
+					case GOOGLE_STYLE:
 						mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
 						break;
 					default:	
@@ -1071,7 +1071,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 
 		// skip ScrollTo(...) 
-		if (mMode.showViewOnTop() ) {
+		if (mMode.showGoogleStyle() ) {
 			return;
 		}
 
@@ -1154,7 +1154,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			return;
 		}
 
-		if ( mMode.showViewOnTop() == false ) {
+		if ( mMode.showGoogleStyle() == false ) {
             return;
         }
 
@@ -1168,7 +1168,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mTopViewLayout.removeView(mViewOnTopLoadingLayout);
 		}
 
-		if (mMode.showViewOnTop()) {
+		if (mMode.showGoogleStyle()) {
 			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mViewOnTopLoadingLayout);
 			mTopViewLayout.addView(mViewOnTopLoadingLayout, lp);
 			mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
@@ -1195,7 +1195,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		if (null != mOnRefreshListener) {
 			mOnRefreshListener.onRefresh(this);
 		} else if (null != mOnRefreshListener2) {
-			if (mCurrentMode == Mode.PULL_FROM_START || mCurrentMode == Mode.VIEW_ON_TOP) {
+			if (mCurrentMode == Mode.PULL_FROM_START || mCurrentMode == Mode.GOOGLE_STYLE) {
 				mOnRefreshListener2.onPullDownToRefresh(this);
 			} else if (mCurrentMode == Mode.PULL_FROM_END) {
 				mOnRefreshListener2.onPullUpToRefresh(this);
@@ -1254,7 +1254,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		/**
          * ProgressBar for ViEW_ON_TOP Mode
          */
-        if (mMode.showViewOnTop()) {
+        if (mMode.showGoogleStyle()) {
             mProgressBar = new ProgressBar(context);
             mProgressBar.setIndeterminate(true);
             mProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
@@ -1327,7 +1327,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	private void showViewTopLayout() {
-    	if (mMode.showViewOnTop() == false ) {
+    	if (mMode.showGoogleStyle() == false ) {
     		return;
     	}
     	// WARNING : There is a magic number!
@@ -1337,7 +1337,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	private void hideViewTopLayout() {
-    	if (mMode.showViewOnTop() == false ) {
+    	if (mMode.showGoogleStyle() == false ) {
     		return;
     	}
     	// WARNING : There is a magic number!
@@ -1356,7 +1356,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void initTopViewGroup() {
 
-        if ( mMode.showViewOnTop() == false ) {
+        if ( mMode.showGoogleStyle() == false ) {
             return;
         }
 
@@ -1396,7 +1396,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private boolean isReadyForPull() {
 		switch (mMode) {
 			case PULL_FROM_START:
-			case VIEW_ON_TOP:
+			case GOOGLE_STYLE:
 				return isReadyForPullStart();
 			case PULL_FROM_END:
 				return isReadyForPullEnd();
@@ -1435,7 +1435,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				newScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / mFriction);
 				itemDimension = getFooterSize();
 				break;
-			case VIEW_ON_TOP:
+			case GOOGLE_STYLE:
 				newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / mFriction);
 				itemDimension = getViewOnTopSize();
 				break;
@@ -1454,7 +1454,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				case PULL_FROM_END:
 					mFooterLayout.onPull(scale);
 					break;
-				case VIEW_ON_TOP:
+				case GOOGLE_STYLE:
 					mViewOnTopLoadingLayout.onPull(scale);
 					break;
 				case PULL_FROM_START:
@@ -1586,7 +1586,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		 * Google style pull-to-refresh mode
 		 *
 		 */
-		VIEW_ON_TOP(0x5);
+		GOOGLE_STYLE(0x5);
 		
 		/**
 		 * @deprecated Use {@link #PULL_FROM_START} from now on.
@@ -1652,8 +1652,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		/**
 		 * @return true if this mode wants the Loading Layout to be shown like Google style pull-to-refresh
 		 */
-		public boolean showViewOnTop() {
-			return this == VIEW_ON_TOP;
+		public boolean showGoogleStyle() {
+			return this == GOOGLE_STYLE;
 		}
 
 		int getIntValue() {
