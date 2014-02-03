@@ -1274,20 +1274,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mViewOnTopLoadingLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 
 		/**
-         * ProgressBar for ViEW_ON_TOP Mode
-         */
-        if (mMode.showGoogleStyle()) {
-            mProgressBar = new ProgressBar(context);
-            mProgressBar.setIndeterminate(true);
-            mProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
-            // WARNING : There is a magic number!
-            FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(200, 200);
-            barParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
-            mProgressBar.setVisibility(View.INVISIBLE);
-            mRefreshableViewWrapper.addView(mProgressBar, -1, barParams);        	
-        }
-
-		/**
 		 * Styleables from XML
 		 */
 		if (a.hasValue(R.styleable.PullToRefresh_ptrRefreshableViewBackground)) {
@@ -1391,8 +1377,19 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, mActionBarHeight);
 		
 		topViewGroup.addView(layout, params);
+		// Initialize refreshing bar on center
+        if (mMode.showGoogleStyle()) {
+            mProgressBar = new ProgressBar(context);
+            mProgressBar.setIndeterminate(true);
+            mProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
+            // WARNING : There is a magic number!
+            FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(200, 200);
+            barParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mRefreshableViewWrapper.addView(mProgressBar, -1, barParams);        	
+        }
 
-		// WARNING : setY(...) method is supported over API 11
+        // WARNING : setY(...) method is supported over API 11
 		layout.setY(-mActionBarHeight);
 		mTopViewLayout = layout;
 
