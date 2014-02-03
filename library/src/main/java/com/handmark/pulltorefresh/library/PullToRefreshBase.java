@@ -110,7 +110,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 */
 	private FrameLayout mTopViewLayout; 
 	private boolean mWindowAttached = false;
-	private ProgressBar mProgressBar;
+	private ProgressBar mRefreshableViewProgressBar;
 
 	private OnRefreshListener<T> mOnRefreshListener;
 	private OnRefreshListener2<T> mOnRefreshListener2;
@@ -810,8 +810,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			// Progressbar animation
 			// WARNING : There are magic numbers!
 			mRefreshableView.animate().alpha(0).setDuration(500).start();
-			mProgressBar.setVisibility(View.VISIBLE);
-			mProgressBar.animate().alpha(1).setDuration(200).start();
+			mRefreshableViewProgressBar.setVisibility(View.VISIBLE);
+			mRefreshableViewProgressBar.animate().alpha(1).setDuration(200).start();
 			
 			mViewOnTopLoadingLayout.refreshing();
 		}
@@ -886,11 +886,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			// Progressbar animation
 			// WARNING: There are magic numbers!
 			mRefreshableView.animate().alpha(1).setDuration(500).start();
-			mProgressBar.animate().alpha(0).setDuration(200).withEndAction(new Runnable(){
+			mRefreshableViewProgressBar.animate().alpha(0).setDuration(200).withEndAction(new Runnable(){
 
 				@Override
 				public void run() {
-					mProgressBar.setVisibility(View.INVISIBLE);
+					mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);
 				}}).start();
 		}
 
@@ -1379,14 +1379,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		topViewGroup.addView(layout, params);
 		// Initialize refreshing bar on center
         if (mMode.showGoogleStyle()) {
-            mProgressBar = new ProgressBar(context);
-            mProgressBar.setIndeterminate(true);
-            mProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
+            mRefreshableViewProgressBar = new ProgressBar(context);
+            mRefreshableViewProgressBar.setIndeterminate(true);
+            mRefreshableViewProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
             // WARNING : There is a magic number!
             FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(200, 200);
             barParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
-            mProgressBar.setVisibility(View.INVISIBLE);
-            mRefreshableViewWrapper.addView(mProgressBar, -1, barParams);        	
+            mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);
+            mRefreshableViewWrapper.addView(mRefreshableViewProgressBar, -1, barParams);        	
         }
 
         // WARNING : setY(...) method is supported over API 11
