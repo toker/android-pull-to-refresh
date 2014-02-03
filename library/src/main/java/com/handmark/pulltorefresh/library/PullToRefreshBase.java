@@ -1429,6 +1429,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mRefeshableViewRefreshingBarViewWhileRefreshingDuration = a.getInteger(R.styleable.PullToRefresh_ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingDuration, REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION);
 		}
 
+		// Get a flag that decides Google View Layout's size is set to ActionBar's 
+		if (a.hasValue(R.styleable.PullToRefresh_ptrSetGoogleViewLayoutSizeToActionbarHeight)) {
+			mSetGoogleViewLayoutSizeToActionbarHeight = a.getBoolean(R.styleable.PullToRefresh_ptrSetGoogleViewLayoutSizeToActionbarHeight, true);
+		}
+
 		/**
 		 * Styleables from XML
 		 */

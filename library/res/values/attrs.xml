@@ -89,6 +89,9 @@
         -->
         <attr name="ptrRotateDrawableWhilePulling" format="reference|boolean" />
 
+        <!-- Whether Google style view layout's size is set to ActionBar's size 
+        	 (Don't set to false as possible, it's hard to control height if this flag is false) -->
+        <attr name="ptrSetGoogleViewLayoutSizeToActionbarHeight" format="reference|boolean" />
         <!-- Animation Options only for google Style mode  -->
 		<!--  Whether Google style view layout's fade-in animation is shown when pulling -->
         <attr name="ptrShowGoogleStyleViewAnimationEnabled" format="reference|boolean" />
