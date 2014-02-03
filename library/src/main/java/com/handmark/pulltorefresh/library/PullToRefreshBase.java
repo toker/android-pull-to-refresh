@@ -118,6 +118,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 	private SmoothScrollRunnable mCurrentSmoothScrollRunnable;
 
+	private int mStatusBarHeight;
+	/**
+	 * Current actionbar size
+	 */
+	private int mActionBarHeight;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -1174,8 +1179,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		// We need to use the correct LayoutParam values, based on scroll
 		// direction
-		int actionBarHeight = 96;
-		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, actionBarHeight);  
+		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, mActionBarHeight);  
 		lp.gravity = Gravity.CENTER;
 		//
 		if ( mTopViewLayout == mViewOnTopLoadingLayout.getParent()) {
@@ -1321,27 +1325,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		handleStyledAttributes(a);
 		a.recycle();
 
+		// Get action bar height and status bar height 
+		initActionBarSize(context);
+		initStatusBarSize(context);
 		// Finally update the UI for the modes
 		updateUIForMode();
 	}
 
-	/**
-	 * {@link //stackoverflow.com/questions/7165830/what-is-the-size-of-actionbar-in-pixels}
-	 * @param context
-	 * @return
-	 */
-	private int getActionBarSize(Context context) {
-		// Calculate ActionBar height
-		int actionBarHeight = 0;
-		TypedValue tv = new TypedValue();
-		if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-		{
-		    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-		}
-		
-		return actionBarHeight;
-	}
-    
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	private void showViewTopLayout() {
     	if (mMode.showGoogleStyle() == false ) {
@@ -1392,24 +1382,37 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			topViewGroup = (ViewGroup) view;
 		}
 		
-		int actionBarHeight = getActionBarSize(context);  
 		FrameLayout layout = new FrameLayout(context);
 
 		@SuppressWarnings("deprecation")
 		int matchParent = (VERSION.SDK_INT >= 8) ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.FILL_PARENT;
 		
-		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, actionBarHeight);
+		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, mActionBarHeight);
 		
 		topViewGroup.addView(layout, params);
 		// NOTE : Set background just for test
 		layout.setBackgroundColor(0xFFEEEEEE); 
 
 		// WARNING : setY(...) method is supported over API 11
-		layout.setY(-actionBarHeight);
+		layout.setY(-mActionBarHeight);
 		mTopViewLayout = layout;
 
 	}
-	
+	/**
+	 * Get an actionBar's size and save into a field
+	 * @param context
+	 */
+	private void initActionBarSize(Context context) {
+		mActionBarHeight = Utils.getActionBarSize(context);
+	}
+	/**
+	 * Get an StatusBar's size and save into a field
+	 * @param context
+	 */
+	private void initStatusBarSize(Context context) {
+		mStatusBarHeight = Utils.getStatusBarSize(context);
+	}
+
 	private boolean isReadyForPull() {
 		switch (mMode) {
 			case PULL_FROM_START:

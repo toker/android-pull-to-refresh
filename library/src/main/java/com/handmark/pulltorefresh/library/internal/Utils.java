@@ -20,8 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 
 public class Utils {
 
@@ -125,5 +127,33 @@ public class Utils {
 			isExist = false;
 		}
 		return isExist;
+	}
+	/**
+	 * Get an action bar size <br />
+	 * {@link //stackoverflow.com/questions/7165830/what-is-the-size-of-actionbar-in-pixels}
+	 * @param context
+	 */	
+	public static int getActionBarSize(Context context) {
+		// Calculate ActionBar height
+		int actionBarHeight = 0;
+		TypedValue tv = new TypedValue();
+		if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+		    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,context.getResources().getDisplayMetrics());
+		}
+		
+		return actionBarHeight;
+	}
+	/**
+	 * Get a status bar size <br />
+	 * @param context
+	 */	
+	public static int getStatusBarSize(Context context) {
+	      int result = 0;
+	      int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+	      if (resourceId > 0) {
+	          result = context.getResources().getDimensionPixelSize(resourceId);
+	      } 
+	      
+	     return result;
 	}
 }
