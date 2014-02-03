@@ -1262,7 +1262,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// set it to pull down
 		mCurrentMode = (mMode != Mode.BOTH) ? mMode : Mode.PULL_FROM_START;
 	}
-
+	/**
+	 * Be called separately for google style mode when updating ui
+	 */
 	protected void updateUIForGoogleStyleMode() {
 		if ( mWindowAttached == false ) {
 			return;
