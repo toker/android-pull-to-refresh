@@ -1281,11 +1281,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mTopActionbarLayout.removeView(mGoogleStyleViewLayout);
 		}
 
-		if (mMode.showGoogleStyle()) {
-			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mGoogleStyleViewLayout);
-			mTopActionbarLayout.addView(mGoogleStyleViewLayout);
-			mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
-		}
+		Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mGoogleStyleViewLayout);
+		mTopActionbarLayout.addView(mGoogleStyleViewLayout);
+		mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 		
 		// Hide Loading Views
 		refreshLoadingViewsSize();
