@@ -1701,6 +1701,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					break;
 				case GOOGLE_STYLE:
 					mGoogleStyleViewLayout.onPull(scale);
+					mGoogleStyleProgressLayout.onPull(scale);
 					break;
 				case PULL_FROM_START:
 				default:
