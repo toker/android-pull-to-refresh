@@ -1402,7 +1402,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		initTopViewGroup();
 		updateUIForGoogleStyleMode();
 	}
-    
+
+	/**
+     * Initialize {@code mTopActionbarLayout} and add that into Top DecorView(this is the root view),
+     * and initialize needed components
+     */   
 	private void initTopViewGroup() {
 
         if ( mMode.showGoogleStyle() == false ) {
@@ -1423,7 +1427,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		} else {
 			topViewGroup = (ViewGroup) view;
 		}
-		
+
+		// Initialize Top Layout Layout
 		FrameLayout layout = new FrameLayout(context);
 
 		@SuppressWarnings("deprecation")
@@ -1432,6 +1437,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, mActionBarHeight);
 		
 		topViewGroup.addView(layout, params);
+		layout.setVisibility(View.INVISIBLE);
+
 		// Initialize refreshing bar on center
         if (mMode.showGoogleStyle()) {
             mRefreshableViewProgressBar = generateCircleProgressBar(context);
@@ -1442,6 +1449,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             mRefreshableViewWrapper.addView(mRefreshableViewProgressBar, -1, barParams);        	
         }
 
+        // Finally assign
 		mTopActionbarLayout = layout;
 
 	}
