@@ -33,10 +33,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -1329,23 +1332,66 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		updateUIForMode();
 	}
 
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	private void showViewTopLayout() {
     	if (mMode.showGoogleStyle() == false ) {
     		return;
     	}
-    	// WARNING : There is a magic number!
-    	mTopViewLayout.setAlpha(0);
-    	mTopViewLayout.animate().alpha(1).translationY(75).setDuration(100).start();
+    	// Initialize Translate and Alpha animation
+    	AnimationSet set = new AnimationSet(true /* share interpolator */);
+    	set.setDuration(100);
+    	set.setFillAfter(true);
+    	set.setAnimationListener(new AnimationListener(){
+
+			@Override
+			public void onAnimationEnd(Animation anim) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation anim) {
+			}
+
+			@Override
+			public void onAnimationStart(Animation anim) {
+				mTopViewLayout.setVisibility(View.VISIBLE);
+			}});
+    	
+    	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, -mActionBarHeight, Animation.ABSOLUTE, mStatusBarHeight);
+    	AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+    	set.addAnimation(transAnimation);
+    	set.addAnimation(alphaAnimation);
+    	// Start animation
+    	mTopViewLayout.startAnimation(set); 
     }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	private void hideViewTopLayout() {
     	if (mMode.showGoogleStyle() == false ) {
     		return;
     	}
-    	// WARNING : There is a magic number!
-    	mTopViewLayout.animate().alpha(0).translationY(- 96/2).setDuration(100).start();
+    	// Initialize Translate and Alpha animation
+	   	AnimationSet set = new AnimationSet(true /* share interpolator */);
+    	set.setDuration(100);
+    	set.setFillAfter(true);
+    	set.setAnimationListener(new AnimationListener(){
+
+			@Override
+			public void onAnimationEnd(Animation anim) {
+				mTopViewLayout.setVisibility(View.INVISIBLE);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation anim) {
+			}
+
+			@Override
+			public void onAnimationStart(Animation anim) {
+			}});
+    	
+    	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, mTopViewLayout.getTop(), Animation.ABSOLUTE, -mStatusBarHeight);
+    	AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+    	set.addAnimation(transAnimation);
+    	set.addAnimation(alphaAnimation);
+    	// Start animation
+    	mTopViewLayout.startAnimation(set);
     }
     
 	@Override
