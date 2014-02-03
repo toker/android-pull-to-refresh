@@ -1283,6 +1283,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mGoogleStyleViewLayout);
 		mTopActionbarLayout.addView(mGoogleStyleViewLayout);
+		// If it has called setHeight(...) method immediately after {@code view} has been added, the height isn't set correct
+		post(new Runnable(){
+
+			@Override
+			public void run() {
+				mGoogleStyleViewLayout.setHeight(mActionBarHeight);
+			}});		
 		mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 		
 		// Hide Loading Views
