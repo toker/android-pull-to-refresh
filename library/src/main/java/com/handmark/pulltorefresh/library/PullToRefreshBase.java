@@ -702,7 +702,32 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	protected LoadingLayout createLoadingLayout(Context context, Mode mode, TypedArray attrs) {
 		return LoadingLayoutFactory.createLoadingLayout(mLoadingLayoutClazz, context, mode, getFilteredPullToRefreshScrollDirection(), attrs);
 	}
-
+	/**
+	 * Create a new google style view layout instance by using the class token 
+	 * @param layoutCode Google style view layout code to be converted to some class token 
+	 * @param context
+	 * @param mode
+	 * @param attrs
+	 * @return Google style <b>view</b> layout instance which was created by using the class token
+	 */
+	private GoogleStyleViewLayout createGoogleStyleViewLayout(
+			String layoutCode, Context context, TypedArray a) {
+		Class<? extends GoogleStyleViewLayout> clazz = GoogleStyleViewLayoutFactory.createGoogleStyleViewLayoutClazzByLayoutCode(layoutCode);
+		return GoogleStyleViewLayoutFactory.createGoogleStyleViewLayout(clazz, context, a);
+	}	
+	/**
+	 * Create a new google style progress layout instance by using the class token 
+	 * @param layoutCode google style progress layout code  to be converted to some class token 
+	 * @param context
+	 * @param mode
+	 * @param attrs
+	 * @return Google style <b>progress</b> layout instance which was created by using the class token
+	 */
+	private GoogleStyleProgressLayout createGoogleStyleProgressLayout(
+			String layoutCode, Context context, TypedArray a) {
+		Class<? extends GoogleStyleProgressLayout> clazz = GoogleStyleProgressLayoutFactory.createGoogleStyleProgressLayoutClazzByLayoutCode(layoutCode);
+		return GoogleStyleProgressLayoutFactory.createGoogleStyleProgressLayout(clazz, context, a);
+	}
 	/**
 	 * Used internally for {@link #getLoadingLayoutProxy(boolean, boolean)}.
 	 * Allows derivative classes to include any extra LoadingLayouts.
@@ -1354,7 +1379,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			googleStyleProgressLayoutCode = a.getString(R.styleable.PullToRefresh_ptrGoogleProgressStyle);
 			Log.d(PullToRefreshBase.class.getCanonicalName(), ""+googleStyleProgressLayoutCode);
 		} 
-
+		// Get a google style view layout
+		mGoogleStyleViewLayout = createGoogleStyleViewLayout(googleStyleViewLayoutCode, context, a);
+		// Get a google style progress layout 
+		mGoogleStyleProgressLayout = createGoogleStyleProgressLayout(googleStyleProgressLayoutCode, context, a);
 		// Get animation options for Google style mode
 		if (a.hasValue(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationEnabled)) {
 			mShowGoogleStyleViewAnimationEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationEnabled, true);
