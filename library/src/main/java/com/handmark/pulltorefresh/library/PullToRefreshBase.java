@@ -1494,6 +1494,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     		mTopActionbarLayout.setVisibility(View.VISIBLE);   		
     	}
 
+    	mGoogleStyleProgressLayout.setVisibility(View.VISIBLE);
     }
 
 	/**
@@ -1536,6 +1537,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     		mTopActionbarLayout.setVisibility(View.INVISIBLE);
     	}
 
+    	mGoogleStyleProgressLayout.setVisibility(View.INVISIBLE);
     }
     
 	@Override
