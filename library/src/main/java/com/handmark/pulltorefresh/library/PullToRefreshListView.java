@@ -70,7 +70,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		 * the header/footer views won't show so we use the normal method.
 		 */
 		ListAdapter adapter = mRefreshableView.getAdapter();
-		if (!mListViewExtrasEnabled || !getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty() || getCurrentMode() == Mode.VIEW_ON_TOP) {
+		if (!mListViewExtrasEnabled || !getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty() || getCurrentMode() == Mode.GOOGLE_STYLE) {
 			super.onRefreshing(doScroll);
 			return;
 		}
@@ -132,7 +132,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		/**
 		 * If the extras are not enabled, just call up to super and return.
 		 */
-		if (!mListViewExtrasEnabled || getCurrentMode() == Mode.VIEW_ON_TOP) {
+		if (!mListViewExtrasEnabled || getCurrentMode() == Mode.GOOGLE_STYLE) {
 			super.onReset();
 			return;
 		}
@@ -227,7 +227,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		super.handleStyledAttributes(a);
 
 		mListViewExtrasEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrListViewExtrasEnabled, true);
-		if ( getMode() == Mode.VIEW_ON_TOP) {
+		if ( getMode() == Mode.GOOGLE_STYLE) {
 			mListViewExtrasEnabled = false;
 		}
 		
