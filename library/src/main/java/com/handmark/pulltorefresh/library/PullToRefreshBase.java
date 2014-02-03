@@ -109,6 +109,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	
 	private LoadingLayout mHeaderLayout;
 	private LoadingLayout mFooterLayout;
+
+	/**
+	 * Top DecorView for containing google style pull to refresh 
+	 */
+	private FrameLayout mTopActionbarLayout;
+	/**
+	 * Flag whether {@link #onAttachedToWindow()} event has been called
+	 */	
+	private boolean mWindowAttached = false;
 	/**
 	 * View Layout being shown over ActionBar
 	 */	
@@ -117,12 +126,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Progress Bar being shown over ActionBar
 	 */
 	private GoogleStyleProgressLayout mGoogleStyleProgressLayout;	
-
 	/**
-	 * Top DecorView for containing google style-ptr 
-	 */
-	private FrameLayout mTopActionbarLayout; 
-	private boolean mWindowAttached = false;
+	 * Progress bar ratating on center while Refreshing
+	 */	
 	private ProgressBar mRefreshableViewProgressBar;
 
 	private OnRefreshListener<T> mOnRefreshListener;
