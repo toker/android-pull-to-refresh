@@ -1179,7 +1179,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 		// We need to use the correct LayoutParam values, based on scroll
 		// direction
-		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, mActionBarHeight);  
+		@SuppressWarnings("deprecation")
+		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, mActionBarHeight);  
 		lp.gravity = Gravity.CENTER;
 		//
 		if ( mTopViewLayout == mViewOnTopLoadingLayout.getParent()) {
@@ -1385,7 +1386,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		FrameLayout layout = new FrameLayout(context);
 
 		@SuppressWarnings("deprecation")
-		int matchParent = (VERSION.SDK_INT >= 8) ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.FILL_PARENT;
+		int matchParent = ViewGroup.LayoutParams.FILL_PARENT;
 		
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, mActionBarHeight);
 		
@@ -1489,14 +1490,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private LinearLayout.LayoutParams getLoadingLayoutLayoutParams() {
 		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-						LinearLayout.LayoutParams.MATCH_PARENT);
+						LinearLayout.LayoutParams.FILL_PARENT);
 			case VERTICAL:
 			default:
-				return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT);
 		}
 	}
