@@ -1327,6 +1327,22 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mFooterLayout = createLoadingLayout(context, Mode.PULL_FROM_END, a);
 		mViewOnTopLoadingLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 
+		/**
+		 * Initialization for Google Style mode
+		 */
+		// Get a Google style view layout class token
+		String googleStyleViewLayoutCode = null;
+		if (a.hasValue(R.styleable.PullToRefresh_ptrGoogleViewStyle)) {
+			googleStyleViewLayoutCode = a.getString(R.styleable.PullToRefresh_ptrGoogleViewStyle);
+			Log.d(PullToRefreshBase.class.getCanonicalName(), ""+googleStyleViewLayoutCode);
+		} 
+		// Get a Google style progress layout class token
+		String googleStyleProgressLayoutCode = null;
+		if (a.hasValue(R.styleable.PullToRefresh_ptrGoogleViewStyle)) {
+			googleStyleProgressLayoutCode = a.getString(R.styleable.PullToRefresh_ptrGoogleProgressStyle);
+			Log.d(PullToRefreshBase.class.getCanonicalName(), ""+googleStyleProgressLayoutCode);
+		} 
+
 		// Get animation options for Google style mode
 		if (a.hasValue(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationEnabled)) {
 			mShowGoogleStyleViewAnimationEnabled = a.getBoolean(R.styleable.PullToRefresh_ptrShowGoogleStyleViewAnimationEnabled, true);

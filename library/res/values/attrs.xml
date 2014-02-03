@@ -56,7 +56,14 @@
         <!--  -->
         <attr name="ptrIndicatorStyle" format="string">
         </attr>
-        
+ 
+        <!-- Styles of Animation for google style pull to refresh -->
+        <attr name="ptrGoogleViewStyle" format="string">
+        </attr>
+		<!-- Styles of Progress Bar Layout for google style pull to refresh -->
+        <attr name="ptrGoogleProgressStyle" format="string">
+        </attr>
+
         <!-- Label attributes of Loading layout -->
         <attr name="ptrPullLabel" format="string" />
         <attr name="ptrRefreshLabel" format="string" />
