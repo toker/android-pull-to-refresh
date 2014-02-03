@@ -1379,9 +1379,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		topViewGroup.addView(layout, params);
 		// Initialize refreshing bar on center
         if (mMode.showGoogleStyle()) {
-            mRefreshableViewProgressBar = new ProgressBar(context);
-            mRefreshableViewProgressBar.setIndeterminate(true);
-            mRefreshableViewProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
+            mRefreshableViewProgressBar = generateCircleProgressBar(context);
             // WARNING : There is a magic number!
             FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(200, 200);
             barParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
@@ -1407,6 +1405,18 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 */
 	private void initStatusBarSize(Context context) {
 		mStatusBarHeight = Utils.getStatusBarSize(context);
+	}
+	/**
+	 * Generate Progress bar UI Component on center
+	 * @param context
+	 * @return Generated ProgressBar instance
+	 */
+	private ProgressBar generateCircleProgressBar(Context context) {
+        ProgressBar circleProgressBar = new ProgressBar(context);
+        circleProgressBar.setScrollBarStyle(android.R.attr.progressBarStyle);
+        circleProgressBar.setIndeterminate(true);
+		
+		return circleProgressBar;
 	}
 
 	private boolean isReadyForPull() {
