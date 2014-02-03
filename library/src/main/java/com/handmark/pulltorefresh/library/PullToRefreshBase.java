@@ -1390,8 +1390,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(matchParent, mActionBarHeight);
 		
 		topViewGroup.addView(layout, params);
-		// NOTE : Set background just for test
-		layout.setBackgroundColor(0xFFEEEEEE); 
 
 		// WARNING : setY(...) method is supported over API 11
 		layout.setY(-mActionBarHeight);
