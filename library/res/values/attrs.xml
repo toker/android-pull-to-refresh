@@ -105,6 +105,10 @@
         <attr name="ptrHideRefeshableViewWhileRefreshingDuration" format="integer" value="500" />
         <!-- Duration of rotating progress bar's fade-in/out animation -->
         <attr name="ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingDuration" format="integer" value="200" />
+		
+		<!-- These attrs are enabled to set width or height of Rotating progress bar on center -->
+        <attr name="ptrRefeshableViewProgressBarOnCenterWidth" format="integer" value="200" />
+        <attr name="ptrRefeshableViewProgressBarOnCenterHeight" format="integer" value="200" />
 
         <!-- BELOW HERE ARE DEPRECEATED. DO NOT USE. -->
         <attr name="ptrAdapterViewBackground" format="reference|color" />

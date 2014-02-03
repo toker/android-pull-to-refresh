@@ -74,6 +74,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	static final int REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION = 100;
 	static final int REFRESHABLE_VIEW_HIDE_WHILE_REFRESHING_DURATION = 500;
 	static final int GOOGLE_STYLE_VIEW_APPEAREANCE_DURATION = 200;
+	static final int DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE = 200;
 
 	static final int LAYER_TYPE_HARDWARE = 2;
 	static final int LAYER_TYPE_NONE = 0;
@@ -169,7 +170,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	/**
 	 * {@code mRefreshableViewRefreshingBar}'s fade-in Duration
 	 */
-	private int mRefeshableViewRefreshingBarViewWhileRefreshingDuration = REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION;	
+	private int mRefeshableViewRefreshingBarViewWhileRefreshingDuration = REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION;
+	/**
+	 * Width of {@code mRefreshableViewRefreshingBar}
+	 */
+	private int mRefeshableViewRefreshingBarWidth = DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE;
+	/**
+	 * Height of {@code mRefreshableViewRefreshingBar}
+	 */
+	private int mRefeshableViewRefreshingBarHeight = DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE;	
 	/**
 	 * Flag whether Google style view layout's size is set to ActionBar's size 
 	 * (Don't set to false as possible, it's hard to control height if this flag is false)
@@ -178,7 +187,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-
 	public PullToRefreshBase(Context context) {
 		super(context);
 		init(context, null);
@@ -1432,6 +1440,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			mSetGoogleViewLayoutSizeToActionbarHeight = a.getBoolean(R.styleable.PullToRefresh_ptrSetGoogleViewLayoutSizeToActionbarHeight, true);
 		}
 
+		// Get width or height attr of refreshing bar 
+		if (a.hasValue(R.styleable.PullToRefresh_ptrRefeshableViewProgressBarOnCenterWidth)) {
+			mRefeshableViewRefreshingBarWidth = a.getInteger(R.styleable.PullToRefresh_ptrRefeshableViewProgressBarOnCenterWidth, DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE);
+		}
+		if (a.hasValue(R.styleable.PullToRefresh_ptrRefeshableViewProgressBarOnCenterHeight)) {
+			mRefeshableViewRefreshingBarHeight = a.getInteger(R.styleable.PullToRefresh_ptrRefeshableViewProgressBarOnCenterHeight, DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE);
+		}		
 		/**
 		 * Styleables from XML
 		 */
@@ -1613,8 +1628,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Initialize refreshing bar on center
         if (mMode.showGoogleStyle()) {
             mRefreshableViewProgressBar = generateCircleProgressBar(context);
-            // WARNING : There is a magic number!
-            FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(200, 200);
+            FrameLayout.LayoutParams barParams = new FrameLayout.LayoutParams(mRefeshableViewRefreshingBarWidth, mRefeshableViewRefreshingBarHeight);
             barParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
             mRefreshableViewProgressBar.setVisibility(View.INVISIBLE);
             mRefreshableViewWrapper.addView(mRefreshableViewProgressBar, -1, barParams);        	
