@@ -113,6 +113,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * View Layout being shown over ActionBar
 	 */	
 	private GoogleStyleViewLayout mGoogleStyleViewLayout;
+	/**
+	 * Progress Bar being shown over ActionBar
+	 */
+	private GoogleStyleProgressLayout mGoogleStyleProgressLayout;	
 
 	/**
 	 * Top DecorView for containing google style-ptr 
