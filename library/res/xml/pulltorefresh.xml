@@ -7,4 +7,10 @@
     <IndicatorLayouts>
        <layout name="default">com.handmark.pulltorefresh.library.internal.DefaultIndicatorLayout</layout>
     </IndicatorLayouts>
+    <GoogleStyleViewLayouts>
+       <layout name="default">com.handmark.pulltorefresh.library.internal.DefaultGoogleStyleViewLayout</layout> 
+    </GoogleStyleViewLayouts>
+    <GoogleStyleProgressLayouts>
+       <layout name="default">com.handmark.pulltorefresh.library.internal.DefaultGoogleStyleProgressLayout</layout> 
+    </GoogleStyleProgressLayouts>    
 </PullToRefresh>
