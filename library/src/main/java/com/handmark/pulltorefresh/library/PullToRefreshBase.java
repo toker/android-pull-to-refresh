@@ -109,7 +109,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	
 	private LoadingLayout mHeaderLayout;
 	private LoadingLayout mFooterLayout;
-	private LoadingLayout mViewOnTopLoadingLayout;
+	/**
+	 * View Layout being shown over ActionBar
+	 */	
+	private GoogleStyleViewLayout mGoogleStyleViewLayout;
 
 	/**
 	 * Top DecorView for containing google style-ptr 
@@ -744,7 +747,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	protected final int getGoogleStyleViewSize() {
-		return mViewOnTopLoadingLayout.getContentSize();
+		return mGoogleStyleViewLayout.getContentSize();
 	}
 
 	protected int getPullToRefreshScrollDuration() {
@@ -815,7 +818,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				break;
 			case GOOGLE_STYLE:
 				showViewTopLayout();
-				mViewOnTopLoadingLayout.pullToRefresh();
+				mGoogleStyleViewLayout.pullToRefresh();
 				break;
 			case PULL_FROM_START:
 				mHeaderLayout.pullToRefresh();
@@ -853,7 +856,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				AlphaAnimator.fadein(mRefreshableViewProgressBar, mRefeshableViewRefreshingBarViewWhileRefreshingDuration);
 			}
 
-			mViewOnTopLoadingLayout.refreshing();
+			mGoogleStyleViewLayout.refreshing();
 		}
 
 		if (doScroll) {
@@ -896,7 +899,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 				mFooterLayout.releaseToRefresh();
 				break;
 			case GOOGLE_STYLE:
-				mViewOnTopLoadingLayout.releaseToRefresh();
+				mGoogleStyleViewLayout.releaseToRefresh();
 				break;
 			case PULL_FROM_START:
 				mHeaderLayout.releaseToRefresh();
@@ -919,7 +922,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mHeaderLayout.reset();
 		mFooterLayout.reset();
 		if (mMode.showGoogleStyle()) {
-			mViewOnTopLoadingLayout.reset();
+			mGoogleStyleViewLayout.reset();
 			hideViewTopLayout();
 
 			// Fade-in mRefreshableView
@@ -1057,7 +1060,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					pTop = -maximumPullScroll;
 				} else if (mMode.showGoogleStyle() && mWindowAttached == true ) {
 					// WARNING : There is a magic number!
-					mViewOnTopLoadingLayout.setHeight(96 * 2);
+					mGoogleStyleViewLayout.setHeight(96 * 2);
 					pTop = 0;
 				} else {
 					pTop = 0;
@@ -1118,7 +1121,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			if (value < 0) {
 				switch (mCurrentMode) {
 					case GOOGLE_STYLE:
-						mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
+						mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 						break;
 					default:	
 					case PULL_FROM_START:
@@ -1237,14 +1240,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, mActionBarHeight);  
 		lp.gravity = Gravity.CENTER;
 		//
-		if ( mTopActionbarLayout == mViewOnTopLoadingLayout.getParent()) {
-			mTopActionbarLayout.removeView(mViewOnTopLoadingLayout);
+		if ( mTopActionbarLayout == mGoogleStyleViewLayout.getParent()) {
+			mTopActionbarLayout.removeView(mGoogleStyleViewLayout);
 		}
 
 		if (mMode.showGoogleStyle()) {
-			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mViewOnTopLoadingLayout);
-			mTopActionbarLayout.addView(mViewOnTopLoadingLayout, lp);
-			mViewOnTopLoadingLayout.setVisibility(View.VISIBLE);
+			Log.d(LOG_TAG, "mViewOnTopLayout has been added." + mGoogleStyleViewLayout);
+			mTopActionbarLayout.addView(mGoogleStyleViewLayout, lp);
+			mGoogleStyleViewLayout.setVisibility(View.VISIBLE);
 		}
 		
 		// Hide Loading Views
@@ -1325,7 +1328,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// We need to create now layouts now
 		mHeaderLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 		mFooterLayout = createLoadingLayout(context, Mode.PULL_FROM_END, a);
-		mViewOnTopLoadingLayout = createLoadingLayout(context, Mode.PULL_FROM_START, a);
 
 		/**
 		 * Initialization for Google Style mode
@@ -1642,7 +1644,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 					mFooterLayout.onPull(scale);
 					break;
 				case GOOGLE_STYLE:
-					mViewOnTopLoadingLayout.onPull(scale);
+					mGoogleStyleViewLayout.onPull(scale);
 					break;
 				case PULL_FROM_START:
 				default:
