@@ -1403,7 +1403,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		updateUIForGoogleStyleMode();
 	}
     
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void initTopViewGroup() {
 
         if ( mMode.showGoogleStyle() == false ) {
@@ -1443,8 +1442,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
             mRefreshableViewWrapper.addView(mRefreshableViewProgressBar, -1, barParams);        	
         }
 
-        // WARNING : setY(...) method is supported over API 11
-		layout.setY(-mActionBarHeight);
 		mTopActionbarLayout = layout;
 
 	}
