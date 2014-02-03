@@ -1221,7 +1221,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	private void init(Context context, AttributeSet attrs) {
 		// PullToRefreshXmlConfiguration must be initialized.
 		PullToRefreshXmlConfiguration.getInstance().init(context);
-		// start initialization 
+		// start initialization
+		// Styleables from XML
+		// Getting mMode is first, because It uses mMode in getFilteredPullToRefreshScrollDirection()
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
+		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
+			mMode = Mode.mapIntToValue(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
+		}
+
 		switch (getFilteredPullToRefreshScrollDirection()) {
 			case HORIZONTAL:
 				setOrientation(LinearLayout.HORIZONTAL);
@@ -1235,18 +1242,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		ViewConfiguration config = ViewConfiguration.get(context);
 		mTouchSlop = config.getScaledTouchSlop();
 
-		// Styleables from XML
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
-		
 		// Default value of PTR View's gravity is center. So let the value be set center when the gravity is not set yet in XML.
 		if (!Utils.existAttributeIntValue(attrs, "gravity")) {
 			setGravity(Gravity.CENTER);
 		}
 
-		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
-			mMode = Mode.mapIntToValue(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
-		}
-		
 		// Get a loading layout class token
 		String loadingLayoutCode = null;
 		if (a.hasValue(R.styleable.PullToRefresh_ptrAnimationStyle)) {
