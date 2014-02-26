@@ -1,0 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+    }
+}
+
+allprojects {
+	version = PULLTOREFRESH_RELEASE_VERSION
+	group = PULLTOREFRESH_RELEASE_GROUP
+
+    repositories {
+        mavenCentral()
+    }
+}
