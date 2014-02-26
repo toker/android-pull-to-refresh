@@ -1377,7 +1377,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		mTouchSlop = config.getScaledTouchSlop();
 
 		// Default value of PTR View's gravity is center. So let the value be set center when the gravity is not set yet in XML.
-		if (!Utils.existAttributeIntValue(attrs, "gravity")) {
+		if (!Utils.existAttributeValue(attrs, "gravity")) {
 			setGravity(Gravity.CENTER);
 		}
 

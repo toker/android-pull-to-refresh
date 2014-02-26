@@ -129,6 +129,39 @@ public class Utils {
 		return isExist;
 	}
 	/**
+	 * Check whether android {@code attribute} exists and is set in {@code attributeSet} 
+	 * @param attrs {@code AttributeSet} where the {@code attribute} is included (if that is set)
+	 * @param attribute Attribute to be checked
+	 * @return true if the {@code attribute} exists
+	 */
+	public static boolean existAttributeValue(AttributeSet attrs, String attribute) {
+		return existAttributeValue(attrs, ANDROID_NAMESPACE, attribute);
+	}	
+	/**
+	 * Check whether android {@code attribute} exists and is set in {@code attributeSet} 
+	 * @param attrs {@code AttributeSet} where the {@code attribute} is included (if that is set)
+	 * @param namespace Namespace where the {@code attribute} is defined 
+	 * @param attribute Attribute to be checked
+	 * @return true if the {@code attribute} exists
+	 */
+	public static boolean existAttributeValue(AttributeSet attrs, String namespace, String attribute) {
+		// If attrs is null, assume the attribute is not set.
+		if ( attrs == null ) {
+			return false;
+		}
+		Assert.notNull(attrs, "namespace");
+		Assert.notNull(attrs, "attribute");
+		
+		boolean isExist = true;
+		String value = attrs.getAttributeValue(namespace, attribute);
+		// Assume that it doesn't exist only when value is null.
+		// An empty value can be skipped.
+		if ( value == null ) {
+			isExist = false;
+		}
+		return isExist;
+	}	
+	/**
 	 * Get an action bar size <br />
 	 * {@link //stackoverflow.com/questions/7165830/what-is-the-size-of-actionbar-in-pixels}
 	 * @param context
