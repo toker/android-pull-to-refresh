@@ -92,6 +92,7 @@ public class Utils {
 	 * @param attrs {@code AttributeSet} where the {@code attribute} is included (if that is set)
 	 * @return true if the {@code attribute} exists
 	 */
+	@Deprecated
 	public static boolean existAttributeIntValue(AttributeSet attrs, String attribute) {
 		return existAttributeIntValue(attrs, ANDROID_NAMESPACE, attribute);
 	}
@@ -102,6 +103,7 @@ public class Utils {
 	 * @param attribute Attribute to be checked
 	 * @return true if the {@code attribute} exists
 	 */
+	@Deprecated
 	public static boolean existAttributeIntValue(AttributeSet attrs, String namespace, String attribute) {
 		return existAttributeIntValue(attrs, namespace, attribute, INVALID_INT_VALUE);
 	}
@@ -113,6 +115,7 @@ public class Utils {
 	 * @param invalidValue The flag to check that the {@code attribute} is set 
 	 * @return true if the {@code attribute} exists
 	 */
+	@Deprecated
 	public static boolean existAttributeIntValue(AttributeSet attrs, String namespace, String attribute, int invalidValue) {
 		// If attrs is null, assume the attribute is not set.
 		if ( attrs == null ) {
