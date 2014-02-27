@@ -74,7 +74,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	static final int REFRESHABLEVIEW_REFRESHING_BAR_VIEW_WHILE_REFRESHING_DURATION = 100;
 	static final int REFRESHABLE_VIEW_HIDE_WHILE_REFRESHING_DURATION = 500;
 	static final int GOOGLE_STYLE_VIEW_APPEAREANCE_DURATION = 200;
-	static final int DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE = 200;
+	static final int DFEAULT_REFRESHABLEVIEW_REFRESHING_BAR_SIZE = ViewGroup.LayoutParams.WRAP_CONTENT;
 
 	static final int LAYER_TYPE_HARDWARE = 2;
 	static final int LAYER_TYPE_NONE = 0;
