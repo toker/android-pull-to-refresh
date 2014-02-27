@@ -184,6 +184,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * (Don't set to false as possible, it's hard to control height if this flag is false)
 	 */
 	private boolean mSetGoogleViewLayoutSizeToActionbarHeight = true;
+
+	private int mYPositionOfGoogleStyleViewLayout;
+
+	private int mYPositionOfGoogleStyleProgressLayout;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -1489,11 +1493,31 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Get action bar height and status bar height 
 		initActionBarSize(context);
 		initStatusBarSize(context);
+
+		determineYPositionOfGoogleStyleViewLayout();
+		
 		// Finally update the UI for the modes
 		updateUIForMode();
 		// updateUIForGoogleStyleMode() method will be called when onAttachedToWindow() event has been fired.
 	}
 
+	private void determineYPositionOfGoogleStyleViewLayout() {
+		if ( VERSION.SDK_INT < VERSION_CODES.ICE_CREAM_SANDWICH ) { 
+			mYPositionOfGoogleStyleViewLayout = 0;
+		} else {
+			mYPositionOfGoogleStyleViewLayout = mStatusBarHeight;
+		}
+	}
+	/**
+	 * NOTE : This method must be called after initStatusBarSize() and initActionBarSize() have already been called. Also, mGoogleStyleProgressLayout should be initialized before calling this method. 
+	 */
+	private void determineYPositionOfGoogleStyleProgressLayout() {
+		if ( VERSION.SDK_INT < VERSION_CODES.ICE_CREAM_SANDWICH ) { 
+			mYPositionOfGoogleStyleProgressLayout = mStatusBarHeight + 1;
+		} else {
+			mYPositionOfGoogleStyleProgressLayout = mActionBarHeight + mGoogleStyleProgressLayout.getHeight() + 1;
+		}		
+	}
 	/**
 	 * Show google view layout and google progress layout when pulling
 	 */
@@ -1522,7 +1546,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     				mTopActionbarLayout.setVisibility(View.VISIBLE);
     			}});
         	
-        	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, -mActionBarHeight, Animation.ABSOLUTE, mStatusBarHeight);
+        	TranslateAnimation transAnimation = new TranslateAnimation(Animation.ABSOLUTE, 0,Animation.ABSOLUTE, 0, Animation.ABSOLUTE, -mActionBarHeight, Animation.ABSOLUTE, mYPositionOfGoogleStyleViewLayout);
         	AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         	set.addAnimation(transAnimation);
         	set.addAnimation(alphaAnimation);
@@ -1530,7 +1554,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         	mTopActionbarLayout.startAnimation(set);    		
     	} else {
        		// Show Google style view layout without animation
-    		((FrameLayout.LayoutParams) mTopActionbarLayout.getLayoutParams()).topMargin = mStatusBarHeight;
+    		((FrameLayout.LayoutParams) mTopActionbarLayout.getLayoutParams()).topMargin = mYPositionOfGoogleStyleViewLayout;
     		mTopActionbarLayout.setVisibility(View.VISIBLE);   		
     	}
 
@@ -1641,8 +1665,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
 			@Override
 			public void run() {
-				int height = mActionBarHeight + mGoogleStyleProgressLayout.getHeight() + 1;
-				mGoogleStyleProgressLayout.setTopMargin(height);
+				determineYPositionOfGoogleStyleProgressLayout();
+				mGoogleStyleProgressLayout.setTopMargin(mYPositionOfGoogleStyleProgressLayout);
 				
 			}});
 
