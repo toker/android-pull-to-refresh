@@ -1365,6 +1365,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
 		if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
 			mMode = Mode.mapIntToValue(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
+			filterModeForSDKVersion();
 		}
 
 		switch (getFilteredPullToRefreshScrollDirection()) {
@@ -1499,6 +1500,14 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		// Finally update the UI for the modes
 		updateUIForMode();
 		// updateUIForGoogleStyleMode() method will be called when onAttachedToWindow() event has been fired.
+	}
+
+	private void filterModeForSDKVersion() {
+		// If SDK version is 2.x or lower, Let the mode not be google mode. 
+		// Because google mode should not be supported in those versions.
+		if ( VERSION.SDK_INT < VERSION_CODES.HONEYCOMB && mMode == Mode.GOOGLE_STYLE ) {
+			mMode = Mode.PULL_FROM_START;
+		}
 	}
 
 	private void determineYPositionOfGoogleStyleViewLayout() {
