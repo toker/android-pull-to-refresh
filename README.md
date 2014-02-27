@@ -1,13 +1,14 @@
-# Pull To Refresh Views for Android `Renewal`! v3.1
+# Pull To Refresh Views for Android `Renewal`! v3.2
 ### This project is a fork of Chris Banes' Android-PullToRefresh project. The project provides flexibility in customization in addition to adding brand new features listed below.
-- __New!__ Google-like pull to refresh animation support [Gmail Example](https://www.youtube.com/watch?v=1trFnjQx-AM&noredirect=1)
+- __New!__ AAR package support
+- Google-like pull to refresh animation support (in Android 3.x or 4.x)
 - Easy layout customization - no need to include the library's source code directly into your project. 
 - Easily Customizable loading layouts, labels, and icons. 
 - Ability to customize and add multiple indicator layouts. 
 - Configurable friction and smooth scroll duration. 
 - This fork project is __not__ being deprecated. Please send issues or pull requests to me, and I will provide you with feedbacks.
 
-- __Are you are using Pull To Refresh v2.1.x? You'd better [MIGRATE](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Migration-from-v2.1.x-to-v3.0.0) to v3.1 now!__
+- __Are you are using Pull To Refresh v2.1.x? You'd better [MIGRATE](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Migration-from-v2.1.x-to-v3.0.0) to v3.2 now!__
 
 ### Introduction
 * * *
