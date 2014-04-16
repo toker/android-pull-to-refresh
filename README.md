@@ -2,6 +2,10 @@
 ### This project is a fork of Chris Banes' Android-PullToRefresh project. The project provides flexibility in customization in addition to adding brand new features listed below.
 - __New!__ AAR package support
 - Google-like pull to refresh animation support (in Android 3.x or 4.x)
+
+  *__NOTE__: This style is now supported in [Android Support Library](http://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout.html).
+  I recommend you to use the support library instead of this library, unless you are already using and want to change the style from old style to it.*
+
 - Easy layout customization - no need to include the library's source code directly into your project. 
 - Easily Customizable loading layouts, labels, and icons. 
 - Ability to customize and add multiple indicator layouts. 
