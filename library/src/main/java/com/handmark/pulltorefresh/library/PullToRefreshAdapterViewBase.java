@@ -16,6 +16,9 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -29,6 +32,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -338,6 +342,26 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		if (null != mEmptyView && !mScrollEmptyView) {
 			mEmptyView.scrollTo(-l, -t);
 		}
+	}
+
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		if (isInEditMode()) {
+			// Only when the preview mode of IDE
+			createSampleList();
+		}
+	}
+	/**
+	 * <pre>
+	 * Create the sample list to be shown on the preview layout of IDE.
+	 * _NOTE_ : This method is used only for the preview mode of IDE.
+	 * </pre>
+	 */
+	private void createSampleList() {
+		List<String> listItems = Arrays.asList(new String[]{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7"});
+		ListAdapter sampleAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, listItems);
+		setAdapter(sampleAdapter);
 	}
 
 	@Override
