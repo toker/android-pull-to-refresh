@@ -61,6 +61,9 @@
             android:name=".PullToRefreshWebView2Activity"
             android:label="PtR WebView Advanced" >
         </activity>
+        <activity
+            android:name=".PullToRefreshCustomLoadingLayoutActivity"
+            android:label="PtR Custom LoadingLayout"></activity>
     </application>
 
     <!-- For WebView Sample -->
