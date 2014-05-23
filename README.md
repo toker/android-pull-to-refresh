@@ -45,7 +45,7 @@ Repository at <https://github.com/nhnopensource/android-pull-to-refresh>.
 ## Sample Application
 Sample application is being provided as APK file (the source is in the repository):
 
-[Download Here!](https://github.com/nhnopensource/android-pull-to-refresh/raw/master/downloads/sample-3.0.0.apk)
+[Download Here!](http://search.maven.org/remotecontent?filepath=com/navercorp/pulltorefresh/sample/3.2.2/sample-3.2.2.apk)
 
 ## Usage
 To begin using the library, please see the [Quick Start Guide](https://github.com/nhnopensource/android-pull-to-refresh/wiki/Quick-Start-Guide).
