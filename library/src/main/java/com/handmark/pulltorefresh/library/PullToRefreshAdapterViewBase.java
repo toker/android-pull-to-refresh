@@ -226,6 +226,10 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		mOnLastItemVisibleListener = listener;
 	}
 
+    public final void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
+        mRefreshableView.setOnItemLongClickListener(listener);
+    }
+
 	public final void setOnScrollListener(OnScrollListener listener) {
 		mOnScrollListener = listener;
 	}
