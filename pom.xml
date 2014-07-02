@@ -7,7 +7,7 @@
 	<version>3.3.0-SNAPSHOT</version>
 	<name>Android-PullToRefresh Project</name>
 	<description>Implementation of the Pull-to-Refresh UI Pattern for Android.</description>
-	<url>https://github.com/nhnopensource/android-pull-to-refresh</url>
+	<url>https://github.com/naver/android-pull-to-refresh</url>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -21,9 +21,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/nhnopensource/android-pull-to-refresh</url>
-		<connection>scm:git:git://github.com/nhnopensource/android-pull-to-refresh.git</connection>
-		<developerConnection>scm:git:git@github.com:nhnopensource/android-pull-to-refresh.git</developerConnection>
+		<url>https://github.com/naver/android-pull-to-refresh</url>
+		<connection>scm:git:git://github.com/naver/android-pull-to-refresh.git</connection>
+		<developerConnection>scm:git:git@github.com:naver/android-pull-to-refresh.git</developerConnection>
 	  <tag>HEAD</tag>
   </scm>
 	<developers>
