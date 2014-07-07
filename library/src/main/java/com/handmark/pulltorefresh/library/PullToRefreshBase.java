@@ -306,6 +306,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		return mState == State.REFRESHING || mState == State.MANUAL_REFRESHING;
 	}
 
+    @Override
+    public final void stopRefreshing() {
+        onRefreshComplete();
+    }
+
 	@Override
 	public final boolean isScrollingWhileRefreshingEnabled() {
 		return mScrollingWhileRefreshingEnabled;
