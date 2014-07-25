@@ -140,6 +140,13 @@ public interface IPullToRefresh<T extends View> {
 	 */
 	public boolean isRefreshing();
 
+    /**
+     * Stops the current refreshing view when the user needs to stop.
+     * This method is only an alias to onRefreshComplete.
+     *
+     * */
+    public void stopRefreshing();
+
 	/**
 	 * Returns whether the widget has enabled scrolling on the Refreshable View
 	 * while refreshing.
