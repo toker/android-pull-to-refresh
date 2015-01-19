@@ -11,10 +11,9 @@ buildscript {
 
 apply plugin: 'maven'
 apply plugin: 'signing'
-android {
-    compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)
-    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
+android {
+    
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -22,7 +21,18 @@ android {
             res.srcDirs = ['res']
         }
     }
+
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
 }
+
 dependencies {
     compile project(':library')
     compile project(':PullToRefreshListFragment')
