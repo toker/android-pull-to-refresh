@@ -6,6 +6,7 @@ library/build/
 
 **/build
 /.gradle
+/downloads
 
 #Eclipse
 .project
