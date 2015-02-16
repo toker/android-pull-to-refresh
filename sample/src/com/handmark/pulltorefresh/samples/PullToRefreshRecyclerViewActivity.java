@@ -40,7 +40,6 @@ public final class PullToRefreshRecyclerViewActivity extends Activity {
     //private ArrayAdapter<String> mAdapter;
     RecyclerViewAdapter mAdapter;
 
-    /* Called when the activity is first created.*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +48,17 @@ public final class PullToRefreshRecyclerViewActivity extends Activity {
         mPullToRefreshRecyclerView = (PullToRefreshRecyclerView) findViewById(R.id.pull_refresh_recycler_view);
 
         // Set a listener to be invoked when the list should be refreshed.
-        mPullToRefreshRecyclerView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
+        mPullToRefreshRecyclerView.setOnRefreshListener(
+				new PullToRefreshBase.OnRefreshListener<RecyclerView>() {
             @Override
             public void onRefresh(PullToRefreshBase<RecyclerView> refreshView) {
-                String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
-                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+                String label = DateUtils.formatDateTime(getApplicationContext(),
+						System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE |
+								DateUtils.FORMAT_ABBREV_ALL);
 
                 // Update the LastUpdatedLabel
-                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                //refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
                 // Do work to refresh the list here.
                 new GetDataTask().execute();
@@ -65,7 +67,6 @@ public final class PullToRefreshRecyclerViewActivity extends Activity {
 
         // Add an end-of-list listener
         /*mPullRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
-
             @Override
             public void onLastItemVisible() {
                 Toast.makeText(PullToRefreshRecyclerViewActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
@@ -77,29 +78,18 @@ public final class PullToRefreshRecyclerViewActivity extends Activity {
         // Need to use the Actual ListView when registering for Context Menu
         //registerForContextMenu(actualListView);
 
-        /*mListItems = new LinkedList<String>();
-        mListItems.addAll(Arrays.asList(mStrings));*/
-
-        //TODO no need
-        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mListItems);
-
-
-        /* Add Sound Event Listener*/
-
-        /*SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(this);
+        // Add Sound Event Listener
+        /*
+        SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(this);
         soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
         soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
         soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
         mPullRefreshListView.setOnPullEventListener(soundListener);*/
 
-        // You can also just use setListAdapter(mAdapter) or
-        // mPullRefreshListView.setAdapter(mAdapter)
-        //TODO no need
-        //actualListView.setAdapter(mAdapter);
         List<Record> records = new ArrayList<Record>();
         populateRecords(records);
 
-        RecyclerViewAdapter mAdapter = new RecyclerViewAdapter(records);
+        mAdapter = new RecyclerViewAdapter(records);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         actualListView.setAdapter(mAdapter);
@@ -146,6 +136,9 @@ public final class PullToRefreshRecyclerViewActivity extends Activity {
             "Allgauer Emmentaler"
     };
 
+	/**
+	 * RecyclerView
+	 */
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
         private List<Record> records;

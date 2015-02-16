@@ -46,7 +46,9 @@ import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 import com.handmark.pulltorefresh.library.internal.Utils;
 import com.handmark.pulltorefresh.library.internal.ViewCompat;
 
-public abstract class PullToRefreshBase<T extends View> extends LinearLayout implements IPullToRefresh<T> {
+public abstract class PullToRefreshBase<T extends View>
+		extends LinearLayout
+		implements IPullToRefresh<T> {
 
 	// ===========================================================
 	// Constants
@@ -754,7 +756,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	 * Used internally for {@link #getLoadingLayoutProxy(boolean, boolean)}.
 	 * Allows derivative classes to include any extra LoadingLayouts.
 	 */
-	protected LoadingLayoutProxy createLoadingLayoutProxy(final boolean includeStart, final boolean includeEnd) {
+	protected LoadingLayoutProxy createLoadingLayoutProxy(final boolean includeStart,
+														  final boolean includeEnd) {
 		LoadingLayoutProxy proxy = new LoadingLayoutProxy();
 
 		if (includeStart && mMode.showHeaderLoadingLayout()) {

@@ -41,8 +41,9 @@ import com.handmark.pulltorefresh.library.internal.IndicatorLayout;
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
-public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends PullToRefreshBase<T> implements
-		OnScrollListener {
+public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
+		extends PullToRefreshBase<T>
+		implements OnScrollListener {
 
 	private static FrameLayout.LayoutParams convertEmptyViewLayoutParams(ViewGroup.LayoutParams lp) {
 		FrameLayout.LayoutParams newLp = null;

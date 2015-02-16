@@ -4,8 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <!--     The PullToRefreshListView replaces a standard ListView widget. -->
-
+    <!-- The PullToRefreshListView replaces a standard ListView widget. -->
     <com.handmark.pulltorefresh.library.PullToRefreshRecyclerView
         android:id="@+id/pull_refresh_recycler_view"
         android:layout_width="fill_parent"
